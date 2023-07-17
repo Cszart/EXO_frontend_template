@@ -8,7 +8,9 @@ export interface InputProps {
 	onChangeCustom?: (e: SyntheticEvent) => void;
 	isLogin?: boolean;
 	title?: string;
-	register?: (
+	classNameInput?: string;
+	className?: string;
+	register: (
 		name: string,
 		RegisterOptions?: RegisterOptions
 	) => {
@@ -27,6 +29,6 @@ export interface InputProps {
 	primary?: boolean;
 	rightClick?: () => void;
 	leftClick?: () => void;
-	error?: object;
+	error?: any;
 	setError?: (name: string, error: ErrorOption) => void;
 }

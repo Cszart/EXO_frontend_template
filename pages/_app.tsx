@@ -2,8 +2,10 @@ import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 
 // Styles
-import '../styles/global.css';
+import '../styles/globals.css';
 import '../styles/home.css';
+import '../styles/global-tailwind.css';
+import '../styles/globals.scss';
 
 export default function App({
 	Component,

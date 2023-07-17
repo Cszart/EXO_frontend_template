@@ -94,7 +94,7 @@ export const Typography: React.FC<TypographyProps> = ({
 
 	if (type === 'headline-3')
 		return (
-			<h1
+			<h3
 				className={clsx(
 					'text-gray-800 font-bold text-2xl',
 					'xl:text-3xl',
@@ -103,12 +103,12 @@ export const Typography: React.FC<TypographyProps> = ({
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h3>
 		);
 
 	if (type === 'headline-4')
 		return (
-			<h1
+			<h4
 				className={clsx(
 					'text-gray-800 font-bold text-[21px]',
 					'xl:text-2xl leading-[30px]',
@@ -117,7 +117,7 @@ export const Typography: React.FC<TypographyProps> = ({
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h4>
 		);
 
 	if (type === 'headline-5')
@@ -136,7 +136,7 @@ export const Typography: React.FC<TypographyProps> = ({
 
 	if (type === 'subtitle-1')
 		return (
-			<h1
+			<h2
 				className={clsx(
 					'text-gray-800 font-medium text-base xl:text-lg',
 					className
@@ -144,12 +144,12 @@ export const Typography: React.FC<TypographyProps> = ({
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h2>
 		);
 
 	if (type === 'subtitle-2')
 		return (
-			<h1
+			<h2
 				className={clsx(
 					'text-gray-800 font-medium text-sm xl:text-base',
 					className
@@ -157,12 +157,12 @@ export const Typography: React.FC<TypographyProps> = ({
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h2>
 		);
 
 	if (type === 'subtitle-3')
 		return (
-			<h1
+			<h3
 				className={clsx(
 					'text-gray-800 font-bold text-sm xl:text-base leading-5',
 					className
@@ -170,52 +170,52 @@ export const Typography: React.FC<TypographyProps> = ({
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h3>
 		);
 
 	if (type === 'link-1')
 		return (
-			<h1
+			<h2
 				className={clsx('text-gray-800 font-bold text-sm', className)}
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h2>
 		);
 
 	if (type === 'link-2')
 		return (
-			<h1
+			<h2
 				className={clsx('text-gray-800 font-bold text-xs', className)}
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h2>
 		);
 
 	if (type === 'body-1')
 		return (
-			<h1
+			<h2
 				className={clsx('text-gray-800 font-normal text-base', className)}
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h2>
 		);
 
 	if (type === 'body-2')
 		return (
-			<h1
+			<h2
 				className={clsx('text-gray-800 font-normal text-xs', className)}
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h2>
 		);
 
 	if (type === 'caption-1')
 		return (
-			<h1
+			<h2
 				className={clsx(
 					'text-gray-800 font-light text-[10px] leading-[14px]',
 					className
@@ -223,12 +223,12 @@ export const Typography: React.FC<TypographyProps> = ({
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h2>
 		);
 
 	if (type === 'caption-2')
 		return (
-			<h1
+			<h2
 				className={clsx(
 					'text-gray-800 font-medium text-[10px] leading-[14px]',
 					className
@@ -236,12 +236,12 @@ export const Typography: React.FC<TypographyProps> = ({
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h2>
 		);
 
 	if (type === 'caption-3')
 		return (
-			<h1
+			<h2
 				className={clsx(
 					'text-gray-800 font-extrabold text-[10px] leading-[14px]',
 					className
@@ -249,12 +249,12 @@ export const Typography: React.FC<TypographyProps> = ({
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h2>
 		);
 
 	if (type === 'overline')
 		return (
-			<h1
+			<h2
 				className={clsx(
 					'text-gray-800 font-medium text-[8px] leading-[10px]',
 					className
@@ -262,7 +262,7 @@ export const Typography: React.FC<TypographyProps> = ({
 				onClick={() => onClick && onClick()}
 			>
 				{children || text}
-			</h1>
+			</h2>
 		);
 
 	return null;
