@@ -5,25 +5,21 @@ import Footer from 'components/footer/footer';
 
 export interface Layout_Props {
 	with_header?: boolean;
-
 	with_footer?: boolean;
-
 	children?: any;
-	className_Children?: string;
-	className_Layout?: string;
+	className_children?: string;
+	className_layout?: string;
 }
 
 export const Layout: React.FC<Layout_Props> = ({
 	with_header,
-
 	with_footer,
-
 	children,
-	className_Children,
-	className_Layout,
+	className_children,
+	className_layout,
 }) => {
 	return (
-		<main className={clsx('w-full', className_Layout)}>
+		<main className={clsx('w-full bg-dark-10 min-h-screen', className_layout)}>
 			{/* Header */}
 			{with_header && (
 				<Header_Navbar
@@ -34,7 +30,11 @@ export const Layout: React.FC<Layout_Props> = ({
 			)}
 
 			{/* Content of the layout */}
-			{children && <div className={className_Children}>{children}</div>}
+			{children && (
+				<div className={clsx('min-h-screen', className_children)}>
+					{children}
+				</div>
+			)}
 
 			{/* Footer */}
 			{with_footer && <Footer companyName="Shokworks" rightsYear="2023" />}

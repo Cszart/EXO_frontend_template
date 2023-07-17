@@ -1,32 +1,50 @@
 /** @type {import('tailwindcss').Config} */
-const colors = require('tailwindcss/colors');
-
-delete colors['lightBlue'];
-delete colors['warmGray'];
-delete colors['trueGray'];
-delete colors['coolGray'];
-delete colors['blueGray'];
-colors = { ...colors, ...{ transparent: 'transparent' } };
 
 module.exports = {
-	mode: 'jit',
 	content: [
-		'./app/**/*.{js,ts,jsx,tsx,mdx}',
-		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
-		'./components/**/*.{js,ts,jsx,tsx,mdx}',
+		'./app/**/*.{js,ts,jsx,tsx}',
+		'./pages/**/*.{js,ts,jsx,tsx}',
+		'./components/**/*.{js,ts,jsx,tsx}',
 
+		// Or if using `src` directory:
 		'./src/**/*.{js,ts,jsx,tsx}',
 	],
 	theme: {
-		extend: {
-			backgroundImage: {
-				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'gradient-conic':
-					'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-			},
+		extend: {},
+		fontFamily: {
+			sans: ['Open Sans', 'sans-serif'],
+		},
+		screens: {
+			xs: '440px',
+			sm: '640px',
+			md: '768px',
+			lg: '1024px',
+			xl: '1280px',
+			'2xl': '1536px',
+			'3xl': '1700px',
+			'4xl': '1920px',
 		},
 		colors: {
-			...colors,
+			dark: {
+				0: 'var(--color-dark-0)',
+				10: 'var(--color-dark-10)',
+				30: 'var(--color-dark-30)',
+				40: 'var(--color-dark-40)',
+				60: 'var(--color-dark-60)',
+				80: 'var(--color-dark-80)',
+				100: 'var(--color-dark-100)',
+			},
+			white: 'var(--color-white)',
+			black: 'var(--color-black)',
+			yellow: 'var(--color-yellow)',
+			gray: 'var(--color-gray)',
+			blue: 'var(--color-blue)',
+			sky: 'var(--color-sky)',
+			alert: {
+				success: 'var(--color-alert-success)',
+				error: 'var(--color-alert-error)',
+			},
+			transparent: 'rgba(0, 0, 0, 0)',
 		},
 	},
 	plugins: [],

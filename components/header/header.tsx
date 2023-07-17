@@ -25,11 +25,9 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 			)}
 		>
 			{/* Logo */}
-			<div className="text-white">
+			<div className="text-white text-2xl font-bold">
 				<Link href="/">
-					<a className="text-2xl font-bold">
-						<img src={logoUrl} alt="Logo" className="h-8 max-h-8" />
-					</a>
+					<img src={logoUrl} alt="Logo" className="h-8 max-h-8" />
 				</Link>
 			</div>
 
@@ -39,8 +37,8 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 					{links &&
 						links.map((link, index) => (
 							<li key={index}>
-								<Link href={link.href}>
-									<a className="text-white">{link.name}</a>
+								<Link href={link.href} className="text-white">
+									{link.name}
 								</Link>
 							</li>
 						))}

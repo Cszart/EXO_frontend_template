@@ -1,10 +1,28 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import FacebookProvider from 'next-auth/providers/facebook';
+import GoogleProvider from 'next-auth/providers/google';
 
 const options: NextAuthOptions = {
 	// Configure one or more authentication providers
 	providers: [
+		FacebookProvider({
+			clientId: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID || '',
+			clientSecret: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_SECRET || '',
+			profile: (data) => ({
+				provider: 'facebook',
+				...data,
+			}),
+		}),
+		GoogleProvider({
+			clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',
+			clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || '',
+			profile: (data) => ({
+				provider: 'google',
+				...data,
+			}),
+		}),
 		CredentialsProvider({
 			// The name to display on the sign in form (e.g. 'Sign in with...')
 			name: 'Credentials',
@@ -42,7 +60,7 @@ const options: NextAuthOptions = {
 		}),
 	],
 	pages: {
-		signIn: '/auth/signin',
+		signIn: '/',
 		signOut: '/auth/signout',
 		error: '/auth/error', // Error code passed in query string as ?error=
 		verifyRequest: '/auth/verify-request', // (used for check email message)

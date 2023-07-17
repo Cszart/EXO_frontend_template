@@ -5,7 +5,7 @@ export interface ButtonProps {
 	className?: string;
 	disabled?: boolean;
 	decoration?: 'fill' | 'line-white' | 'line-primary' | 'none';
-	size?: 'extra-small' | 'small' | 'medium' | 'large' | 'full';
+	size?: 'extra-small' | 'small' | 'medium' | 'large' | 'full' | 'fit';
 	onClick?: () => void;
 }
 
@@ -23,6 +23,7 @@ export const Button: React.FC<
 				onClick={onClick}
 				className={clsx(
 					//size
+					{ 'w-fit': size === 'fit' },
 					{ 'w-full': size === 'full' },
 					{ 'w-75': size === 'large' },
 					{ 'w-61': size === 'medium' },
@@ -31,7 +32,7 @@ export const Button: React.FC<
 
 					// fill
 					{
-						'text-gray-0 bg-primary border-primary': decoration === 'fill',
+						'text-white bg-blue border-blue': decoration === 'fill',
 					},
 					{
 						'hover:text-primary hover:border-primary hover:bg-transparent':
@@ -40,7 +41,7 @@ export const Button: React.FC<
 
 					// not fill white
 					{
-						'text-gray-0 border-gray-0': decoration === 'line-white',
+						'text-blue border-blue': decoration === 'line-white',
 					},
 					{
 						'hover:bg-primary hover:text-gray-0 hover:border-primary':
@@ -62,7 +63,7 @@ export const Button: React.FC<
 					},
 
 					// global
-					'group flex items-center justify-center border rounded-[26px]',
+					'group flex items-center justify-center border rounded-[26px] px-4 py-2',
 					'outline-none transition-colors duration-200',
 					'focus:outline-none disabled:cursor-not-allowed',
 					className

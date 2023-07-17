@@ -1,0 +1,24 @@
+*,
+html,
+body {
+	font-family: 'Open sans', sans-serif;
+}
+
+@media screen and (min-width: 600px) {
+	/* Works on Firefox */
+	.scroll-custom {
+		scrollbar-width: 8px;
+		scrollbar-color: #f5f5f54b;
+	}
+
+	/* Works on Chrome, Edge, and Safari */
+	.scroll-custom::-webkit-scrollbar {
+		width: 8px;
+		background-color: #f5f5f54b;
+	}
+
+	.scroll-custom::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		background-color: #212529;
+	}
+}
