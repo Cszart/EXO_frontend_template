@@ -35,7 +35,7 @@ export const Button: React.FC<
 						'text-white bg-blue border-blue': decoration === 'fill',
 					},
 					{
-						'hover:text-primary hover:border-primary hover:bg-transparent':
+						'hover:text-blue hover:border-blue hover:bg-transparent':
 							decoration === 'fill' && !disabled,
 					},
 
