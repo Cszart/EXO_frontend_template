@@ -15,6 +15,7 @@ const options: NextAuthOptions = {
 				...data,
 			}),
 		}),
+
 		GoogleProvider({
 			clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',
 			clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || '',
@@ -23,8 +24,10 @@ const options: NextAuthOptions = {
 				...data,
 			}),
 		}),
+
 		CredentialsProvider({
 			// The name to display on the sign in form (e.g. 'Sign in with...')
+			id: 'Credentials',
 			name: 'Credentials',
 			// The credentials is used to generate a suitable form on the sign in page.
 			// You can specify whatever fields you are expecting to be submitted.
@@ -40,34 +43,45 @@ const options: NextAuthOptions = {
 				// that is false/null if the credentials are invalid.
 				// e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
 
-				const res = await fetch('/your/endpoint', {
-					method: 'POST',
-					body: JSON.stringify(credentials),
-					headers: { 'Content-Type': 'application/json' },
-				});
+				try {
+					const res = await fetch(`${process.env.NEXT_PUBLIC_API}/login`, {
+						method: 'POST',
+						body: JSON.stringify(credentials),
+						headers: { 'Content-Type': 'application/json' },
+					});
 
-				const user = await res.json();
+					// CHECK out for other type of responses
+					// This might change depending on your project
+					const response_json = await res.json();
 
-				// If no error and we have user data, return it
-				if (res.ok && user) {
-					return user;
+					// If no error and we have user data, return it
+					if (res.status == 200 && response_json) {
+						const user = response_json.data;
+						return Promise.resolve(user);
+					}
+
+					// If no error and we have user data, return it
+					// Return null if user data could not be retrieved
+					return Promise.reject(new Error(response_json.message));
+				} catch (error) {
+					return Promise.resolve(error);
 				}
-
-				// If no error and we have user data, return it
-				// Return null if user data could not be retrieved
-				return null;
 			},
 		}),
 	],
+
 	pages: {
-		signIn: '/',
+		signIn: '/auth/signin',
 		signOut: '/auth/signout',
 		error: '/auth/error', // Error code passed in query string as ?error=
 		verifyRequest: '/auth/verify-request', // (used for check email message)
 		newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
 	},
+
 	callbacks: {
+		// SignIn Callback
 		async signIn() {
+			// You could add some more complex logic here
 			const isAllowedToSignIn = true;
 			if (isAllowedToSignIn) {
 				return true;
@@ -78,6 +92,8 @@ const options: NextAuthOptions = {
 				// return '/unauthorized'
 			}
 		},
+
+		// Redirect Callback
 		async redirect({ url, baseUrl }) {
 			// Allows relative callback URLs
 			if (url.startsWith('/')) return `${baseUrl}${url}`;
@@ -85,20 +101,27 @@ const options: NextAuthOptions = {
 			else if (new URL(url).origin === baseUrl) return url;
 			return baseUrl;
 		},
+
+		// Session Callback
 		async session({ session, token }) {
 			// Send properties to the client, like an access_token and user id from a provider.
-			// session.accessToken = token.accessToken // Pending
-			session.user = token;
+
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const { access_token, ...userData } = token.user as any;
+			session.user = userData;
+			(session as any).access_token = token.access_token;
 
 			return session;
 		},
-		async jwt({ token, account, profile }) {
+
+		// JWT Callback
+		async jwt({ token, user }) {
 			// Persist the OAuth access_token and or the user id to the token right after signin
-			if (account) {
-				token.accessToken = account.access_token;
-				token.id = profile; // Pending token.id = profile?.id
+			if (user) {
+				token.user = user;
+				token.access_token = (user as any).access_token;
 			}
-			return token;
+			return Promise.resolve(token);
 		},
 	},
 	// A database is optional, but required to persist accounts in a database

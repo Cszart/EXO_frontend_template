@@ -3,15 +3,15 @@ import { Layout } from 'components/layout';
 import { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
 
-export default function homePage(): any {
+const HomePage = (): any => {
 	return (
-		<div className="">
-			<Layout with_header with_footer>
-				This is the content of the homePage
-			</Layout>
-		</div>
+		<Layout with_footer>
+			<div className="flex justify-center items-center w-full text-2xl font-bold">
+				You are logged in and this is the Home Page
+			</div>
+		</Layout>
 	);
-}
+};
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const session = await getSession(context);
@@ -23,10 +23,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			},
 		};
 	}
+
 	return {
-		redirect: {
-			destination: '/',
-			permanent: false,
+		props: {
+			session,
 		},
 	};
 };
+
+export default HomePage;

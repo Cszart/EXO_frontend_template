@@ -4,6 +4,7 @@ import { Separator } from 'components/separator';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 type providerTypes = 'email' | 'google' | 'facebook';
 
@@ -12,9 +13,14 @@ interface SignInProps {
 }
 
 export const SignInComponent: React.FC<SignInProps> = ({ providers }) => {
-	const [isLoading, setIsLoading] = React.useState<boolean>(false);
-	const { register } = useForm({ mode: 'onChange' });
+	const { register, handleSubmit } = useForm({ mode: 'onChange' });
+	const router = useRouter();
 
+	// Loading flag
+	const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+	// Functions
+	// Sign in with FACEBOOK
 	console.log({ providers });
 
 	const handleSubmitDataFacebook = async () => {
@@ -31,6 +37,7 @@ export const SignInComponent: React.FC<SignInProps> = ({ providers }) => {
 		}
 	};
 
+	// Sign in with GOOGLE
 	const handleSubmitDataGoogle = async () => {
 		setIsLoading(true);
 		try {
@@ -44,9 +51,29 @@ export const SignInComponent: React.FC<SignInProps> = ({ providers }) => {
 			setIsLoading(false);
 		}
 	};
+
+	// Sign in with Data
+	const handleSubmitDataForm = async (data: any): Promise<any> => {
+		setIsLoading(true);
+		try {
+			await signIn('Credentials', {
+				...data,
+			});
+
+			router.push('/');
+		} catch (error) {
+			console.log('Log in ERROR: ', error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return (
 		<div className="flex flex-col w-full h-full justify-center items-center">
-			<form className="bg-white px-12 py-10 rounded-2xl flex flex-col space-y-4 max-w-md w-full mx-auto h-full">
+			<form
+				className="bg-white px-12 py-10 rounded-2xl flex flex-col space-y-4 max-w-md w-full mx-auto h-full"
+				onSubmit={handleSubmit(handleSubmitDataForm)}
+			>
 				<Typography type="headline-4" className="text-center">
 					Sign In
 				</Typography>

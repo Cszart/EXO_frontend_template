@@ -2,6 +2,7 @@ import * as React from 'react';
 import clsx from 'clsx';
 
 export interface ButtonProps {
+	type?: 'submit' | 'reset' | 'button';
 	className?: string;
 	disabled?: boolean;
 	decoration?: 'fill' | 'line-white' | 'line-primary' | 'none';
@@ -14,11 +15,19 @@ export interface ButtonProps {
  */
 export const Button: React.FC<
 	ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
-> = ({ className, disabled = false, decoration, size, onClick, children }) => {
+> = ({
+	type = 'button',
+	className,
+	disabled = false,
+	decoration,
+	size,
+	onClick,
+	children,
+}) => {
 	return (
 		<>
 			<button
-				type="button"
+				type={type}
 				disabled={disabled}
 				onClick={onClick}
 				className={clsx(
