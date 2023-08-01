@@ -78,7 +78,7 @@ export const Input: React.FC<
 				)}
 			</div>
 			{error && error.message && (
-				<span className="flex items-center mt-1 text-status-error-solid gap-1">
+				<span className="flex items-center mt-1 text-red-600 gap-1">
 					<Typography type="caption-1">{error.message}</Typography>
 				</span>
 			)}

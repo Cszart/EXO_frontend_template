@@ -68,7 +68,7 @@ export const Button: React.FC<
 
 					// none
 					{
-						'text-gray-800 font-medium': decoration === 'none',
+						'text-gray-800 font-medium hover:bg-dark-10': !decoration,
 					},
 
 					// global
