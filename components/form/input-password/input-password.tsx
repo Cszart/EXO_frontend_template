@@ -46,14 +46,12 @@ export const InputPassword: React.FC<
 	}, [rules, validate]);
 
 	return (
-		<>
-			<Input
-				type={isVisible ? 'text' : 'password'}
-				rules={finalRules}
-				rightImg={isVisible ? Icons.visible : Icons.invisible}
-				rightClick={() => handleClick()}
-				{...props}
-			></Input>
-		</>
+		<Input
+			type={isVisible ? 'text' : 'password'}
+			rules={finalRules}
+			rightImg={isVisible ? Icons.visible : Icons.invisible}
+			rightClick={() => handleClick()}
+			{...props}
+		/>
 	);
 };
