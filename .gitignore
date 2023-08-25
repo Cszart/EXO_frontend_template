@@ -4,6 +4,7 @@
 
 # package-lock.js
 .package-lock.json
+./package-lock.json
 yarn.lock
 
 # dependencies
