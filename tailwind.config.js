@@ -25,6 +25,7 @@ module.exports = {
 				'4xl': '1920px',
 			},
 			colors: {
+				primary: 'var(--color-primary)',
 				dark: {
 					0: 'var(--color-dark-0)',
 					10: 'var(--color-dark-10)',
@@ -39,7 +40,6 @@ module.exports = {
 				yellow: 'var(--color-yellow)',
 				gray: 'var(--color-gray)',
 				blue: 'var(--color-blue)',
-				sky: 'var(--color-sky)',
 				alert: {
 					success: 'var(--color-alert-success)',
 					error: 'var(--color-alert-error)',

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Button, InputEmail, InputPassword, Typography } from 'components/form';
-import { Separator } from 'components/separator';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Separator } from '..';
 
 type providerTypes = 'email' | 'google' | 'facebook';
 
