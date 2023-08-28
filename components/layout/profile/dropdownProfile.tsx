@@ -36,18 +36,14 @@ export const DropdownProfile: React.FC<DropdownProfileProps> = ({ links }) => {
 								{/* Link option */}
 								{link.href != undefined && link.href != null && (
 									<Link href={link.href}>
-										<Typography type="subtitle-3" className="text-dark-100">
-											{link.label}
-										</Typography>
+										<Typography type="link-1">{link.label}</Typography>
 									</Link>
 								)}
 
 								{/* Clickable option */}
 								{link.onClick != undefined && link.onClick != null && (
 									<button type="button" onClick={link.onClick}>
-										<Typography type="subtitle-3" className="text-dark-100">
-											{link.label}
-										</Typography>
+										<Typography type="link-1">{link.label}</Typography>
 									</button>
 								)}
 							</div>

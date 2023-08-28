@@ -34,10 +34,10 @@ export const Button: React.FC<
 					//size
 					{ 'w-fit': size === 'fit' },
 					{ 'w-full': size === 'full' },
-					{ 'w-75': size === 'large' },
-					{ 'w-61': size === 'medium' },
+					{ 'w-80': size === 'large' },
+					{ 'w-60': size === 'medium' },
 					{ 'w-48': size === 'small' },
-					{ 'w-37': size === 'extra-small' },
+					{ 'w-36': size === 'extra-small' },
 
 					// fill
 					{

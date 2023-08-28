@@ -7,21 +7,21 @@ import { SidebarDesktop } from './sidebars';
 import { Option } from 'interfaces';
 
 export interface Layout_Props {
-	with_header?: boolean;
-	with_footer?: boolean;
-	with_sidebar?: boolean;
+	withHeader?: boolean;
+	withFooter?: boolean;
+	withSidebar?: boolean;
 	children?: any;
-	className_children?: string;
-	className_layout?: string;
+	classNameChildren?: string;
+	classNameLayout?: string;
 }
 
 export const Layout: React.FC<Layout_Props> = ({
-	with_header = true,
-	with_footer = false,
-	with_sidebar = true,
+	withHeader = true,
+	withFooter = false,
+	withSidebar = true,
 	children,
-	className_children,
-	className_layout,
+	classNameChildren,
+	classNameLayout,
 }) => {
 	const session = useSession();
 
@@ -53,9 +53,9 @@ export const Layout: React.FC<Layout_Props> = ({
 	}, [session]);
 
 	return (
-		<main className={clsx('w-full min-h-screen', className_layout)}>
+		<main className={clsx('w-full min-h-screen', classNameLayout)}>
 			{/* Header */}
-			{with_header && (
+			{withHeader && (
 				<HeaderNavbar
 					links={headerTextOptions}
 					logoUrl={
@@ -66,11 +66,11 @@ export const Layout: React.FC<Layout_Props> = ({
 
 			{/* Content of the layout */}
 			{children && (
-				<div className={clsx('flex min-h-screen', className_children)}>
-					{with_sidebar && <SidebarDesktop />}
+				<div className={clsx('flex min-h-screen', classNameChildren)}>
+					{withSidebar && <SidebarDesktop />}
 					<div
 						className={clsx({
-							'w-full overflow-hidden px-20 py-10': with_sidebar,
+							'w-full overflow-hidden px-20 py-10': withSidebar,
 						})}
 					>
 						{children}
@@ -79,7 +79,7 @@ export const Layout: React.FC<Layout_Props> = ({
 			)}
 
 			{/* Footer */}
-			{with_footer && <Footer companyName="Shokworks" rightsYear="2023" />}
+			{withFooter && <Footer companyName="Shokworks" rightsYear="2023" />}
 		</main>
 	);
 };

@@ -4,15 +4,13 @@ import * as React from 'react';
 
 type AvatarProps = {
 	photoUrl: string;
-	size: 'small' | 'medium' | 'large';
-	width?: string;
+	size?: 'small' | 'medium' | 'large';
 	className?: string;
 };
 
 export const Avatar: React.FC<AvatarProps> = ({
 	photoUrl,
 	size,
-	width,
 	className,
 }) => {
 	return (
@@ -22,7 +20,6 @@ export const Avatar: React.FC<AvatarProps> = ({
 				{ 'w-8 h-8': size === 'small' },
 				{ 'w-12 h-12': size === 'medium' },
 				{ 'w-16 h-16': size === 'large' },
-				width,
 				className
 			)}
 		>

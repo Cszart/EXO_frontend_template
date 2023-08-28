@@ -6,7 +6,7 @@ import { Layout } from 'components/layout';
 
 const HomePage = (): any => {
 	return (
-		<Layout with_sidebar>
+		<Layout withSidebar>
 			<div className="flex justify-center items-center h-screen w-full text-2xl font-bold">
 				<Typography type="headline-2">Welcome to the Dashboard</Typography>
 			</div>
