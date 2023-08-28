@@ -4,15 +4,17 @@ import { Layout } from 'components/layout';
 import { roles } from 'data/tables/tableRoles';
 import * as React from 'react';
 
-const Settings = () => {
+const Roles = () => {
 	return (
 		<Layout with_sidebar>
 			<div>
-				<Typography type="subtitle-1">Settings</Typography>
+				<Typography type="headline-3" className="mb-10">
+					Roles
+				</Typography>
 				<Table columns={Object.keys(roles[0])} rows={roles} />
 			</div>
 		</Layout>
 	);
 };
 
-export default Settings;
+export default Roles;

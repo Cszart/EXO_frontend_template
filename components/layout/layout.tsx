@@ -68,7 +68,11 @@ export const Layout: React.FC<Layout_Props> = ({
 			{children && (
 				<div className={clsx('flex min-h-screen', className_children)}>
 					{with_sidebar && <SidebarDesktop />}
-					<div className={clsx({ 'px-20 py-10': with_sidebar })}>
+					<div
+						className={clsx({
+							'w-full overflow-hidden px-20 py-10': with_sidebar,
+						})}
+					>
 						{children}
 					</div>
 				</div>
