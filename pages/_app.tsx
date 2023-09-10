@@ -8,11 +8,7 @@ import '../styles/globals.scss';
 import '../styles/globals.css';
 
 // Lexical styles
-import '../styles/lexicalTheme.css';
-import '../components/lexicalEditor/ui/Dialog.css';
-import '../components/lexicalEditor/ui/Input.css';
-import '../components/lexicalEditor/ui/Modal.css';
-import '../components/lexicalEditor/ui/TextEditorButton.css';
+import '../components/text-editor/themes/default_theme.css';
 
 export default function App({
 	Component,
