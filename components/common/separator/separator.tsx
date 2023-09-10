@@ -1,12 +1,14 @@
+import clsx from 'clsx';
 import * as React from 'react';
 
 type SeparatorProps = {
 	text?: string;
+	className?: string;
 };
 
-export const Separator: React.FC<SeparatorProps> = ({ text }) => {
+export const Separator: React.FC<SeparatorProps> = ({ text, className }) => {
 	return (
-		<div className="relative w-full">
+		<div className={clsx('relative w-full', className)}>
 			<div className="absolute inset-0 flex items-center" aria-hidden="true">
 				<div className="w-full border-t border-dark-40" />
 			</div>
