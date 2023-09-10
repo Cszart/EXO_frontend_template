@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
+import Head from 'next/head';
 
 // Styles
 import '../styles/home.css';
@@ -15,8 +16,13 @@ export default function App({
 	pageProps: { session, ...pageProps },
 }: AppProps): any {
 	return (
-		<SessionProvider session={session}>
-			<Component {...pageProps} />
-		</SessionProvider>
+		<>
+			<Head>
+				<title>Frontend template</title>
+			</Head>
+			<SessionProvider session={session}>
+				<Component {...pageProps} />
+			</SessionProvider>
+		</>
 	);
 }

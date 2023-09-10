@@ -1,0 +1,57 @@
+import * as React from 'react';
+import { Menu, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import { Typography } from 'components/form';
+import { Icons } from 'const';
+import { Option } from 'interfaces';
+import Link from 'next/link';
+import { Avatar } from 'components/common';
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
+
+interface DropdownProfileProps {
+	links: Option[];
+}
+
+export const DropdownProfile: React.FC<DropdownProfileProps> = ({ links }) => {
+	return (
+		// <div className="">
+		<Menu as="div" className="relative">
+			<Menu.Button className="inline-flex space-x-2 items-center justify-center focus:outline-none">
+				<Avatar photoUrl={Icons.avatar} size="small" />
+				<ChevronDownIcon width={20} height={20} className="text-white" />
+			</Menu.Button>
+			<Transition
+				as={Fragment}
+				enter="transition ease-out duration-100"
+				enterFrom="transform opacity-0 scale-95"
+				enterTo="transform opacity-100 scale-100"
+				leave="transition ease-in duration-75"
+				leaveFrom="transform opacity-100 scale-100"
+				leaveTo="transform opacity-0 scale-95"
+			>
+				<Menu.Items className="absolute z-10 bg-white mt-1 right-0 origin-top-right shadow-lg rounded-lg w-40 hover:bg-dark-10">
+					{links.map((link, index) => (
+						<Menu.Item key={`headerNavbar-${index}`}>
+							<div className="flex justify-start items-center py-2 px-4 cursor-pointer">
+								{/* Link option */}
+								{link.href != undefined && link.href != null && (
+									<Link href={link.href}>
+										<Typography type="link-1">{link.label}</Typography>
+									</Link>
+								)}
+
+								{/* Clickable option */}
+								{link.onClick != undefined && link.onClick != null && (
+									<button type="button" onClick={link.onClick}>
+										<Typography type="link-1">{link.label}</Typography>
+									</button>
+								)}
+							</div>
+						</Menu.Item>
+					))}
+				</Menu.Items>
+			</Transition>
+		</Menu>
+		// </div>
+	);
+};
