@@ -21,6 +21,8 @@ import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
+import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
+import { TRANSFORMERS } from '@lexical/markdown';
 
 // Custom plugins
 import ImagesPlugin from './plugins/ImagesPlugin';
@@ -28,10 +30,12 @@ import SetDefaultValuePlugin from './plugins/SetDefaultValuePlugin';
 import ToolbarPlugin from './plugins/ToolbarPlugin';
 
 // Nodes
-import { TextEditorImageNode } from './nodes/ImageNode';
+import { ImageNode } from './nodes/ImageNode';
 
 // Styles
 import TextEditorDefaultTheme from './themes/DefaultTheme';
+import CodeHighlightPlugin from './plugins/CodeHighlightPlugin';
+import ActionsPlugin from './plugins/ActionsPlugin';
 
 function Placeholder(): JSX.Element {
 	return <div className="editor-placeholder">Enter some text...</div>;
@@ -59,7 +63,7 @@ const editorConfig: InitialConfigType = {
 		TableRowNode,
 		AutoLinkNode,
 		LinkNode,
-		TextEditorImageNode,
+		ImageNode,
 	],
 };
 
@@ -89,15 +93,18 @@ const SimpleTextEditor = (props: SimpleTextEditorProps): JSX.Element => {
 						}}
 						ignoreSelectionChange
 					/>
+					<AutoFocusPlugin />
 					<HistoryPlugin />
 					<LinkPlugin />
 					<ListPlugin />
+					<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
 
+					<CodeHighlightPlugin />
 					<ImagesPlugin />
-					<AutoFocusPlugin />
 				</div>
+				<SetDefaultValuePlugin html={props.defaultHtml} />
+				<ActionsPlugin />
 			</div>
-			<SetDefaultValuePlugin html={props.defaultHtml} />
 		</LexicalComposer>
 	);
 };

@@ -789,3 +789,7 @@ i.outdent {
 i.insert-image {
 	background-image: url(./images/icons/insert_image.svg);
 }
+
+i.markdown {
+	background-image: url(./images/icons/markdown.svg);
+}

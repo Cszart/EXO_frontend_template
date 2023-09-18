@@ -33,7 +33,7 @@ export function TextEditorDropDownItem({
 	className: string;
 	onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	title?: string;
-}) {
+}): JSX.Element {
 	const ref = useRef<HTMLButtonElement>(null);
 
 	const dropDownContext = React.useContext(DropDownContext);
@@ -71,7 +71,7 @@ function DropDownItems({
 	children: React.ReactNode;
 	dropDownRef: React.Ref<HTMLDivElement>;
 	onClose: () => void;
-}) {
+}): JSX.Element {
 	const [items, setItems] = useState<React.RefObject<HTMLButtonElement>[]>();
 	const [highlightedItem, setHighlightedItem] =
 		useState<React.RefObject<HTMLButtonElement>>();

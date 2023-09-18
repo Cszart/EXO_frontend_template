@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useCallback, useEffect, useState } from 'react';
+import {
+	Dispatch,
+	SetStateAction,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
 	$createParagraphNode,
@@ -34,6 +41,7 @@ import {
 	$isParentElementRTL,
 	$patchStyleText,
 	$setBlocksType,
+	$wrapNodes,
 } from '@lexical/selection';
 import {
 	$isListNode,
@@ -64,7 +72,17 @@ import FloatingLinkEditor from '../ui/FloatingLinkEditor';
 import { InsertImageDialog } from './ImagesPlugin';
 import textEditorUseModal from '../hooks/UseModal';
 
-// --- --- UTILS CONST --- -- //
+// const supportedBlockTypes = new Set([
+// 	'paragraph',
+// 	'quote',
+// 	'code',
+// 	'h1',
+// 	'h2',
+// 	'ul',
+// 	'ol',
+// ]);
+
+// --- --- UTILS CONST --- --- //
 const blockTypeToBlockName: { [key: string]: string } = {
 	bullet: 'Bulleted List',
 	check: 'Check List',
@@ -78,6 +96,8 @@ const blockTypeToBlockName: { [key: string]: string } = {
 	number: 'Numbered List',
 	paragraph: 'Normal',
 	quote: 'Quote',
+	ol: 'Numbered List',
+	ul: 'Bulleted List',
 };
 
 const TEXT_ALIGN_OPTIONS: {
@@ -124,7 +144,21 @@ const FONT_SIZE_OPTIONS: [string, string][] = [
 	['20px', '20px'],
 ];
 
-function dropDownActiveClass(active: boolean) {
+// --- --- ELEMENTS FUNCTIONS helpers --- --- //
+function Select({ onChange, className, options, value }: any): JSX.Element {
+	return (
+		<select className={className} onChange={onChange} value={value}>
+			<option hidden={true} value="" />
+			{options.map((option: any) => (
+				<option key={option} value={option}>
+					{option}
+				</option>
+			))}
+		</select>
+	);
+}
+
+function dropDownActiveClass(active: boolean): string {
 	if (active) return 'active dropdown-item-active';
 	else return '';
 }
@@ -143,29 +177,71 @@ function getCodeLanguageOptions(): [string, string][] {
 
 const CODE_LANGUAGE_OPTIONS = getCodeLanguageOptions();
 
-// --- --- OPTION TOOLBAR ELEMENTS --- --- //
+// --- --- OPTION TOOLBAR ELEMENTS renderers --- --- //
+// EDITOR block options
 function BlockFormatDropDown({
 	editor,
 	blockType,
 	disabled = false,
+	toolbarRef,
+	setShowBlockOptionsDropDown,
 }: {
 	blockType: keyof typeof blockTypeToBlockName;
 	editor: LexicalEditor;
 	disabled?: boolean;
+	toolbarRef: any;
+	setShowBlockOptionsDropDown: Dispatch<SetStateAction<boolean>>;
 }): JSX.Element {
-	const formatParagraph = () => {
-		editor.update(() => {
-			const selection = $getSelection();
-			if (
-				$isRangeSelection(selection) ||
-				DEPRECATED_$isGridSelection(selection)
-			) {
-				$setBlocksType(selection, () => $createParagraphNode());
-			}
-		});
+	const dropDownRef = useRef(null);
+
+	useEffect(() => {
+		const toolbar = toolbarRef.current;
+		const dropDown = dropDownRef.current;
+
+		if (toolbar !== null && dropDown !== null) {
+			const { top, left } = toolbar.getBoundingClientRect();
+			(dropDown as any).style.top = `${top + 40}px`;
+			(dropDown as any).style.left = `${left}px`;
+		}
+	}, [dropDownRef, toolbarRef]);
+
+	useEffect(() => {
+		const dropDown = dropDownRef.current;
+		const toolbar = toolbarRef.current;
+
+		if (dropDown !== null && toolbar !== null) {
+			const handle = (event: MouseEvent): any => {
+				const target = event.target;
+
+				if (!(dropDown as any).contains(target) && !toolbar.contains(target)) {
+					setShowBlockOptionsDropDown(false);
+				}
+			};
+			document.addEventListener('click', handle);
+
+			return () => {
+				document.removeEventListener('click', handle);
+			};
+		}
+	}, [dropDownRef, setShowBlockOptionsDropDown, toolbarRef]);
+
+	const formatParagraph = (): void => {
+		if (blockType !== 'paragraph') {
+			editor.update(() => {
+				const selection = $getSelection();
+
+				if (
+					$isRangeSelection(selection) ||
+					DEPRECATED_$isGridSelection(selection)
+				) {
+					$setBlocksType(selection, () => $createParagraphNode());
+				}
+			});
+		}
+		setShowBlockOptionsDropDown(false);
 	};
 
-	const formatHeading = (headingSize: HeadingTagType) => {
+	const formatHeading = (headingSize: HeadingTagType): void => {
 		if (blockType !== headingSize) {
 			editor.update(() => {
 				const selection = $getSelection();
@@ -180,30 +256,35 @@ function BlockFormatDropDown({
 	};
 
 	const formatBulletList = () => {
+		// (blockType !== "ul")
 		if (blockType !== 'bullet') {
 			editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
 		} else {
 			editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
 		}
+		setShowBlockOptionsDropDown(false);
 	};
 
-	const formatCheckList = () => {
+	const formatCheckList = (): void => {
 		if (blockType !== 'check') {
 			editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined);
 		} else {
 			editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
 		}
+		setShowBlockOptionsDropDown(false);
 	};
 
-	const formatNumberedList = () => {
+	const formatNumberedList = (): void => {
+		// (blockType !== "ol")
 		if (blockType !== 'number') {
 			editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
 		} else {
 			editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
 		}
+		setShowBlockOptionsDropDown(false);
 	};
 
-	const formatQuote = () => {
+	const formatQuote = (): void => {
 		if (blockType !== 'quote') {
 			editor.update(() => {
 				const selection = $getSelection();
@@ -215,9 +296,10 @@ function BlockFormatDropDown({
 				}
 			});
 		}
+		setShowBlockOptionsDropDown(false);
 	};
 
-	const formatCode = () => {
+	const formatCode = (): void => {
 		if (blockType !== 'code') {
 			editor.update(() => {
 				let selection = $getSelection();
@@ -239,6 +321,7 @@ function BlockFormatDropDown({
 				}
 			});
 		}
+		setShowBlockOptionsDropDown(false);
 	};
 
 	return (
@@ -291,10 +374,32 @@ function BlockFormatDropDown({
 				<i className="icon numbered-list" />
 				<span className="text">Numbered List</span>
 			</TextEditorDropDownItem>
+			<TextEditorDropDownItem
+				className={'item ' + dropDownActiveClass(blockType === 'check')}
+				onClick={formatCheckList}
+			>
+				<i className="icon check-list" />
+				<span className="text">Check list</span>
+			</TextEditorDropDownItem>
+			<TextEditorDropDownItem
+				className={'item ' + dropDownActiveClass(blockType === 'quote')}
+				onClick={formatQuote}
+			>
+				<i className="icon quote" />
+				<span className="text">Quote</span>
+			</TextEditorDropDownItem>
+			<TextEditorDropDownItem
+				className={'item ' + dropDownActiveClass(blockType === 'code')}
+				onClick={formatCode}
+			>
+				<i className="icon code" />
+				<span className="text">Code Block</span>
+			</TextEditorDropDownItem>
 		</TextEditorDropDown>
 	);
 }
 
+// FONT options
 function FontDropDown({
 	editor,
 	value,
@@ -352,6 +457,7 @@ function FontDropDown({
 	);
 }
 
+// ALIGN options
 function TextAlignDropDown({
 	editor,
 	value,
@@ -430,6 +536,7 @@ function TextAlignDropDown({
 	);
 }
 
+// DIVIDER element
 function Divider(): JSX.Element {
 	return <div className="divider" />;
 }
@@ -444,6 +551,9 @@ export default function ToolbarPlugin(): JSX.Element {
 	const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
 		null
 	);
+	const toolbarRef = useRef(null);
+	const [showBlockOptionsDropDown, setShowBlockOptionsDropDown] =
+		useState(false);
 	const [modal, showModal] = textEditorUseModal();
 
 	// --- --- Values helper variables --- --- //
@@ -486,25 +596,6 @@ export default function ToolbarPlugin(): JSX.Element {
 			const elementKey = element.getKey();
 			const elementDOM = activeEditor.getElementByKey(elementKey);
 
-			// Update text format
-			setIsBold(selection.hasFormat('bold'));
-			setIsItalic(selection.hasFormat('italic'));
-			setIsUnderline(selection.hasFormat('underline'));
-			setIsStrikethrough(selection.hasFormat('strikethrough'));
-			setIsSubscript(selection.hasFormat('subscript'));
-			setIsSuperscript(selection.hasFormat('superscript'));
-			setIsCode(selection.hasFormat('code'));
-			setIsRTL($isParentElementRTL(selection));
-
-			// Update links
-			const node = getSelectedNode(selection);
-			const parent = node.getParent();
-			if ($isLinkNode(parent) || $isLinkNode(node)) {
-				setIsLink(true);
-			} else {
-				setIsLink(false);
-			}
-
 			if (elementDOM !== null) {
 				setSelectedElementKey(elementKey);
 				if ($isListNode(element)) {
@@ -533,6 +624,25 @@ export default function ToolbarPlugin(): JSX.Element {
 					}
 				}
 			}
+			// Update text format
+			setIsBold(selection.hasFormat('bold'));
+			setIsItalic(selection.hasFormat('italic'));
+			setIsUnderline(selection.hasFormat('underline'));
+			setIsStrikethrough(selection.hasFormat('strikethrough'));
+			setIsSubscript(selection.hasFormat('subscript'));
+			setIsSuperscript(selection.hasFormat('superscript'));
+			setIsCode(selection.hasFormat('code'));
+			setIsRTL($isParentElementRTL(selection));
+
+			// Update links
+			const node = getSelectedNode(selection);
+			const parent = node.getParent();
+			if ($isLinkNode(parent) || $isLinkNode(node)) {
+				setIsLink(true);
+			} else {
+				setIsLink(false);
+			}
+
 			// Handle buttons
 			setFontSize(
 				$getSelectionStyleValueForProperty(selection, 'font-size', '15px')
@@ -622,7 +732,9 @@ export default function ToolbarPlugin(): JSX.Element {
 	}, [editor, isLink]);
 
 	return (
-		<div className="toolbar">
+		<div className="toolbar" ref={toolbarRef}>
+			{/* BUTTONS */}
+			{/* UNDO  */}
 			<button
 				disabled={!canUndo || !isEditable}
 				onClick={() => {
@@ -635,6 +747,7 @@ export default function ToolbarPlugin(): JSX.Element {
 			>
 				<i className="format undo" />
 			</button>
+			{/* REDO */}
 			<button
 				disabled={!canRedo || !isEditable}
 				onClick={() => {
@@ -648,17 +761,23 @@ export default function ToolbarPlugin(): JSX.Element {
 				<i className="format redo" />
 			</button>
 			<Divider />
+
+			{/* SELECT - DROPDOWN BLOCK TYPE OPTIONS */}
 			{blockType in blockTypeToBlockName && activeEditor === editor && (
 				<>
 					<BlockFormatDropDown
 						disabled={!isEditable}
 						blockType={blockType}
 						editor={editor}
+						toolbarRef={toolbarRef}
+						setShowBlockOptionsDropDown={setShowBlockOptionsDropDown}
 					/>
 					<Divider />
 				</>
 			)}
-			{blockType === 'code' ? (
+
+			{/* Show available coding languages */}
+			{blockType === 'code' && (
 				<>
 					<TextEditorDropDown
 						disabled={!isEditable}
@@ -681,7 +800,10 @@ export default function ToolbarPlugin(): JSX.Element {
 						})}
 					</TextEditorDropDown>
 				</>
-			) : (
+			)}
+
+			{/* Show normal edition options */}
+			{blockType !== 'code' && (
 				<>
 					<FontDropDown
 						disabled={!isEditable}

@@ -63,7 +63,7 @@ export type SerializedImageNode = Spread<
 	SerializedLexicalNode
 >;
 
-export class TextEditorImageNode extends DecoratorNode<JSX.Element> {
+export class ImageNode extends DecoratorNode<JSX.Element> {
 	__src: string;
 	__altText: string;
 	__width: 'inherit' | number;
@@ -78,8 +78,8 @@ export class TextEditorImageNode extends DecoratorNode<JSX.Element> {
 		return 'image';
 	}
 
-	static clone(node: TextEditorImageNode): TextEditorImageNode {
-		return new TextEditorImageNode(
+	static clone(node: ImageNode): ImageNode {
+		return new ImageNode(
 			node.__src,
 			node.__altText,
 			node.__maxWidth,
@@ -92,7 +92,7 @@ export class TextEditorImageNode extends DecoratorNode<JSX.Element> {
 		);
 	}
 
-	static importJSON(serializedNode: SerializedImageNode): TextEditorImageNode {
+	static importJSON(serializedNode: SerializedImageNode): ImageNode {
 		const { altText, height, width, maxWidth, caption, src, showCaption } =
 			serializedNode;
 		const node = $createImageNode({
@@ -234,9 +234,9 @@ export function $createImageNode({
 	showCaption,
 	caption,
 	key,
-}: TextEditorImagePayload): TextEditorImageNode {
+}: TextEditorImagePayload): ImageNode {
 	return $applyNodeReplacement(
-		new TextEditorImageNode(
+		new ImageNode(
 			src,
 			altText,
 			maxWidth,
@@ -252,6 +252,6 @@ export function $createImageNode({
 
 export function $isImageNode(
 	node: LexicalNode | null | undefined
-): node is TextEditorImageNode {
-	return node instanceof TextEditorImageNode;
+): node is ImageNode {
+	return node instanceof ImageNode;
 }

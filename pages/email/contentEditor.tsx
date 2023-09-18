@@ -10,10 +10,11 @@ import useModal from 'components/hooks/useModal';
 import { Separator } from 'components/common';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
-const EmailContentEditor = (): any => {
+const EmailContentEditor = (): JSX.Element => {
 	const [previewContent, setPreviewContent] = React.useState<string>();
 
 	const { Modal, show, hide } = useModal();
+	const { Modal: ModalRaw, show: showRaw, hide: hideRaw } = useModal();
 
 	return (
 		<>
@@ -29,25 +30,33 @@ const EmailContentEditor = (): any => {
 					className="text-4xl font-bold text-gray-800 mb-5"
 				/>
 
-				<Button
-					type="button"
-					decoration="line-white"
-					size="medium"
-					onClick={() => show()}
-					className="mb-6"
-				>
-					Preview
-				</Button>
+				<div className="flex flex-row items-center justify-center gap-6">
+					<Button
+						type="button"
+						decoration="line-white"
+						size="medium"
+						onClick={() => show()}
+						className="mb-6"
+					>
+						Preview HTML
+					</Button>
+
+					<Button
+						type="button"
+						decoration="line-primary"
+						size="medium"
+						onClick={() => showRaw()}
+						className="mb-6"
+					>
+						Preview Raw
+					</Button>
+				</div>
 
 				<SimpleTextEditor
 					onChange={(html: string) => {
 						setPreviewContent(html);
 					}}
 				/>
-
-				<div className={clsx('flex flex-col mt-40 max-w-[600px]')}>
-					{previewContent}
-				</div>
 			</Layout>
 
 			<Modal className="w-auto max-w-full">
@@ -67,6 +76,25 @@ const EmailContentEditor = (): any => {
 				<Separator className="mb-10" />
 				{parse(previewContent ?? '')}
 			</Modal>
+
+			<ModalRaw className="w-auto max-w-full">
+				<div className="flex flex-wrap justify-between items-center w-full">
+					<Typography
+						type="custom-h1"
+						text="Preview raw content"
+						className="text-4xl font-medium text-gray-700"
+					/>
+
+					<XMarkIcon
+						className="w-[20px] cursor-pointer"
+						onClick={() => hideRaw()}
+					/>
+				</div>
+
+				<Separator className="mb-10" />
+
+				<div className="flex flex-col w-full h-auto">{previewContent}</div>
+			</ModalRaw>
 		</>
 	);
 };

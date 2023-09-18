@@ -32,7 +32,7 @@ import * as React from 'react';
 import {
 	$createImageNode,
 	$isImageNode,
-	TextEditorImageNode,
+	ImageNode,
 	TextEditorImagePayload,
 } from '../nodes/ImageNode';
 import TextEditorButton from '../ui/Button';
@@ -242,7 +242,7 @@ export default function ImagesPlugin({
 	const [editor] = useLexicalComposerContext();
 
 	useEffect(() => {
-		if (!editor.hasNodes([TextEditorImageNode])) {
+		if (!editor.hasNodes([ImageNode])) {
 			throw new Error('ImagesPlugin: ImageNode not registered on editor');
 		}
 
@@ -358,7 +358,7 @@ function onDrop(event: DragEvent, editor: LexicalEditor): boolean {
 	return true;
 }
 
-function getImageNodeInSelection(): TextEditorImageNode | null {
+function getImageNodeInSelection(): ImageNode | null {
 	const selection = $getSelection();
 	if (!$isNodeSelection(selection)) {
 		return null;
