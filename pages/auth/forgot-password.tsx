@@ -1,11 +1,10 @@
-import { ForgotPasswordComponent } from 'components/auth';
 import { Layout } from 'components/layout';
-import * as React from 'react';
+import { ForgotPasswordScreen } from 'components/screens';
 
 const ForgotPassword = () => {
 	return (
-		<Layout className_children="flex items-center">
-			<ForgotPasswordComponent />
+		<Layout classNameChildren="flex items-center">
+			<ForgotPasswordScreen />
 		</Layout>
 	);
 };

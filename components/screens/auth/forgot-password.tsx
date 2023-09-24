@@ -4,7 +4,7 @@ import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-export const ForgotPasswordComponent = () => {
+export const ForgotPasswordScreen = () => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const {

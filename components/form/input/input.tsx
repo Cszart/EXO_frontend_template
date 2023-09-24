@@ -1,6 +1,6 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { Typography } from '../typography';
+import { Typography } from '../../common/typography';
 import { InputProps } from 'interfaces';
 
 export const Input: React.FC<

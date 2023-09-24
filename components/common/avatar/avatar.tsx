@@ -1,6 +1,8 @@
-import clsx from 'clsx';
-import { Icons } from 'const';
+/* eslint-disable @next/next/no-img-element */
 import * as React from 'react';
+import clsx from 'clsx';
+
+import { Icons } from 'const';
 
 type AvatarProps = {
 	photoUrl: string;

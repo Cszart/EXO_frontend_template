@@ -1,27 +1,27 @@
-import * as React from 'react';
-import { Button, InputEmail, InputPassword, Typography } from 'components/form';
+import { Separator } from 'components/common';
+import { Typography, InputEmail, InputPassword, Button } from 'components/form';
 import { signIn } from 'next-auth/react';
-import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Separator } from '..';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
 type providerTypes = 'email' | 'google' | 'facebook';
 
-interface SignUpProps {
+interface SignInProps {
 	providers: providerTypes[];
 }
 
-export const SignUpComponent: React.FC<SignUpProps> = ({ providers }) => {
+export const SignInScreen: React.FC<SignInProps> = ({ providers }) => {
+	const router = useRouter();
+	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm({ mode: 'onChange' });
-	const router = useRouter();
+	} = useForm({ mode: 'onSubmit' });
 
-	// Loading flag
-	const [isLoading, setIsLoading] = React.useState<boolean>(false);
+	console.log({ providers });
 
 	// Inputs rules
 	const rules = {
@@ -35,8 +35,6 @@ export const SignUpComponent: React.FC<SignUpProps> = ({ providers }) => {
 
 	// Functions
 	// Sign in with FACEBOOK
-	console.log({ providers });
-
 	const handleSubmitDataFacebook = async () => {
 		setIsLoading(true);
 		try {
@@ -67,13 +65,13 @@ export const SignUpComponent: React.FC<SignUpProps> = ({ providers }) => {
 	};
 
 	// Sign in with Data
-	const handleSubmitDataForm = async (data: any): Promise<any> => {
-		setIsLoading(true);
+	const handleSubmitDataForm = async (data: any) => {
 		console.log({ data });
+		setIsLoading(true);
 		try {
-			// await signIn('redentials', {
-			// 	...data,
-			// });
+			await signIn('credentials', {
+				...data,
+			});
 			router.push('/');
 		} catch (error) {
 			console.log('Log in ERROR: ', error);
@@ -89,7 +87,7 @@ export const SignUpComponent: React.FC<SignUpProps> = ({ providers }) => {
 				onSubmit={handleSubmit(handleSubmitDataForm)}
 			>
 				<Typography type="headline-4" className="text-center">
-					Sign Up
+					Sign In
 				</Typography>
 				<InputEmail
 					name="email"
@@ -103,12 +101,18 @@ export const SignUpComponent: React.FC<SignUpProps> = ({ providers }) => {
 					name="password"
 					title="Password"
 					placeholder="Password"
+					validate={false}
 					register={register}
 					rules={rules.password}
 					error={errors.password}
 				/>
+				<Link href="/auth/forgot-password">
+					<Typography type="link-1" className="hover:text-dark-30">
+						Forgot password?
+					</Typography>
+				</Link>
 				<Button type="submit" size="large" decoration="fill">
-					Sign up
+					Sign in
 				</Button>
 				<Separator text="Or" />
 				<Button
@@ -116,21 +120,21 @@ export const SignUpComponent: React.FC<SignUpProps> = ({ providers }) => {
 					onClick={handleSubmitDataGoogle}
 					disabled={isLoading}
 				>
-					Sign up with Google
+					Sign in with Google
 				</Button>
 				<Button
 					size="large"
 					onClick={handleSubmitDataFacebook}
 					disabled={isLoading}
 				>
-					Sign up with Facebook
+					Sign in with Facebook
 				</Button>
 				<Typography type="link-1">
-					{`You already have an account?`}
-					<Link href="/auth/signin">
+					{`Don't have an account? `}
+					<Link href="/auth/signup">
 						{' '}
 						<span className="text-blue hover:text-dark-30 hover:underline">
-							Sign in
+							Sign up
 						</span>
 					</Link>
 				</Typography>

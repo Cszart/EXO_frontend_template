@@ -4,7 +4,7 @@ import { Layout } from 'components/layout';
 import { users } from 'data/tables/tableUser';
 import * as React from 'react';
 
-const Permissions = () => {
+const PermissionsScreen = (): JSX.Element => {
 	return (
 		<Layout withSidebar>
 			<div>
@@ -17,4 +17,4 @@ const Permissions = () => {
 	);
 };
 
-export default Permissions;
+export default PermissionsScreen;

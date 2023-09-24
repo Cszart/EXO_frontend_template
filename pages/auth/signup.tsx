@@ -1,11 +1,10 @@
-import { SignUpComponent } from 'components/auth';
 import { Layout } from 'components/layout';
-import * as React from 'react';
+import { SignUpScreen } from 'components/screens';
 
 const SignUp = () => {
 	return (
-		<Layout className_children="flex items-center">
-			<SignUpComponent providers={['email', 'google', 'facebook']} />
+		<Layout classNameChildren="flex items-center">
+			<SignUpScreen providers={['email', 'google', 'facebook']} />
 		</Layout>
 	);
 };

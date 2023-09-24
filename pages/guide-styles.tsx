@@ -11,7 +11,7 @@ import { Icons } from 'const';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 
-const GuideStyles = () => {
+const GuideStyles = (): JSX.Element => {
 	const { register } = useForm({ mode: 'onChange' });
 	return (
 		<Layout withFooter withHeader withSidebar>
@@ -23,6 +23,7 @@ const GuideStyles = () => {
 					Guide Styles
 				</Typography>
 
+				{/* *** Typography *** */}
 				<Separator text="Typography" />
 				<div className="flex flex-wrap space-x-10 w-full">
 					<div className="space-y-10">

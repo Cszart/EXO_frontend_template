@@ -1,11 +1,10 @@
-import { SignInComponent } from 'components/auth';
 import { Layout } from 'components/layout';
-import * as React from 'react';
+import { SignInScreen } from 'components/screens';
 
 const SignIn = () => {
 	return (
-		<Layout className_children="flex items-center">
-			<SignInComponent providers={['email']} />
+		<Layout classNameChildren="flex items-center">
+			<SignInScreen providers={['email']} />
 		</Layout>
 	);
 };

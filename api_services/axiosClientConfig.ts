@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AuthSession } from 'interfaces/common';
+import { AuthSession } from 'interfaces';
 import { getSession, signIn } from 'next-auth/react';
 
 const config = axios.defaults;

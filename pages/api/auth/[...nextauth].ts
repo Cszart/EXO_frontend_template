@@ -39,8 +39,7 @@ const options: NextAuthOptions = {
 			},
 			async authorize(credentials) {
 				// You need to provide your own logic here that takes the credentials
-				// submitted and returns either a object representing a user or value
-				// that is false/null if the credentials are invalid.
+				// submitted and returns either a object representing a user or value that is false/null if the credentials are invalid.
 				// e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
 
 				try {
