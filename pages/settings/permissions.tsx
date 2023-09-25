@@ -1,3 +1,4 @@
+import withAuthorization from 'components/auth/withAuthorization';
 import { Table } from 'components/common';
 import { Typography } from 'components/form';
 import { Layout } from 'components/layout';
@@ -17,4 +18,4 @@ const PermissionsScreen = (): JSX.Element => {
 	);
 };
 
-export default PermissionsScreen;
+export default withAuthorization(PermissionsScreen);

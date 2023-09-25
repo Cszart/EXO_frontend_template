@@ -1,3 +1,4 @@
+import NextAuthProvidersEnum from 'const/auth';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -8,6 +9,8 @@ const options: NextAuthOptions = {
 	// Configure one or more authentication providers
 	providers: [
 		FacebookProvider({
+			id: NextAuthProvidersEnum.FACEBOOK,
+			name: NextAuthProvidersEnum.FACEBOOK,
 			clientId: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID || '',
 			clientSecret: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_SECRET || '',
 			profile: (data) => ({
@@ -17,6 +20,8 @@ const options: NextAuthOptions = {
 		}),
 
 		GoogleProvider({
+			id: NextAuthProvidersEnum.GOOGLE,
+			name: NextAuthProvidersEnum.GOOGLE,
 			clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',
 			clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || '',
 			profile: (data) => ({
@@ -27,8 +32,8 @@ const options: NextAuthOptions = {
 
 		CredentialsProvider({
 			// The name to display on the sign in form (e.g. 'Sign in with...')
-			id: 'Credentials',
-			name: 'Credentials',
+			id: NextAuthProvidersEnum.CREDENTIALS,
+			name: NextAuthProvidersEnum.CREDENTIALS,
 			// The credentials is used to generate a suitable form on the sign in page.
 			// You can specify whatever fields you are expecting to be submitted.
 			// e.g. domain, username, password, 2FA token, etc.
@@ -55,7 +60,7 @@ const options: NextAuthOptions = {
 
 					// If no error and we have user data, return it
 					if (res.status == 200 && response_json) {
-						const user = response_json.data;
+						const user = response_json.user;
 						return Promise.resolve(user);
 					}
 

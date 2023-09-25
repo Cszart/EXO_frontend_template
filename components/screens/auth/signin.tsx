@@ -1,8 +1,7 @@
 import { Separator } from 'components/common';
 import { Typography, InputEmail, InputPassword, Button } from 'components/form';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -12,8 +11,8 @@ interface SignInProps {
 	providers: providerTypes[];
 }
 
-export const SignInScreen: React.FC<SignInProps> = ({ providers }) => {
-	const router = useRouter();
+export const SignInScreen: React.FC<SignInProps> = () => {
+	const session = useSession();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const {
 		register,
@@ -21,7 +20,7 @@ export const SignInScreen: React.FC<SignInProps> = ({ providers }) => {
 		formState: { errors },
 	} = useForm({ mode: 'onSubmit' });
 
-	console.log({ providers });
+	console.log('<- Handle submit session : ', session);
 
 	// Inputs rules
 	const rules = {
@@ -35,7 +34,7 @@ export const SignInScreen: React.FC<SignInProps> = ({ providers }) => {
 
 	// Functions
 	// Sign in with FACEBOOK
-	const handleSubmitDataFacebook = async () => {
+	const handleSubmitDataFacebook = async (): Promise<void> => {
 		setIsLoading(true);
 		try {
 			signIn('facebook', {
@@ -50,7 +49,7 @@ export const SignInScreen: React.FC<SignInProps> = ({ providers }) => {
 	};
 
 	// Sign in with GOOGLE
-	const handleSubmitDataGoogle = async () => {
+	const handleSubmitDataGoogle = async (): Promise<void> => {
 		setIsLoading(true);
 		try {
 			signIn('google', {
@@ -65,14 +64,14 @@ export const SignInScreen: React.FC<SignInProps> = ({ providers }) => {
 	};
 
 	// Sign in with Data
-	const handleSubmitDataForm = async (data: any) => {
-		console.log({ data });
+	const handleSubmitDataForm = async (data: any): Promise<void> => {
 		setIsLoading(true);
 		try {
-			await signIn('credentials', {
+			await signIn('Credentials', {
 				...data,
+				redirect: true,
+				callbackUrl: '/',
 			});
-			router.push('/');
 		} catch (error) {
 			console.log('Log in ERROR: ', error);
 		} finally {
@@ -81,7 +80,7 @@ export const SignInScreen: React.FC<SignInProps> = ({ providers }) => {
 	};
 
 	return (
-		<div className="flex flex-col w-full h-full justify-center items-center">
+		<div className="flex flex-col w-full h-full justify-centers items-center">
 			<form
 				className="bg-white px-12 py-10 rounded-2xl flex flex-col space-y-4 max-w-md w-full mx-auto h-full"
 				onSubmit={handleSubmit(handleSubmitDataForm)}
