@@ -1,3 +1,7 @@
+// Note: This enum should NOT replace backend stored permissions
+// but serve as a helper to manage frontend permission related stuff
+// in consequence this should be updated whenever backend creates another permission
+
 enum PermissionsEnum {
 	// CRUD for user
 	USER_MANAGEMENT_VIEW = 'user:management:view',

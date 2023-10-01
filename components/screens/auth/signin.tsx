@@ -1,6 +1,7 @@
 import { Separator } from 'components/common';
 import { Typography, InputEmail, InputPassword, Button } from 'components/form';
-import { signIn, useSession } from 'next-auth/react';
+import NextAuthProvidersEnum from 'const/auth';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -12,15 +13,12 @@ interface SignInProps {
 }
 
 export const SignInScreen: React.FC<SignInProps> = () => {
-	const session = useSession();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({ mode: 'onSubmit' });
-
-	console.log('<- Handle submit session : ', session);
 
 	// Inputs rules
 	const rules = {
@@ -37,7 +35,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 	const handleSubmitDataFacebook = async (): Promise<void> => {
 		setIsLoading(true);
 		try {
-			signIn('facebook', {
+			signIn(NextAuthProvidersEnum.FACEBOOK, {
 				redirect: true,
 				callbackUrl: '/',
 			});
@@ -52,7 +50,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 	const handleSubmitDataGoogle = async (): Promise<void> => {
 		setIsLoading(true);
 		try {
-			signIn('google', {
+			signIn(NextAuthProvidersEnum.GOOGLE, {
 				redirect: true,
 				callbackUrl: '/',
 			});
@@ -67,7 +65,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 	const handleSubmitDataForm = async (data: any): Promise<void> => {
 		setIsLoading(true);
 		try {
-			await signIn('Credentials', {
+			await signIn(NextAuthProvidersEnum.CREDENTIALS, {
 				...data,
 				redirect: true,
 				callbackUrl: '/',

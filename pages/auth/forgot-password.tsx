@@ -1,12 +1,7 @@
-import { Layout } from 'components/layout';
 import { ForgotPasswordScreen } from 'components/screens';
 
-const ForgotPassword = () => {
-	return (
-		<Layout classNameChildren="flex items-center">
-			<ForgotPasswordScreen />
-		</Layout>
-	);
+const ForgotPassword = (): JSX.Element => {
+	return <ForgotPasswordScreen />;
 };
 
 export default ForgotPassword;
