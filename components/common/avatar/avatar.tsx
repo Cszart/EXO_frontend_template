@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import * as React from 'react';
 import clsx from 'clsx';
-
-import { Icons } from 'const';
+import Icons from 'const/icons';
 
 type AvatarProps = {
 	photoUrl: string;

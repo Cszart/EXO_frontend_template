@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { Typography } from 'components/form';
-import { Icons } from 'const';
 import { Option } from 'interfaces';
 import Link from 'next/link';
 import { Avatar } from 'components/common';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
+import Icons from 'const/icons';
 
 interface DropdownProfileProps {
 	links: Option[];

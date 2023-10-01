@@ -2,6 +2,7 @@ import withAuthorization from 'components/auth/withAuthorization';
 import { Table } from 'components/common';
 import { Typography } from 'components/form';
 import { Layout } from 'components/layout';
+import RolesEnum from 'const/role';
 import { users } from 'data/tables/tableUser';
 import * as React from 'react';
 
@@ -18,4 +19,6 @@ const PermissionsScreen = (): JSX.Element => {
 	);
 };
 
-export default withAuthorization(PermissionsScreen);
+export default withAuthorization(PermissionsScreen, undefined, [
+	RolesEnum.ADMIN,
+]);

@@ -1,8 +1,7 @@
 import { Avatar, Separator } from 'components/common';
-import {
+import InputPassword, {
 	Button,
 	InputEmail,
-	InputPassword,
 	InputText,
 	Typography,
 } from 'components/form';

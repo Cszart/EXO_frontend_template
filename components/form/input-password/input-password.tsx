@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Input } from '../input/input';
 import { InputProps } from 'interfaces';
-import { Icons } from 'const';
+import Icons from 'const/icons';
 
-export const InputPassword: React.FC<
+const InputPassword: React.FC<
 	InputProps &
 		React.InputHTMLAttributes<HTMLInputElement> & {
 			validate?: boolean;
@@ -55,3 +55,4 @@ export const InputPassword: React.FC<
 		/>
 	);
 };
+export default InputPassword;

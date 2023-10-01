@@ -5,6 +5,7 @@ import Footer from './footer/footer';
 import HeaderNavbar from './header/header';
 import { SidebarDesktop } from './sidebars';
 import { Option } from 'interfaces';
+import authUtils from 'utils/auth';
 
 export interface Layout_Props {
 	withHeader?: boolean;
@@ -50,6 +51,12 @@ export const Layout: React.FC<Layout_Props> = ({
 				},
 			]);
 		}
+	}, [session]);
+
+	// Set session for AuthUtils
+	// This is being called in layout to keep session updated
+	React.useEffect(() => {
+		if (session) authUtils.setSession(session);
 	}, [session]);
 
 	return (

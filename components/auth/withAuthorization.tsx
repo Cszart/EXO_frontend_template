@@ -1,5 +1,7 @@
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import React from 'react';
+import authUtils from 'utils/auth';
 
 interface WithAuthorizationProps {
 	allowedPermissions?: string[];
@@ -14,33 +16,32 @@ const withAuthorization = (
 	redirectTo?: string
 ): React.FC<WithAuthorizationProps> => {
 	const AuthWrapper: React.FC<WithAuthorizationProps> = () => {
-		// Use a var to automatically update the value
-		let isAllowed = false;
+		const router = useRouter();
 
 		// Auth logic
 		const session = useSession();
-		console.log('<- SESSION : ', session);
+		authUtils.setSession(session);
 
-		// If allowedRoles is provided, check if the user has any of the allowed roles
-		// if (allowedRoles && allowedRoles.length > 0) {
-		// 	const userHasRole = allowedRoles.includes(userRole);
-		// 	if (!userHasRole) {
-		// 		return <p>You are not authorized to access this page.</p>;
-		// 	}
-		// }
+		// Set the permissions and roles var
+		let isAllowed = false;
 
-		// // If allowedPermissions is provided, check if the user has any of the allowed permissions
-		// if (allowedPermissions && allowedPermissions.length > 0) {
-		// 	const userHasPermission = userPermissions.some((permission) =>
-		// 		allowedPermissions.includes(permission)
-		// 	);
-		// 	if (!userHasPermission) {
-		// 		return <p>You are not authorized to access this page.</p>;
-		// 	}
-		// }
+		if (!allowedPermissions && !allowedRoles) isAllowed = true;
+		if (allowedPermissions)
+			isAllowed = isAllowed || authUtils.hasAnyPermission(allowedPermissions);
+		if (allowedRoles)
+			isAllowed = isAllowed || authUtils.hasAnyRole(allowedRoles);
 
 		// If the user is authorized, render the wrapped component
-		return <WrappedComponent />;
+		if (isAllowed) {
+			return <WrappedComponent />;
+		} else {
+			if (redirectTo) {
+				router.push(redirectTo);
+			} else {
+				router.push(authUtils.getPathToNotAuthorized());
+			}
+		}
+		return <></>;
 	};
 
 	return AuthWrapper;

@@ -108,22 +108,22 @@ const options: NextAuthOptions = {
 
 		// Session Callback
 		async session({ session, token }) {
-			// Send properties to the client, like an access_token and user id from a provider.
+			// Send properties to the client, like an accessToken and user id from a provider.
 
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			const { access_token, ...userData } = token.user as any;
+			const { accessToken, ...userData } = token.user as any;
 			session.user = userData;
-			(session as any).access_token = token.access_token;
+			(session as any).accessToken = token.accessToken;
 
 			return session;
 		},
 
 		// JWT Callback
 		async jwt({ token, user }) {
-			// Persist the OAuth access_token and or the user id to the token right after signin
+			// Persist the OAuth accessToken and or the user id to the token right after signin
 			if (user) {
 				token.user = user;
-				token.access_token = (user as any).access_token;
+				token.accessToken = (user as any).accessToken;
 			}
 			return Promise.resolve(token);
 		},

@@ -1,6 +1,6 @@
 import { Navigation } from 'interfaces';
 
-export const sidebarNavigation: Navigation[] = [
+const sidebarNavigation: Navigation[] = [
 	{
 		name: 'dashboard',
 		label: 'Dashboard',
@@ -24,3 +24,5 @@ export const sidebarNavigation: Navigation[] = [
 		],
 	},
 ];
+
+export default sidebarNavigation;
