@@ -1,4 +1,5 @@
 import AppRoutes from 'const/routes';
+import SessionStatus from 'const/session';
 import { UserType } from 'interfaces';
 import { SessionContextValue } from 'next-auth/react';
 
@@ -55,7 +56,12 @@ class AuthUtils {
 				'Session is null. Please set the session before calling this method.'
 			);
 		}
+
 		return true;
+	}
+
+	protected isAuthenticatedSession(): boolean {
+		return this.session?.status == SessionStatus.AUTHENTICATED;
 	}
 
 	// -- Getters -- //
@@ -74,7 +80,9 @@ class AuthUtils {
 	// Get session user, devs might follow manual useSession approach without any problem
 	public getUser(): UserType | null {
 		this.checkSession();
-		return this.session?.data?.user ?? null;
+		if (this.isAuthenticatedSession() && this.session && this.session.data)
+			return this.session.data.user;
+		return null;
 	}
 
 	// Check if user has an specific role
@@ -88,7 +96,6 @@ class AuthUtils {
 	// Check if user has a set of roles
 	public hasAnyRole(roleNames: string[]): boolean {
 		const user: UserType | null = this.getUser();
-
 		if (user) return user.roles.some((role) => roleNames.includes(role));
 		return false;
 	}
