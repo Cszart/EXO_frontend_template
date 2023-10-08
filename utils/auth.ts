@@ -31,7 +31,7 @@ export enum LoginError {
 
 class AuthUtils {
 	//  Session instance
-	public session: SessionContextValue | null = null;
+	private session: SessionContextValue | null = null;
 
 	constructor(
 		private publicPaths: Set<string> = new Set<string>(),
@@ -62,6 +62,10 @@ class AuthUtils {
 
 	protected isAuthenticatedSession(): boolean {
 		return this.session?.status == SessionStatus.AUTHENTICATED;
+	}
+
+	public getSession(): SessionContextValue | null {
+		return this.session;
 	}
 
 	// -- Getters -- //
@@ -101,20 +105,18 @@ class AuthUtils {
 	}
 
 	// Check if user has a specific permission
-	public hasPermissionFor(permissionUUID: string): boolean {
+	public hasPermissionFor(permission: string): boolean {
 		const user: UserType | null = this.getUser();
 
-		if (user) return user.permissions.some((p) => p == permissionUUID);
+		if (user) return user.permissions.some((p) => p == permission);
 		return false;
 	}
 
 	// Check if user has any of the permission provided
 	public hasAnyPermission(permissions: string[]): boolean {
 		const user: UserType | null = this.getUser();
-
 		if (user) {
-			const setPermissions = new Set<string>(permissions);
-			return user.permissions.some((p) => setPermissions.has(p));
+			return user.permissions.some((p) => permissions.includes(p));
 		}
 
 		return false;

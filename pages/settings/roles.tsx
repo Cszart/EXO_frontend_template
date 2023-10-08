@@ -1,10 +1,14 @@
+import withAuthorization from 'components/auth/withAuthorization';
 import { Table } from 'components/common';
 import { Typography } from 'components/form';
 import { Layout } from 'components/layout';
+import RolesEnum from 'const/role';
+import AppRoutes from 'const/routes';
 import { roles } from 'data/tables/tableRoles';
 import * as React from 'react';
+import { rolesPermissions } from 'utils';
 
-const Roles = () => {
+const RolesScreen = (): JSX.Element => {
 	return (
 		<Layout withSidebar>
 			<div>
@@ -17,4 +21,9 @@ const Roles = () => {
 	);
 };
 
-export default Roles;
+export default withAuthorization(
+	RolesScreen,
+	rolesPermissions(),
+	[RolesEnum.ADMIN],
+	AppRoutes.HOME
+);

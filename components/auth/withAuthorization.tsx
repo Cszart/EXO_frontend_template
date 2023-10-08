@@ -1,7 +1,7 @@
 import SessionStatus from 'const/session';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import authUtils from 'utils/auth';
 
 interface WithAuthorizationProps {
@@ -33,20 +33,24 @@ const withAuthorization = (
 		const session = useSession();
 		authUtils.setSession(session);
 
-		// Set the permissions and roles varconst isAllowedRef = useRef(false);
-		const isAllowedRef = useRef(false);
-
-		// If no permissions or roles are given the the user is allowed by default
-		// this should be the case because if this HOC is being used is to ensure
-		// the user has some roles or permissions
-		if (!allowedPermissions && !allowedRoles) isAllowedRef.current = true;
+		// Set the permissions and roles
+		const [isAllowed, setIsAllowed] = useState<boolean>(false);
 
 		useEffect(() => {
-			// Use AuthUtils to check for user permissions or roles
-			if (session.status != SessionStatus.LOADING) {
-				let isAllowedByPermissions = false;
-				let isAllowedByRoles = false;
+			let isAllowedByPermissions = false;
+			let isAllowedByRoles = false;
 
+			// If no permissions or roles are given the the user is allowed by default
+			// this should not be the case because if this HOC is being used is to ensure
+			// the user has some roles or permissions
+			if (!allowedPermissions && !allowedRoles) {
+				isAllowedByPermissions = true;
+				isAllowedByRoles = true;
+				setIsAllowed(true);
+			}
+
+			// Use AuthUtils to check for user permissions or roles
+			if (session.status == SessionStatus.AUTHENTICATED) {
 				if (allowedPermissions) {
 					isAllowedByPermissions =
 						authUtils.hasAnyPermission(allowedPermissions);
@@ -56,29 +60,34 @@ const withAuthorization = (
 					isAllowedByRoles = authUtils.hasAnyRole(allowedRoles);
 				}
 
-				isAllowedRef.current = isAllowedByPermissions || isAllowedByRoles;
-			}
-		}, [session.status]);
-
-		useEffect(() => {
-			// Check when only when the session is not loading state so authUtils doesnt have problems
-			if (session.status != SessionStatus.LOADING) {
-				// If the user is not authorized, redirect
-				if (!isAllowedRef.current) {
-					if (redirectTo) {
-						router.push(redirectTo);
-					} else {
-						router.push(authUtils.getPathToNotAuthorized());
-					}
+				setIsAllowed(isAllowedByPermissions || isAllowedByRoles);
+			} else if (
+				session.status == SessionStatus.UNAUTHENTICATED &&
+				!isAllowedByPermissions &&
+				!isAllowedByRoles &&
+				!isAllowed
+			) {
+				if (redirectTo) {
+					router.push(redirectTo);
+				} else {
+					router.push(authUtils.getPathToNotAuthorized());
 				}
 			}
-		}, [isAllowedRef.current, session.status]);
+
+			console.log('\n\n\n <- auth HOC  : ', {
+				session,
+				session_auth: authUtils.getSession(),
+				isAllowedByPermissions,
+				isAllowedByRoles,
+			});
+		}, [isAllowed, router, session, session.status]);
 
 		// If the user is authorized, render the wrapped component
-		if (isAllowedRef.current) {
+		if (isAllowed) {
 			return <WrappedComponent />;
+		} else {
+			return <></>;
 		}
-		return <></>;
 	};
 
 	return AuthWrapper;

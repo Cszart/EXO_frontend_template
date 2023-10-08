@@ -6,6 +6,7 @@ import RolesEnum from 'const/role';
 import AppRoutes from 'const/routes';
 import { users } from 'data/tables/tableUser';
 import * as React from 'react';
+import { rolesPermissions } from 'utils';
 
 const PermissionsScreen = (): JSX.Element => {
 	return (
@@ -22,7 +23,7 @@ const PermissionsScreen = (): JSX.Element => {
 
 export default withAuthorization(
 	PermissionsScreen,
-	[],
-	[RolesEnum.USER],
+	rolesPermissions(),
+	[RolesEnum.ADMIN],
 	AppRoutes.HOME
 );
