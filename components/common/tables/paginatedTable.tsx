@@ -1,10 +1,16 @@
-import { ColumnProps, PaginatedTableProps } from 'interfaces/components/tables';
+import {
+	ColumnProps,
+	PaginatedTableProps,
+	SimpleTableProps,
+} from 'interfaces/components/tables';
 import React, { useEffect, useState } from 'react';
 import { Dropdown } from '../dropdown';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 
-const PaginatedTable = <T,>(props: PaginatedTableProps<T>): JSX.Element => {
+const PaginatedTable = <T,>(
+	props: PaginatedTableProps<T> & Omit<SimpleTableProps<T>, 'rows'>
+): JSX.Element => {
 	// Redefine columns to show depending if actions should be displayed or not
 	const [columnsData, setColumnsData] = useState<ColumnProps<T>[]>([]);
 
@@ -26,7 +32,7 @@ const PaginatedTable = <T,>(props: PaginatedTableProps<T>): JSX.Element => {
 							const formattedActions = actions.map((item) => {
 								return {
 									display: item.label,
-									onClick: () => item.onClick(instance), // They could still use instance but dropDownProps doesnt accept parameters
+									onClick: () => item.onClick(instance), // Dropdown onClick doesnt accept parameters so we pass the function this way
 								};
 							});
 							return (

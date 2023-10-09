@@ -1,7 +1,7 @@
 import { Typography, Separator, Button, Avatar } from 'components/common';
 import { Dropdown } from 'components/common/dropdown';
 import Spinner from 'components/common/spinner/spinner';
-import PaginatedTable from 'components/common/tables/paginatedTable';
+import SimpleTable from 'components/common/tables/simpleTable';
 import { InputText, InputEmail } from 'components/form';
 import InputPassword from 'components/form/input-password/input-password';
 import { Layout } from 'components/layout';
@@ -164,10 +164,11 @@ const GuideStyles = (): JSX.Element => {
 				</div>
 
 				{/* Tables */}
+				<Separator text="Tables" />
 				<div className="flex flex-col gap-2 justify-center align-center w-full h-auto">
-					<Typography type="headline-2" text="Paginated Table" />
+					<Typography type="headline-4" text="Simple Table" />
 					<Typography type="caption-3" text="Static array" />
-					<PaginatedTable<UserType>
+					<SimpleTable<UserType>
 						columns={[
 							{
 								header: 'ID',
@@ -195,8 +196,25 @@ const GuideStyles = (): JSX.Element => {
 							},
 						]}
 						rows={DummyUsersData}
-						page={0}
-						rowsPerPage={8}
+						rowActions={(instance: UserType) => {
+							return [
+								{
+									label: 'Action 1',
+									onClick: () =>
+										alert(`This Action 1 for user ${instance.name}`),
+								},
+								{
+									label: 'Action 2',
+									onClick: () =>
+										alert(`This Action 2 for user ${instance.email}`),
+								},
+								{
+									label: 'Action 3',
+									onClick: () =>
+										alert(`This Action 3 for user ${instance.username}`),
+								},
+							];
+						}}
 					/>
 				</div>
 			</div>

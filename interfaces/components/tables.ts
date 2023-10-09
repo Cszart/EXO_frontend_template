@@ -5,17 +5,12 @@ export interface ColumnProps<T> {
 	rightIcon?: JSX.Element;
 }
 
-export interface ColumnActionProps<T> {
+export interface RowActionProps<T> {
 	label: string;
 	onClick: (instance: T) => void;
 }
 
 export interface PaginatedTableProps<T> {
-	/**
-	 * Data for each of the columns of the table
-	 */
-	columns: ColumnProps<T>[];
-
 	/**
 	 * The data to show on the rows
 	 * Or a function that will handle fetching the content
@@ -31,11 +26,24 @@ export interface PaginatedTableProps<T> {
 	 * Number of rows to show in a page
 	 */
 	rowsPerPage: number;
+}
+
+export interface SimpleTableProps<T> {
+	/**
+	 * Data for each of the columns of the table
+	 */
+	columns: ColumnProps<T>[];
+
+	/**
+	 * The data to show on the rows
+	 * Or a function that will handle fetching the content
+	 */
+	rows: T[];
 
 	/**
 	 * Actions specified here will be added to the Actions menu
 	 */
-	rowActions?: (instance: T) => ColumnActionProps<T>[];
+	rowActions?: (instance: T) => RowActionProps<T>[];
 
 	/**
 	 * If `true`, the actions section in each column will be not rendered
@@ -64,8 +72,7 @@ export interface PaginatedTableProps<T> {
 	tableEmptyComponent?: JSX.Element;
 
 	/**
-	 * GenericTable prop
-	 * If true, the table header will stick to the top as the user scrolls down the table
+	 * Make header of the table sticky
 	 */
 	stickyHeader?: boolean;
 
@@ -78,5 +85,5 @@ export interface PaginatedTableProps<T> {
 	/**
 	 * Style for row actions (Tailwind string)
 	 */
-	stylesForRowActions?: string;
+	stylesForRows?: string;
 }
