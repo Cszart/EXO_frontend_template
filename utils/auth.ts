@@ -49,6 +49,10 @@ class AuthUtils {
 		this.session = session;
 	}
 
+	public getSession(): SessionContextValue | null {
+		return this.session;
+	}
+
 	// In case session is not set then an error message should be throw
 	protected checkSession(): boolean {
 		if (!this.session) {
@@ -62,10 +66,6 @@ class AuthUtils {
 
 	protected isAuthenticatedSession(): boolean {
 		return this.session?.status == SessionStatus.AUTHENTICATED;
-	}
-
-	public getSession(): SessionContextValue | null {
-		return this.session;
 	}
 
 	// -- Getters -- //
@@ -145,6 +145,7 @@ class AuthUtils {
 		return false;
 	}
 
+	// Redirects the user based on its state on the app
 	public redirectUserIfNeeded(): void {
 		// Here we dont want to throw an error if the user is not logged
 		// or if the session is null, we want to redirect instead so

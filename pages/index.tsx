@@ -1,5 +1,5 @@
 // Local components
-import { Typography } from 'components/form';
+import { Typography } from 'components/common';
 import { Layout } from 'components/layout';
 
 const HomePage = (): any => {

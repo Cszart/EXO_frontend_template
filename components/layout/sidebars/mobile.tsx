@@ -3,8 +3,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { sidebarNavigation } from 'const';
-import { Typography } from 'components/form';
+import { Typography } from 'components/common';
+import sidebarNavigation from 'const/navigation';
 
 interface LayoutDashboardProps {
 	sidebarOpen?: boolean;

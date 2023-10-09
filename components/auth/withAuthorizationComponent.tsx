@@ -1,18 +1,15 @@
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import authUtils from 'utils/auth';
 
 interface WithAuthorizationComponentProps {
 	allowedPermissions?: string[];
 	allowedRoles?: string[];
-	children: React.ReactElement | React.ReactElement[];
 }
 
-const WithAuthorizationComponent: React.FC<WithAuthorizationComponentProps> = ({
-	allowedPermissions,
-	allowedRoles,
-	children,
-}) => {
+const WithAuthorizationComponent: React.FC<
+	PropsWithChildren<WithAuthorizationComponentProps>
+> = ({ allowedPermissions, allowedRoles, children }) => {
 	const session = useSession();
 	authUtils.setSession(session);
 

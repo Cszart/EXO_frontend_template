@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Button, InputEmail, Typography } from 'components/form';
+import { InputEmail } from 'components/form';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { Typography, Button } from 'components/common';
 
 export const ForgotPasswordScreen = () => {
 	const router = useRouter();

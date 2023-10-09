@@ -4,10 +4,9 @@ import parse from 'html-react-parser';
 
 import { Layout } from 'components/layout';
 
-import { Button, Typography } from 'components/form';
 import SimpleTextEditor from 'components/text-editor/textEditor';
 import useModal from 'components/hooks/useModal';
-import { Separator } from 'components/common';
+import { Button, Separator, Typography } from 'components/common';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
 const EmailContentEditorScreen = (): JSX.Element => {

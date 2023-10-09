@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
-interface TablePros {
+
+interface BasicTableProps {
 	columns: string[];
 	rows: Record<string, any>[];
 }
 
-export const Table: React.FC<TablePros> = ({ columns, rows }) => {
+export const BasicTable: React.FC<BasicTableProps> = ({ columns, rows }) => {
 	return (
 		<div className="w-full overflow-hidden overflow-x-auto scroll-custom border border-dark-60 rounded-lg">
 			<table className="w-full table-auto divide-y divide-dark-60">

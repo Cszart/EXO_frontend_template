@@ -1,5 +1,5 @@
-import { Separator } from 'components/common';
-import { Typography, InputEmail, Button } from 'components/form';
+import { Button, Separator, Typography } from 'components/common';
+import { InputEmail } from 'components/form';
 import InputPassword from 'components/form/input-password/input-password';
 import NextAuthProvidersEnum from 'const/auth';
 import { signIn } from 'next-auth/react';

@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Typography } from 'components/form';
 import { Disclosure } from '@headlessui/react';
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import sidebarNavigation from 'const/navigation';
+import { Typography } from 'components/common';
 
 export const SidebarDesktop: React.FC = () => {
 	const router = useRouter();

@@ -1,13 +1,13 @@
-import { Avatar, Separator } from 'components/common';
-import InputPassword, {
-	Button,
-	InputEmail,
-	InputText,
-	Typography,
-} from 'components/form';
+import { Typography, Separator, Button, Avatar } from 'components/common';
+import { Dropdown } from 'components/common/dropdown';
+import Spinner from 'components/common/spinner/spinner';
+import PaginatedTable from 'components/common/tables/paginatedTable';
+import { InputText, InputEmail } from 'components/form';
+import InputPassword from 'components/form/input-password/input-password';
 import { Layout } from 'components/layout';
-import { Icons } from 'const';
-import * as React from 'react';
+import Icons from 'const/icons';
+import DummyUsersData from 'data/tables/userDummyData';
+import { UserType } from 'interfaces';
 import { useForm } from 'react-hook-form';
 
 const GuideStyles = (): JSX.Element => {
@@ -55,7 +55,7 @@ const GuideStyles = (): JSX.Element => {
 				<Separator text="Buttons" />
 
 				{/* Button decoration */}
-				<div className="flex flex-wrap space-x-10 w-full">
+				<div className="flex flex-wrap justify-between gap-4 w-full">
 					<Button decoration="fill" size="medium">
 						Button fill
 					</Button>
@@ -67,8 +67,9 @@ const GuideStyles = (): JSX.Element => {
 					</Button>
 				</div>
 
-				{/* Button decoration */}
-				<div className="flex flex-wrap space-x-10 w-full">
+				<Separator text="Disabled" className="max-w-[200px] self-center" />
+				{/* Button disabled */}
+				<div className="flex flex-wrap justify-between gap-4 w-full">
 					<Button decoration="fill" size="medium" disabled>
 						Button fill disabled
 					</Button>
@@ -80,8 +81,9 @@ const GuideStyles = (): JSX.Element => {
 					</Button>
 				</div>
 
+				<Separator text="Size" className="max-w-[200px] self-center" />
 				{/* Button size */}
-				<div className="flex flex-col space-y-10 w-full">
+				<div className="flex flex-wrap justify-between gap-4 w-full">
 					<Button decoration="fill" size="fit">
 						Button fit
 					</Button>
@@ -102,26 +104,100 @@ const GuideStyles = (): JSX.Element => {
 					</Button>
 				</div>
 
+				<Separator text="Dropdown" className="max-w-[200px] self-center" />
+				{/* Button dropdown */}
+				<div className="flex flex-wrap justify-between gap-4 w-full">
+					<Dropdown
+						display="This is a dropdown button"
+						showChevronDownIcon
+						items={[
+							{
+								display: 'Item 1',
+								onClick: () => alert('This is item 1'),
+							},
+							{
+								display: 'Item 2',
+								onClick: () => alert('This is item 2'),
+							},
+							{
+								display: 'Item 3',
+								onClick: () => alert('This is item 3'),
+							},
+						]}
+					/>
+				</div>
+
 				<Separator text="Avatars" />
 				{/* Avatar */}
-				<div className="flex flex-wrap space-x-10 w-full">
-					<Avatar photoUrl={Icons.avatar} size="large" />
-					<Avatar photoUrl={Icons.avatar} size="medium" />
+				<div className="flex flex-wrap justify-betwen gap-10 w-full">
 					<Avatar photoUrl={Icons.avatar} size="small" />
+					<Avatar photoUrl={Icons.avatar} size="medium" />
+					<Avatar photoUrl={Icons.avatar} size="large" />
 					<Avatar photoUrl={Icons.avatar} className="w-20 h-20" />
 				</div>
 
+				{/* Inputs */}
 				<Separator text="Inputs" />
-
-				<div className="flex flex-wrap space-x-10 w-full">
+				<div className="flex flex-col gap-10 w-full">
 					<InputText
 						register={register}
 						name="Name"
 						title="Name"
 						customPlaceholder="Name"
 					/>
+
 					<InputEmail name="Email" register={register} title="Email" />
+
 					<InputPassword name="Password" register={register} title="Password" />
+				</div>
+
+				{/* Spinner and misc */}
+				<Separator text="MISC" />
+				<div className="flex flex-col gap-2 justify-center align-center w-auto">
+					<Typography type="caption-1" text="Spinner" />
+					<Spinner
+						width="w-8"
+						height="w-8"
+						circleFill="grey"
+						loadingBarFill="black"
+					/>
+				</div>
+
+				{/* Tables */}
+				<div className="flex flex-col gap-2 justify-center align-center w-full h-auto">
+					<Typography type="headline-2" text="Paginated Table" />
+					<Typography type="caption-3" text="Static array" />
+					<PaginatedTable<UserType>
+						columns={[
+							{
+								header: 'ID',
+								content: (instance) => <>{instance.id}</>,
+							},
+							{
+								header: 'Email',
+								content: (instance) => <>{instance.email}</>,
+							},
+							{
+								header: 'Username',
+								content: (instance) => <>{instance.username}</>,
+							},
+							{
+								header: 'Name',
+								content: (instance) => <>{instance.name}</>,
+							},
+							{
+								header: 'Roles',
+								content: (instance) => <>{instance.roles.join(', ')}</>,
+							},
+							{
+								header: 'Permissions',
+								content: (instance) => <>{instance.permissions.join(', ')}</>,
+							},
+						]}
+						rows={DummyUsersData}
+						page={0}
+						rowsPerPage={8}
+					/>
 				</div>
 			</div>
 		</Layout>
