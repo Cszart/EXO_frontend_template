@@ -25,7 +25,7 @@ export interface PaginatedTableProps<T> {
 	/**
 	 * Number of rows to show in a page
 	 */
-	rowsPerPage: number;
+	pageSize: number;
 }
 
 export interface SimpleTableProps<T> {

@@ -1,6 +1,7 @@
 import { Typography, Separator, Button, Avatar } from 'components/common';
 import { Dropdown } from 'components/common/dropdown';
 import Spinner from 'components/common/spinner/spinner';
+import PaginatedTable from 'components/common/tables/paginatedTable';
 import SimpleTable from 'components/common/tables/simpleTable';
 import { InputText, InputEmail } from 'components/form';
 import InputPassword from 'components/form/input-password/input-password';
@@ -14,7 +15,7 @@ const GuideStyles = (): JSX.Element => {
 	const { register } = useForm({ mode: 'onChange' });
 	return (
 		<Layout withFooter withHeader withSidebar>
-			<div className="flex flex-col items-start justify-center gap-20 w-full px-10 py-14">
+			<div className="flex flex-col items-start justify-center gap-20 w-full py-14">
 				<Typography
 					type="custom-h1"
 					className="text-3xl font-bold text-gray-900 text-center"
@@ -169,6 +170,61 @@ const GuideStyles = (): JSX.Element => {
 					<Typography type="headline-4" text="Simple Table" />
 					<Typography type="caption-3" text="Static array" />
 					<SimpleTable<UserType>
+						columns={[
+							{
+								header: 'ID',
+								content: (instance) => <>{instance.id}</>,
+							},
+							{
+								header: 'Email',
+								content: (instance) => <>{instance.email}</>,
+							},
+							{
+								header: 'Username',
+								content: (instance) => <>{instance.username}</>,
+							},
+							{
+								header: 'Name',
+								content: (instance) => <>{instance.name}</>,
+							},
+							{
+								header: 'Roles',
+								content: (instance) => <>{instance.roles.join(', ')}</>,
+							},
+							{
+								header: 'Permissions',
+								content: (instance) => <>{instance.permissions.join(', ')}</>,
+							},
+						]}
+						rows={DummyUsersData}
+						rowActions={(instance: UserType) => {
+							return [
+								{
+									label: 'Action 1',
+									onClick: () =>
+										alert(`This Action 1 for user ${instance.name}`),
+								},
+								{
+									label: 'Action 2',
+									onClick: () =>
+										alert(`This Action 2 for user ${instance.email}`),
+								},
+								{
+									label: 'Action 3',
+									onClick: () =>
+										alert(`This Action 3 for user ${instance.username}`),
+								},
+							];
+						}}
+					/>
+				</div>
+
+				<div className="flex flex-col gap-2 justify-center align-center w-full h-auto">
+					<Typography type="headline-4" text="Paginated Table" />
+					<Typography type="caption-3" text="Static array" />
+					<PaginatedTable<UserType>
+						page={1}
+						pageSize={5}
 						columns={[
 							{
 								header: 'ID',
