@@ -6,6 +6,7 @@ import HeaderNavbar from './header/header';
 import { SidebarDesktop } from './sidebars';
 import authUtils from 'utils/auth';
 import { headerNavbarOptions } from 'const';
+import cmsSidebarNavigation from 'const/sideBarNavigation';
 
 export interface Layout_Props {
 	withHeader?: boolean;
@@ -64,9 +65,13 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 			{/* Content of the layout */}
 			{children && (
 				<div className={clsx('flex min-h-screen', classNameChildren)}>
-					{withSidebar && !customSidebar && <SidebarDesktop />}
+					{/* Sidebar */}
+					{withSidebar && !customSidebar && (
+						<SidebarDesktop itemOptions={cmsSidebarNavigation} />
+					)}
 					{withSidebar && customSidebar && <>{customSidebar}</>}
 
+					{/* Content */}
 					<div
 						className={clsx({
 							'w-full overflow-hidden px-20 py-10': withSidebar,

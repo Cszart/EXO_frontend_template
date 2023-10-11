@@ -60,7 +60,7 @@ export const Dropdown = ({
 			>
 				<Menu.Items
 					className={clsx(
-						'absolute right-0 mt-1 z-20',
+						'absolute right-0 mt-1 z-50',
 						'origin-top-right shadow-lg',
 						'focus:outline-none',
 						classNameMenuItems
