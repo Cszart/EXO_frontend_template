@@ -19,6 +19,7 @@ export const DropdownProfile: React.FC<DropdownProfileProps> = ({ links }) => {
 				<Avatar photoUrl={Icons.avatar} size="small" />
 				<ChevronDownIcon width={20} height={20} className="text-white" />
 			</Menu.Button>
+
 			<Transition
 				as={Fragment}
 				enter="transition ease-out duration-100"

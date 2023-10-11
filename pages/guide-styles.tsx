@@ -224,7 +224,7 @@ const GuideStyles = (): JSX.Element => {
 					<Typography type="caption-3" text="Static array" />
 					<PaginatedTable<UserType>
 						page={1}
-						pageSize={5}
+						pageSize={DummyUsersData.length}
 						columns={[
 							{
 								header: 'ID',

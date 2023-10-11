@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Disclosure } from '@headlessui/react';
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import sidebarNavigation from 'const/navigation';
 import { Typography } from 'components/common';
+import cmsSidebarNavigation from 'const/sideBarNavigation';
 
 export const SidebarDesktop: React.FC = () => {
 	const router = useRouter();
@@ -15,9 +15,9 @@ export const SidebarDesktop: React.FC = () => {
 			<div className="hidden md:flex flex-shrink-0 bg-primary w-[250px] xl:w-[300px] 2xl:w-[350px]">
 				<div className="flex-1 flex flex-col pt-8 pb-4 overflow-y-auto scroll-custom">
 					<nav className="mt-[50px] flex-1" aria-label="Sidebar">
-						{sidebarNavigation.map((item, index) => {
+						{cmsSidebarNavigation.map((item, index) => {
 							const active = router.asPath.includes(item.name);
-							return item.children ? (
+							return item.subOptions ? (
 								<Disclosure
 									as="div"
 									key={`desktopItem-${index}`}
@@ -40,13 +40,14 @@ export const SidebarDesktop: React.FC = () => {
 													)}
 												</div>
 											</Disclosure.Button>
-											{item?.children?.map((subItem, j) => {
+
+											{item?.subOptions?.map((subItem, j) => {
 												return (
 													<Disclosure.Panel
 														className="px-16 py-2 text-white"
 														key={`desktopSubItem-${j}`}
 													>
-														<Link href={subItem.href}>
+														<Link href={subItem.href ?? '#'}>
 															<Typography type="link-1">
 																{subItem.label}
 															</Typography>
@@ -59,7 +60,7 @@ export const SidebarDesktop: React.FC = () => {
 								</Disclosure>
 							) : (
 								<Fragment key={`desktopItem-${index}`}>
-									<Link href={item.href}>
+									<Link href={item.href ?? '#'}>
 										<span
 											className={clsx(
 												{ 'font-bold': active },

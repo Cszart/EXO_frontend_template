@@ -6,6 +6,21 @@ import {
 import SimpleTable from './simpleTable';
 import PaginationBar from '../paginationBar/paginationBar';
 
+/**
+ * This component is meant to render a paginated table with a simple design
+ * it has many style props so it can be overwritten easily.
+ *
+ * This table has the capability to be extended, but on its own should be able to handle calls to an API
+ * so it renders properly the data based on Current page to display and a PageSize given
+ *
+ * NOTE: Call to backend to fetch paginated data is simple, this should be modified since many API's can return
+ * many responses, this component expects a simple PaginatedResponse<T[]> but that interface as well as
+ * call handling should be modified depending on the situation
+ *
+ * @param props Props extends simpleTableProps so it can handle current page and a page size
+ * 				This time rows can be an Array or a function that will fetch the data from a backend API
+ * @returns a JSX element that represents the table
+ */
 const PaginatedTable = <T,>(
 	props: PaginatedTableProps<T> & Omit<SimpleTableProps<T>, 'rows'>
 ): JSX.Element => {
@@ -32,10 +47,11 @@ const PaginatedTable = <T,>(
 	};
 	useEffect(() => {
 		handleSetRows();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.rows, currentPage, props.pageSize]);
 
 	return (
-		<div className="flex flex-col gap-4 w-auto relative overflow-auto shadow-md rounded-lg">
+		<div className="flex flex-col gap-4 w-auto relative overflow-auto rounded-lg">
 			{/* Table Container */}
 			<SimpleTable {...props} rows={rowsData} />
 

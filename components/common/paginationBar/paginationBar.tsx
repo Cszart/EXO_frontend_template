@@ -6,6 +6,9 @@ interface PaginationBarProps {
 	currentPage: number;
 	onPageChange: (page: number) => void;
 
+	showFirstButton?: boolean;
+	showLastButton?: boolean;
+
 	classNameContainer?: string;
 	classNameActivePage?: string;
 	classNamePage?: string;
@@ -16,6 +19,9 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
 	totalPages,
 	currentPage,
 	onPageChange,
+
+	showFirstButton = true,
+	showLastButton = true,
 
 	classNameContainer = 'w-fit',
 	classNameActivePage = 'text-blue-500 font-bold bg-indigo-100 hover:bg-indigo-300 hover:text-blue-800 border-y',
@@ -86,17 +92,20 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
 			)}
 		>
 			{/* Buttons */}
-			<button
-				className={clsx(
-					'flex items-center justify-center p-2',
-					'leading-tight border-l rounded-l-lg',
-					classNameButtons
-				)}
-				disabled={currentPage === firstPage}
-				onClick={() => onPageChange(firstPage)}
-			>
-				First
-			</button>
+			{showFirstButton && (
+				<button
+					className={clsx(
+						'flex items-center justify-center p-2',
+						'leading-tight border-l rounded-l-lg',
+						classNameButtons
+					)}
+					disabled={currentPage === firstPage}
+					onClick={() => onPageChange(firstPage)}
+				>
+					First
+				</button>
+			)}
+
 			<button
 				className={clsx(
 					'flex items-center justify-center p-2',
@@ -124,17 +133,19 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
 			>
 				Next
 			</button>
-			<button
-				className={clsx(
-					'flex items-center justify-center p-2',
-					'leading-tight !border-r rounded-r-lg',
-					classNameButtons
-				)}
-				disabled={currentPage === lastPage}
-				onClick={() => onPageChange(lastPage)}
-			>
-				Last
-			</button>
+			{showLastButton && (
+				<button
+					className={clsx(
+						'flex items-center justify-center p-2',
+						'leading-tight !border-r rounded-r-lg',
+						classNameButtons
+					)}
+					disabled={currentPage === lastPage}
+					onClick={() => onPageChange(lastPage)}
+				>
+					Last
+				</button>
+			)}
 		</nav>
 	);
 };

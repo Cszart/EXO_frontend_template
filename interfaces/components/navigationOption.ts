@@ -1,5 +1,5 @@
 import { Option } from './option';
 
-export interface Navigation extends Option {
-	children?: Option[];
+export interface NavigationOptions extends Option {
+	subOptions?: Option[];
 }

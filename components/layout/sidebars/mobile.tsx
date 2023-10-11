@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Typography } from 'components/common';
-import sidebarNavigation from 'const/navigation';
+import cmsSidebarNavigation from 'const/sideBarNavigation';
 
 interface LayoutDashboardProps {
 	sidebarOpen?: boolean;
@@ -86,11 +86,11 @@ export const SidebarMobile: React.FC<LayoutDashboardProps> = ({
 									</Link>
 								</div>
 								<nav className="mt-5 flex-1">
-									{sidebarNavigation.map((item, i) => {
-										const active = router.asPath.includes(item.href);
+									{cmsSidebarNavigation.map((item, i) => {
+										const active = router.asPath.includes(item.href ?? '#');
 										return (
 											<div key={`mobileItem-${i}`}>
-												<Link href={item.href}>
+												<Link href={item.href ?? '#'}>
 													<span
 														className={clsx(
 															active

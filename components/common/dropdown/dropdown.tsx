@@ -2,14 +2,19 @@ import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
+import Link from 'next/link';
+import { Typography } from '../typography';
+import { Option } from 'interfaces';
+import {
+	itemIsNotNullAndNotUndefined,
+	itemIsNullOrUndefined,
+} from 'utils/common';
+import { Icon } from '../icon';
 
 export interface DropdownProps {
-	display: string | JSX.Element;
+	buttonContent: string | JSX.Element;
 	showChevronDownIcon?: boolean;
-	items?: {
-		display: string;
-		onClick: () => void;
-	}[];
+	items?: Option[];
 	customItems?: JSX.Element;
 
 	// Styles
@@ -19,9 +24,10 @@ export interface DropdownProps {
 }
 
 export const Dropdown = ({
+	showChevronDownIcon = true,
 	classNameButton = 'w-auto rounded-md p-1 bg-stone-200 hover:bg-gray-300',
-	classNameMenuItems = 'bg-stone-50 shadow-lg flex flex-col w-max',
-	classNameItem = 'text-sm text-gray-700 bg-stone-200 hover:bg-stone-500',
+	classNameMenuItems = 'w-max bg-white rounded-lg hover:bg-dark-10',
+	classNameItem = 'text-gray-800 hover:text-white font-bold text-sm',
 	...props
 }: DropdownProps): JSX.Element => {
 	return (
@@ -29,14 +35,13 @@ export const Dropdown = ({
 			<Menu.Button
 				className={clsx(
 					'flex justify-center align-center',
-					'focus:outline-none',
+					'focus:outline-none relative z-0',
 					'focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-opacity-75',
-					'relative z-0',
 					classNameButton
 				)}
 			>
-				{props.display}
-				{props.showChevronDownIcon && (
+				{props.buttonContent}
+				{showChevronDownIcon && (
 					<ChevronDownIcon
 						className="ml-2 -mr-1 h-5 w-5 text-gray-500 hover:text-gray-700"
 						aria-hidden="true"
@@ -55,25 +60,43 @@ export const Dropdown = ({
 			>
 				<Menu.Items
 					className={clsx(
-						'absolute right-4 z-50',
-						'border focus:outline-none',
+						'absolute right-0 mt-1 z-20',
+						'origin-top-right shadow-lg',
+						'focus:outline-none',
 						classNameMenuItems
 					)}
 				>
-					{props.customItems && <>{props.customItems}</>}
-					{!props.customItems &&
+					{props.customItems != undefined && props.customItems != null && (
+						<>{props.customItems}</>
+					)}
+					{(props.customItems == undefined || props.customItems == null) &&
 						props.items?.map((item, index) => {
 							return (
-								<Menu.Item key={`dropDown-option-${item.display}-${index}`}>
-									<button
-										className={clsx(
-											'hover:text-white hover:font-medium p-2',
-											classNameItem
+								<Menu.Item key={`dropDown-option-${item.label}-${index}`}>
+									<div className="cursor-pointer">
+										{item.icon && <Icon src={item.icon} className="w-4 h-4" />}
+
+										{item.href && itemIsNullOrUndefined(item.onClick) && (
+											<Link href={item.href}>
+												<Typography
+													type="custom-p"
+													className={clsx('cursor-pointer p-2', classNameItem)}
+												>
+													{item.label}
+												</Typography>
+											</Link>
 										)}
-										onClick={item.onClick}
-									>
-										{item.display}
-									</button>
+
+										{itemIsNotNullAndNotUndefined(item.onClick) &&
+											itemIsNullOrUndefined(item.href) && (
+												<button
+													className={clsx('cursor-pointer p-2', classNameItem)}
+													onClick={item.onClick}
+												>
+													{item.label}
+												</button>
+											)}
+									</div>
 								</Menu.Item>
 							);
 						})}

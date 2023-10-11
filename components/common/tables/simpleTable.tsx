@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown } from '../dropdown';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
+import { Option } from 'interfaces';
 
 const SimpleTable = <T,>({
 	hideRowActions = false,
@@ -23,15 +24,16 @@ const SimpleTable = <T,>({
 							// Get the row actions
 							const actions = props.rowActions(instance);
 							// Format them so they can be rendered by dropdown menu component
-							const formattedActions = actions.map((item) => {
+							const formattedActions: Option[] = actions.map((item) => {
 								return {
-									display: item.label,
-									onClick: () => item.onClick(instance), // They could still use instance but dropDownProps doesnt accept parameters
+									name: item.label,
+									label: item.label,
+									onClick: () => item.onClick(instance),
 								};
 							});
 							return (
 								<Dropdown
-									display={<EllipsisVerticalIcon className="w-6 h-6" />}
+									buttonContent={<EllipsisVerticalIcon className="w-6 h-6" />}
 									showChevronDownIcon={false}
 									items={formattedActions}
 								/>

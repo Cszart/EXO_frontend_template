@@ -1,6 +1,6 @@
-import { Navigation } from 'interfaces';
+import { NavigationOptions } from 'interfaces';
 
-const sidebarNavigation: Navigation[] = [
+const cmsSidebarNavigation: NavigationOptions[] = [
 	{
 		name: 'dashboard',
 		label: 'Dashboard',
@@ -10,7 +10,7 @@ const sidebarNavigation: Navigation[] = [
 		name: 'settings',
 		label: 'Settings',
 		href: '/settings',
-		children: [
+		subOptions: [
 			{
 				name: 'roles',
 				label: 'Roles',
@@ -25,4 +25,4 @@ const sidebarNavigation: Navigation[] = [
 	},
 ];
 
-export default sidebarNavigation;
+export default cmsSidebarNavigation;
