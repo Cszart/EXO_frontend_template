@@ -64,6 +64,69 @@ const cmsSidebarNavigation: NavigationOptions[] = [
 		},
 		roles: [RolesEnum.USER, RolesEnum.MODERATOR, RolesEnum.ADMIN],
 	},
+
+	// THESE ARE FOR TESTING ROLES AND PERMISSIONS
+	{
+		name: 'misc1',
+		label: 'Admin inherit option',
+		roles: [RolesEnum.ADMIN],
+		subOptions: [
+			{
+				name: 'submisc1',
+				label: 'Admin sub option 1',
+				href: '#',
+			},
+		],
+	},
+	{
+		name: 'misc2',
+		label: 'Moderator inherit option',
+		roles: [RolesEnum.MODERATOR, RolesEnum.ADMIN],
+		subOptions: [
+			{
+				name: 'submisc2',
+				label: 'Moderator sub option 1',
+				href: '#',
+			},
+		],
+	},
+	{
+		name: 'misc3',
+		label: 'User inherit option',
+		roles: [RolesEnum.USER, RolesEnum.MODERATOR, RolesEnum.ADMIN],
+		subOptions: [
+			{
+				name: 'submisc3',
+				label: 'User sub option 1',
+				href: '#',
+			},
+		],
+	},
+	{
+		name: 'misc4',
+		label: 'User not inherit option',
+		roles: [RolesEnum.USER, RolesEnum.MODERATOR, RolesEnum.ADMIN],
+		subOptions: [
+			{
+				name: 'submisc4User',
+				label: 'User sub option',
+				href: '#',
+				roles: [RolesEnum.USER, RolesEnum.MODERATOR, RolesEnum.ADMIN],
+			},
+			{
+				name: 'submisc4Moderator',
+				label: 'Moderator sub option',
+				href: '#',
+				roles: [RolesEnum.MODERATOR, RolesEnum.ADMIN],
+			},
+			{
+				name: 'submisc4Admin',
+				label: 'Admin sub option',
+				href: '#',
+				roles: [RolesEnum.ADMIN],
+			},
+		],
+	},
 ];
 
 export default cmsSidebarNavigation;

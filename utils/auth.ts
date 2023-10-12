@@ -1,3 +1,5 @@
+import PermissionsEnum from 'const/permissions';
+import RolesEnum from 'const/role';
 import AppRoutes from 'const/routes';
 import SessionStatus from 'const/session';
 import { UserType } from 'interfaces';
@@ -87,6 +89,20 @@ class AuthUtils {
 		if (this.isAuthenticatedSession() && this.session && this.session.data)
 			return this.session.data.user;
 		return null;
+	}
+
+	// Get the user Roles
+	public getUserRoles(): RolesEnum[] {
+		const user = this.getUser();
+		if (user) return user.roles;
+		return [];
+	}
+
+	// Get the user permissions
+	public getUserPermissions(): PermissionsEnum[] {
+		const user = this.getUser();
+		if (user) return user.permissions;
+		return [];
 	}
 
 	// Check if user has an specific role

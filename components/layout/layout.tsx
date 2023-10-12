@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
 import Footer from './footer/footer';
@@ -7,6 +7,8 @@ import { SidebarDesktop } from './sidebars';
 import authUtils from 'utils/auth';
 import { headerNavbarOptions } from 'const';
 import cmsSidebarNavigation from 'const/sideBarNavigation';
+import { NavigationOptions } from 'interfaces';
+import { filterSidebarOptionsByRoleAndPermission } from 'utils/sidebar';
 
 export interface Layout_Props {
 	withHeader?: boolean;
@@ -44,11 +46,23 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 }) => {
 	const session = useSession();
 
+	// SideBar options
+	const [sideBarOptions, setSideBarOptions] =
+		useState<NavigationOptions[]>(cmsSidebarNavigation);
+
 	// Set session for AuthUtils
 	// This is being called in layout to keep session updated
 	React.useEffect(() => {
 		if (session) authUtils.setSession(session);
 	}, [session]);
+
+	// Filter the sidebar options based on the user role
+	useEffect(() => {
+		const filteredOptions =
+			filterSidebarOptionsByRoleAndPermission(cmsSidebarNavigation);
+		setSideBarOptions(filteredOptions);
+	}, [session]);
+
 	return (
 		<main className={clsx('w-full min-h-screen', classNameLayout)}>
 			{/* Header */}
@@ -67,7 +81,7 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 				<div className={clsx('flex min-h-screen', classNameChildren)}>
 					{/* Sidebar */}
 					{withSidebar && !customSidebar && (
-						<SidebarDesktop itemOptions={cmsSidebarNavigation} />
+						<SidebarDesktop itemOptions={sideBarOptions} />
 					)}
 					{withSidebar && customSidebar && <>{customSidebar}</>}
 
