@@ -1,40 +1,36 @@
 import { NavigationOptions } from 'interfaces';
 import authUtils from './auth';
+import { itemIsNullOrUndefined } from './common';
 
-/**
- * This function filters the base options array based on the user's role and permissions.
- * @param baseOptions The base options array
- * @returns The filtered options array based on the user's role and permissions
- */
-export function filterSidebarOptionsByRoleAndPermission(
+export function filterOptionsByRolesOrPermissions(
 	baseOptions: NavigationOptions[]
 ): NavigationOptions[] {
-	try {
-		const userRoles = authUtils.getUserRoles();
-		const userPermissions = authUtils.getUserPermissions();
+	return baseOptions.filter((option: NavigationOptions) => {
+		// If the option has no roles or permissions specified, include it in the filtered array
+		if (
+			(itemIsNullOrUndefined(option.roles) || option.roles?.length == 0) &&
+			(itemIsNullOrUndefined(option.permissions) ||
+				option.permissions?.length == 0)
+		) {
+			return true;
+		}
 
-		// Filter the base options array based on the user's roles and permissions
-		const filteredOptions = baseOptions.filter((option) => {
-			// If the option has no roles or permissions specified, include it in the filtered array
-			if (
-				(!option.roles || option.roles.length === 0) &&
-				(!option.permissions || option.permissions.length === 0)
-			) {
-				return true;
+		// Check if user has permissions/roles to see this item
+		const hasAnyRole = option.roles && authUtils.hasAnyRole(option.roles);
+		const hasAnyPermission =
+			option.permissions && authUtils.hasAnyPermission(option.permissions);
+
+		if (hasAnyRole || hasAnyPermission) {
+			// Check and filter subOptions
+			if (option.subOptions && option.subOptions.length > 0) {
+				option.subOptions = filterOptionsByRolesOrPermissions(
+					option.subOptions
+				);
 			}
 
-			// If the user has at least one role that matches the option's roles and has all the required permissions, include it in the filtered array
-			return (
-				option.roles?.some((role) => userRoles.includes(role)) &&
-				option.permissions?.every((permission) =>
-					userPermissions.includes(permission)
-				)
-			);
-		});
+			return true;
+		}
 
-		return filteredOptions;
-	} catch (error) {
-		console.log('<- Error while trying to filter sidebar options : ');
-		return [];
-	}
+		return false;
+	});
 }

@@ -8,7 +8,7 @@ import authUtils from 'utils/auth';
 import { headerNavbarOptions } from 'const';
 import cmsSidebarNavigation from 'const/sideBarNavigation';
 import { NavigationOptions } from 'interfaces';
-import { filterSidebarOptionsByRoleAndPermission } from 'utils/sidebar';
+import { filterOptionsByRolesOrPermissions } from 'utils/sidebar';
 
 export interface Layout_Props {
 	withHeader?: boolean;
@@ -47,19 +47,19 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 	const session = useSession();
 
 	// SideBar options
-	const [sideBarOptions, setSideBarOptions] =
-		useState<NavigationOptions[]>(cmsSidebarNavigation);
+	const [sideBarOptions, setSideBarOptions] = useState<NavigationOptions[]>([]);
 
 	// Set session for AuthUtils
 	// This is being called in layout to keep session updated
 	React.useEffect(() => {
+		console.log('\n\n<- Layout : session', session);
 		if (session) authUtils.setSession(session);
 	}, [session]);
 
 	// Filter the sidebar options based on the user role
 	useEffect(() => {
 		const filteredOptions =
-			filterSidebarOptionsByRoleAndPermission(cmsSidebarNavigation);
+			filterOptionsByRolesOrPermissions(cmsSidebarNavigation);
 		setSideBarOptions(filteredOptions);
 	}, [session]);
 

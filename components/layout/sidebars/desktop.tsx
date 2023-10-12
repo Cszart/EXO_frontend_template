@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { NavigationOptions } from 'interfaces';
@@ -22,16 +22,11 @@ interface SidebarDesktopProps {
 export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 	itemOptions,
 	logo,
-	collapsible = true,
 
 	classNameContainer = 'bg-primary',
 	classNameItem = 'text-white',
 	classNameItemButton = '',
 }) => {
-	useEffect(() => {
-		console.log('<- SideBar : ', { itemOptions, logo, collapsible });
-	}, [collapsible, itemOptions, logo]);
-
 	/**
 	 * This function is to render the proper Element based on the item
 	 * features, this will render the basic elements, the dropdown element will
