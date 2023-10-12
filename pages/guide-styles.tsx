@@ -109,19 +109,22 @@ const GuideStyles = (): JSX.Element => {
 				{/* Button dropdown */}
 				<div className="flex flex-wrap justify-between gap-4 w-full">
 					<Dropdown
-						display="This is a dropdown button"
+						buttonContent="This is a dropdown button"
 						showChevronDownIcon
 						items={[
 							{
-								display: 'Item 1',
+								name: 'item1',
+								label: 'Item 1',
 								onClick: () => alert('This is item 1'),
 							},
 							{
-								display: 'Item 2',
+								name: 'item2',
+								label: 'Item 2',
 								onClick: () => alert('This is item 2'),
 							},
 							{
-								display: 'Item 3',
+								name: 'item3',
+								label: 'Item 3',
 								onClick: () => alert('This is item 3'),
 							},
 						]}

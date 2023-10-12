@@ -1,10 +1,13 @@
-import withAuthorization from 'components/auth/withAuthorization';
+import withAuthorizationServerSide from 'components/auth/withAuthorizationServerSide';
 import { BasicTable, Typography } from 'components/common';
 import { Layout } from 'components/layout';
 import RolesEnum from 'const/role';
 import AppRoutes from 'const/routes';
 import { roles } from 'data/tables/tableRoles';
+import { GetServerSideProps, Redirect } from 'next';
+import { getSession } from 'next-auth/react';
 import * as React from 'react';
+import { rolesPermissions } from 'utils';
 
 const RolesScreen = (): JSX.Element => {
 	return (
@@ -19,9 +22,27 @@ const RolesScreen = (): JSX.Element => {
 	);
 };
 
-export default withAuthorization(
-	RolesScreen,
-	undefined,
-	[RolesEnum.ADMIN],
-	AppRoutes.HOME
-);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const session = await getSession(context);
+
+	const redirect: Redirect | undefined = await withAuthorizationServerSide({
+		session: session,
+		allowedPermissions: rolesPermissions(),
+		allowedRoles: [RolesEnum.ADMIN],
+		redirectTo: AppRoutes.HOME,
+	});
+
+	return {
+		props: {},
+		redirect: redirect,
+	};
+};
+
+// export default withAuthorization(
+// 	RolesScreen,
+// 	rolesPermissions(),
+// 	[RolesEnum.ADMIN],
+// 	AppRoutes.HOME
+// );
+
+export default RolesScreen;
