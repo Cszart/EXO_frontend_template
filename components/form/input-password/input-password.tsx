@@ -10,17 +10,18 @@ const InputPassword: React.FC<
 		}
 > = ({ rules, validate = true, ...props }) => {
 	const [isVisible, setIsVisible] = React.useState(false);
-
 	const handleClick = () => {
 		setIsVisible(!isVisible);
 	};
 
 	/*
-  Minimum length 8 characters (no maximum). 
-  One character must be uppercase. - Include a special character (ex. *: ;-). 
-  Minimum one (1) numeric character. 
-  Users will not be able to choose this style of password combinations: qwerty, password, qwerty1234, 1234, among others.
-  */
+		Minimum length 8 characters (no maximum). 
+		One character must be uppercase.
+		One character must be lowercase.
+		Minimum one numeric character. 
+		Include a special character (ex. *: ;-). 
+		Users will not be able to choose this style of password combinations: qwerty, password, qwerty1234, 1234, among others.
+  	*/
 	const finalRules = React.useMemo(() => {
 		if (validate) {
 			return {
@@ -49,8 +50,8 @@ const InputPassword: React.FC<
 		<Input
 			type={isVisible ? 'text' : 'password'}
 			rules={finalRules}
-			rightImg={isVisible ? Icons.visible : Icons.invisible}
-			rightClick={() => handleClick()}
+			iconRight={isVisible ? Icons.visible : Icons.invisible}
+			rightClick={handleClick}
 			{...props}
 		/>
 	);

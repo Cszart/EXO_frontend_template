@@ -21,9 +21,9 @@ export interface InputProps {
 	};
 	customPlaceholder?: string;
 	rules?: Record<string, unknown>;
-	rightImg?: string | undefined;
 	isDirty?: boolean;
-	leftImg?: string | undefined;
+	iconRight?: string | undefined;
+	iconLeft?: string | undefined;
 	setValueInput?: any;
 	labelVisible?: boolean;
 	primary?: boolean;

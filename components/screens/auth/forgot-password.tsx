@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { InputEmail } from 'components/form';
-import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { Typography, Button } from 'components/common';
+import { LayoutLogin } from 'components/layout';
 
 export const ForgotPasswordScreen = () => {
 	const router = useRouter();
@@ -11,7 +11,7 @@ export const ForgotPasswordScreen = () => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors, isDirty, isValid },
 	} = useForm({ mode: 'onSubmit' });
 
 	// Inputs rules
@@ -20,26 +20,17 @@ export const ForgotPasswordScreen = () => {
 			required: { value: true, message: 'This is required' },
 		},
 	};
-	// Sign in with Data
+
 	const handleSubmitDataForm = async (data: any) => {
 		console.log({ data });
 		setIsLoading(true);
-		try {
-			await signIn('credentials', {
-				...data,
-			});
-			router.push('/');
-		} catch (error) {
-			console.log('Log in ERROR: ', error);
-		} finally {
-			setIsLoading(false);
-		}
+		router.push('/auth/new-password?code=1234');
 	};
 
 	return (
-		<div className="flex flex-col w-full h-full justify-center items-center">
+		<LayoutLogin>
 			<form
-				className="bg-white px-12 py-10 rounded-2xl flex flex-col space-y-6 max-w-md w-full mx-auto h-full"
+				className="w-full space-y-4"
 				onSubmit={handleSubmit(handleSubmitDataForm)}
 			>
 				<Typography type="headline-4" className="text-center">
@@ -59,13 +50,13 @@ export const ForgotPasswordScreen = () => {
 				/>
 				<Button
 					type="submit"
-					size="large"
+					size="full"
 					decoration="fill"
-					disabled={isLoading}
+					disabled={isLoading || !isDirty || !isValid}
 				>
 					Continue
 				</Button>
 			</form>
-		</div>
+		</LayoutLogin>
 	);
 };

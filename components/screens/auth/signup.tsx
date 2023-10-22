@@ -1,6 +1,9 @@
 import { Button, Separator, Typography } from 'components/common';
 import { InputEmail } from 'components/form';
 import InputPassword from 'components/form/input-password/input-password';
+import { LayoutLogin } from 'components/layout';
+import Icons from 'const/icons';
+import AppRoutes from 'const/routes';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -67,14 +70,14 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 		}
 	};
 
-	// Sign in with Data
+	// Sign up with Data
 	const handleSubmitDataForm = async (data: any): Promise<any> => {
 		setIsLoading(true);
 		console.log({ data });
 		try {
-			// await signIn('redentials', {
-			// 	...data,
-			// });
+			await signIn('credentials', {
+				...data,
+			});
 			router.push('/');
 		} catch (error) {
 			console.log('Log in ERROR: ', error);
@@ -84,9 +87,9 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 	};
 
 	return (
-		<div className="flex flex-col w-full h-full justify-center items-center">
+		<LayoutLogin>
 			<form
-				className="bg-white px-12 py-10 rounded-2xl flex flex-col space-y-4 max-w-md w-full mx-auto h-full"
+				className="w-full space-y-4"
 				onSubmit={handleSubmit(handleSubmitDataForm)}
 			>
 				<Typography type="headline-4" className="text-center">
@@ -113,22 +116,24 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 				</Button>
 				<Separator text="Or" />
 				<Button
-					size="large"
+					size="full"
 					onClick={handleSubmitDataGoogle}
 					disabled={isLoading}
-				>
-					Sign up with Google
-				</Button>
+					icon={Icons.google}
+					iconLeft
+					label="	Sign in with Google"
+				/>
 				<Button
-					size="large"
+					size="full"
 					onClick={handleSubmitDataFacebook}
 					disabled={isLoading}
-				>
-					Sign up with Facebook
-				</Button>
+					icon={Icons.facebook}
+					iconLeft
+					label="	Sign up with Facebook"
+				/>
 				<Typography type="link-1">
 					{`You already have an account?`}
-					<Link href="/auth/signin">
+					<Link href={AppRoutes.AUTH_SIGN_IN}>
 						{' '}
 						<span className="text-blue hover:text-dark-30 hover:underline">
 							Sign in
@@ -136,6 +141,6 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 					</Link>
 				</Typography>
 			</form>
-		</div>
+		</LayoutLogin>
 	);
 };

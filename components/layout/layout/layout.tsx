@@ -1,9 +1,9 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
-import Footer from './footer/footer';
-import HeaderNavbar from './header/header';
-import { SidebarDesktop } from './sidebars';
+import Footer from '../footer/footer';
+import HeaderNavbar from '../header/header';
+import { SidebarDesktop } from '../sidebars';
 import authUtils from 'utils/auth';
 import { headerNavbarOptions } from 'const';
 import cmsSidebarNavigation from 'const/sideBarNavigation';

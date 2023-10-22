@@ -2,6 +2,7 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { Typography } from '../../common/typography';
 import { InputProps } from 'interfaces';
+import { Icon } from 'components/common';
 
 export const Input: React.FC<
 	InputProps & React.InputHTMLAttributes<HTMLInputElement>
@@ -10,8 +11,8 @@ export const Input: React.FC<
 	title,
 	register,
 	rules,
-	rightImg,
-	leftImg,
+	iconRight,
+	iconLeft,
 	rightClick,
 	leftClick,
 	customPlaceholder,
@@ -45,9 +46,9 @@ export const Input: React.FC<
 							'text-status-error-solid border-status-error-solid focus:border-status-error-solid placeholder-status-error-solid focus:ring-status-error-solid':
 								error,
 						},
-						{ 'px-4': !leftImg && !rightImg },
-						{ 'pl-14 pr-4': leftImg },
-						{ 'pl-6 pr-8': rightImg },
+						{ 'px-4': !iconLeft && !iconRight },
+						{ 'pl-14 pr-4': iconLeft },
+						{ 'pl-6 pr-8': iconRight },
 						'placeholder-dark-40 py-3 w-full text-xs font-sans border rounded-lg bg-transparent',
 						'focus:outline-none focus:ring-offset-transparent',
 						'disabled:placeholder-dark-40 disabled:cursor-not-allowed disabled:text-dark-80 disabled:bg-dark-10',
@@ -63,17 +64,17 @@ export const Input: React.FC<
 					}}
 					{...props}
 				/>
-				{leftImg && (
-					<div onClick={leftClick} className="absolute left-7 top-1/3 w-5 h-5">
-						<img src={leftImg} className="text-dark-80 cursor-pointer" />
+				{iconLeft && (
+					<div onClick={leftClick} className="absolute left-4 top-1/4 w-6 h-6">
+						<Icon src={iconLeft} className="text-dark-80 cursor-pointer" />
 					</div>
 				)}
-				{rightImg && (
+				{iconRight && (
 					<div
 						onClick={rightClick}
-						className="absolute right-4 top-[30%] w-4 h-4"
+						className="absolute right-4 top-1/4 w-6 h-6"
 					>
-						<img src={rightImg} className="cursor-pointer" />
+						<Icon src={iconRight} className="cursor-pointer" />
 					</div>
 				)}
 			</div>

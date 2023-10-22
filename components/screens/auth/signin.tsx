@@ -1,7 +1,10 @@
 import { Button, Separator, Typography } from 'components/common';
 import { InputEmail } from 'components/form';
 import InputPassword from 'components/form/input-password/input-password';
+import { LayoutLogin } from 'components/layout';
 import NextAuthProvidersEnum from 'const/auth';
+import Icons from 'const/icons';
+import AppRoutes from 'const/routes';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react';
@@ -79,9 +82,9 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 	};
 
 	return (
-		<div className="flex flex-col w-full h-full justify-centers items-center">
+		<LayoutLogin>
 			<form
-				className="bg-white px-12 py-10 rounded-2xl flex flex-col space-y-4 max-w-md w-full mx-auto h-full"
+				className="w-full space-y-4"
 				onSubmit={handleSubmit(handleSubmitDataForm)}
 			>
 				<Typography type="headline-4" className="text-center">
@@ -105,38 +108,38 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 					error={errors.password}
 				/>
 				<Link href="/auth/forgot-password">
-					<Typography type="link-1" className="hover:text-dark-30">
+					<Typography type="link-1" className="hover:opacity-60">
 						Forgot password?
 					</Typography>
 				</Link>
-				<Button type="submit" size="large" decoration="fill">
+				<Button type="submit" size="full" decoration="fill">
 					Sign in
 				</Button>
 				<Separator text="Or" />
 				<Button
-					size="large"
+					size="full"
 					onClick={handleSubmitDataGoogle}
 					disabled={isLoading}
-				>
-					Sign in with Google
-				</Button>
+					icon={Icons.google}
+					iconLeft
+					label="Sign in with Google"
+				/>
 				<Button
-					size="large"
+					size="full"
 					onClick={handleSubmitDataFacebook}
 					disabled={isLoading}
-				>
-					Sign in with Facebook
-				</Button>
+					icon={Icons.facebook}
+					iconLeft
+					label="	Sign in with Facebook"
+				/>
 				<Typography type="link-1">
 					{`Don't have an account? `}
-					<Link href="/auth/signup">
+					<Link href={AppRoutes.AUTH_SIGN_UP}>
 						{' '}
-						<span className="text-blue hover:text-dark-30 hover:underline">
-							Sign up
-						</span>
+						<span className="text-blue hover:opacity-60">Sign up</span>
 					</Link>
 				</Typography>
 			</form>
-		</div>
+		</LayoutLogin>
 	);
 };

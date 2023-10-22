@@ -159,12 +159,7 @@ const GuideStyles = (): JSX.Element => {
 				<Separator text="MISC" />
 				<div className="flex flex-col gap-2 justify-center align-center w-auto">
 					<Typography type="caption-1" text="Spinner" />
-					<Spinner
-						width="w-8"
-						height="w-8"
-						circleFill="grey"
-						loadingBarFill="black"
-					/>
+					<Spinner width="w-8" circleFill="grey" loadingBarFill="black" />
 				</div>
 
 				{/* Tables */}
