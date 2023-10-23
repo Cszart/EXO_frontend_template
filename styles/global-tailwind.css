@@ -13,6 +13,7 @@
 	--color-yellow: #ffbd00;
 	--color-alert-success: #37a211;
 	--color-alert-error: #b52423;
+	--color-opacity-primary: rgba(33, 37, 41, 0.4);
 }
 
 @tailwind base;

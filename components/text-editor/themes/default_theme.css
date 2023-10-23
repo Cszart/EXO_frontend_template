@@ -31,7 +31,7 @@
 	line-height: 20px;
 	font-weight: 400;
 	text-align: left;
-	border: 1px solid rgb(200, 200, 200);
+	border: 1px solid #a1a3a6;
 	border-radius: 10px;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .editor-input {
-	min-height: 200px;
+	min-height: 400px;
 	resize: none;
 	font-size: 15px;
 	caret-color: rgb(5, 5, 5);
@@ -325,6 +325,7 @@ pre::-webkit-scrollbar-thumb {
 
 .toolbar {
 	display: flex;
+	flex-wrap: wrap;
 	border-width: 0px;
 	border-bottom-width: 1px;
 	border-style: solid;
@@ -342,7 +343,7 @@ pre::-webkit-scrollbar-thumb {
 	display: flex;
 	background: none;
 	border-radius: 10px;
-	padding: 8px;
+	padding: 4px;
 	cursor: pointer;
 	vertical-align: middle;
 }
@@ -398,7 +399,7 @@ pre::-webkit-scrollbar-thumb {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	width: 70px;
-	font-size: 14px;
+	font-size: 12px;
 	color: #777;
 	text-overflow: ellipsis;
 }
@@ -413,14 +414,14 @@ pre::-webkit-scrollbar-thumb {
 	line-height: 20px;
 	width: 200px;
 	vertical-align: middle;
-	font-size: 14px;
+	font-size: 12px;
 	color: #777;
 	text-overflow: ellipsis;
 	width: auto;
 	overflow: hidden;
 	height: 20px;
 	text-align: left;
-	margin: 0px 8px;
+	margin: 0px 4px;
 }
 
 .toolbar .toolbar-item .icon {
@@ -435,15 +436,15 @@ pre::-webkit-scrollbar-thumb {
 
 .toolbar i.chevron-down {
 	margin-top: 3px;
-	width: 16px;
-	height: 16px;
+	width: 14px;
+	height: 14px;
 	display: flex;
 	user-select: none;
 }
 
 .toolbar i.chevron-down.inside {
-	width: 16px;
-	height: 16px;
+	width: 14px;
+	height: 14px;
 	display: flex;
 	margin-left: -25px;
 	margin-top: 11px;

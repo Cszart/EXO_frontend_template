@@ -4,25 +4,26 @@ import InputPassword from 'components/form/input-password/input-password';
 import { LayoutLogin } from 'components/layout';
 import Icons from 'const/icons';
 import AppRoutes from 'const/routes';
+import { providerTypes } from 'interfaces';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useForm } from 'react-hook-form';
-
-type providerTypes = 'email' | 'google' | 'facebook';
+import { FieldValues, useForm } from 'react-hook-form';
 
 interface SignUpProps {
 	providers: providerTypes[];
 }
 
 export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
+	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({ mode: 'onChange' });
-	const router = useRouter();
+
+	console.log({ providers });
 
 	// Loading flag
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -37,49 +38,27 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 		},
 	};
 
-	// Functions
-	// Sign in with FACEBOOK
-	console.log({ providers });
-
-	const handleSubmitDataFacebook = async () => {
-		setIsLoading(true);
-		try {
-			signIn('facebook', {
-				redirect: true,
-				callbackUrl: '/',
-			});
-		} catch (error) {
-			console.log(error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	// Sign in with GOOGLE
-	const handleSubmitDataGoogle = async () => {
-		setIsLoading(true);
-		try {
-			signIn('google', {
-				redirect: true,
-				callbackUrl: '/',
-			});
-		} catch (error) {
-			console.log(error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	// Sign up with Data
-	const handleSubmitDataForm = async (data: any): Promise<any> => {
+	// Sign up
+	const handleSubmitData = async (
+		provider: providerTypes,
+		data?: FieldValues
+	) => {
 		setIsLoading(true);
 		console.log({ data });
 		try {
-			await signIn('credentials', {
-				...data,
-			});
+			if (provider === 'credentials') {
+				await signIn('credentials', {
+					...data,
+				});
+			} else {
+				signIn(provider, {
+					redirect: true,
+					callbackUrl: '/',
+				});
+			}
 			router.push('/');
 		} catch (error) {
+			console.log(error);
 			console.log('Log in ERROR: ', error);
 		} finally {
 			setIsLoading(false);
@@ -90,7 +69,7 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 		<LayoutLogin>
 			<form
 				className="w-full space-y-4"
-				onSubmit={handleSubmit(handleSubmitDataForm)}
+				onSubmit={handleSubmit((data) => handleSubmitData('credentials', data))}
 			>
 				<Typography type="headline-4" className="text-center">
 					Sign Up
@@ -111,25 +90,25 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 					rules={rules.password}
 					error={errors.password}
 				/>
-				<Button type="submit" size="large" decoration="fill">
+				<Button type="submit" size="full" decoration="fill">
 					Sign up
 				</Button>
 				<Separator text="Or" />
 				<Button
 					size="full"
-					onClick={handleSubmitDataGoogle}
+					onClick={() => handleSubmitData('google')}
 					disabled={isLoading}
 					icon={Icons.google}
 					iconLeft
-					label="	Sign in with Google"
+					label="Sign in with Google"
 				/>
 				<Button
 					size="full"
-					onClick={handleSubmitDataFacebook}
+					onClick={() => handleSubmitData('facebook')}
 					disabled={isLoading}
 					icon={Icons.facebook}
 					iconLeft
-					label="	Sign up with Facebook"
+					label="Sign up with Facebook"
 				/>
 				<Typography type="link-1">
 					{`You already have an account?`}

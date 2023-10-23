@@ -64,9 +64,7 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 									buttonContent={option.label}
 									showChevronDownIcon={true}
 									items={option.subOptions}
-									classNameButton="text-white font-bold text-sm"
-									classNameMenuItems="w-max bg-white rounded-lg hover:bg-dark-10"
-									classNameItem="text-gray-800 font-bold text-sm hover:text-stone-500"
+									classNameButton="text-white text-sm"
 								/>
 							);
 
@@ -79,7 +77,7 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 								>
 									<Typography
 										key={`header-navbar-option-${option.name}`}
-										type="link-1"
+										type="subtitle-2"
 										className="cursor-pointer text-white"
 									>
 										{option.label}
@@ -92,7 +90,7 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 							return (
 								<Typography
 									key={`header-navbar-option-${option.name}`}
-									type="link-1"
+									type="subtitle-2"
 									onClick={option.onClick}
 									className="cursor-pointer text-white"
 								>
@@ -107,10 +105,9 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 			{/* Profile */}
 			<Dropdown
 				buttonContent={<Avatar photoUrl={Icons.avatar} size="small" />}
-				showChevronDownIcon={false}
+				showChevronDownIcon={true}
 				items={userProfileOptions}
-				classNameButton="w-auto"
-				classNameItem="text-gray-800 hover:text-white font-bold text-sm px-4 py-2"
+				classNameButton="w-auto text-white"
 			/>
 		</nav>
 	);

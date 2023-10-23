@@ -39,7 +39,7 @@ const cmsSidebarNavigation: NavigationOptions[] = [
 	{
 		name: 'email',
 		label: 'Email',
-		roles: [RolesEnum.MODERATOR, RolesEnum.ADMIN],
+		// roles: [RolesEnum.MODERATOR, RolesEnum.ADMIN],
 		icon: Icons.envelope,
 		iconProps: {
 			src: Icons.home,

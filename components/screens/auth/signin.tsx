@@ -2,15 +2,13 @@ import { Button, Separator, Typography } from 'components/common';
 import { InputEmail } from 'components/form';
 import InputPassword from 'components/form/input-password/input-password';
 import { LayoutLogin } from 'components/layout';
-import NextAuthProvidersEnum from 'const/auth';
 import Icons from 'const/icons';
 import AppRoutes from 'const/routes';
+import { providerTypes } from 'interfaces';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react';
-import { useForm } from 'react-hook-form';
-
-type providerTypes = 'email' | 'google' | 'facebook';
+import { FieldValues, useForm } from 'react-hook-form';
 
 interface SignInProps {
 	providers: providerTypes[];
@@ -34,47 +32,27 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 		},
 	};
 
-	// Functions
-	// Sign in with FACEBOOK
-	const handleSubmitDataFacebook = async (): Promise<void> => {
+	const handleSubmitData = async (
+		provider: providerTypes,
+		data?: FieldValues
+	) => {
 		setIsLoading(true);
+		console.log({ data });
 		try {
-			signIn(NextAuthProvidersEnum.FACEBOOK, {
-				redirect: true,
-				callbackUrl: '/',
-			});
+			if (provider === 'credentials') {
+				await signIn('credentials', {
+					...data,
+					redirect: true,
+					callbackUrl: '/',
+				});
+			} else {
+				signIn(provider, {
+					redirect: true,
+					callbackUrl: '/',
+				});
+			}
 		} catch (error) {
 			console.log(error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	// Sign in with GOOGLE
-	const handleSubmitDataGoogle = async (): Promise<void> => {
-		setIsLoading(true);
-		try {
-			signIn(NextAuthProvidersEnum.GOOGLE, {
-				redirect: true,
-				callbackUrl: '/',
-			});
-		} catch (error) {
-			console.log(error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	// Sign in with Data
-	const handleSubmitDataForm = async (data: any): Promise<void> => {
-		setIsLoading(true);
-		try {
-			await signIn(NextAuthProvidersEnum.CREDENTIALS, {
-				...data,
-				redirect: true,
-				callbackUrl: '/',
-			});
-		} catch (error) {
 			console.log('Log in ERROR: ', error);
 		} finally {
 			setIsLoading(false);
@@ -85,7 +63,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 		<LayoutLogin>
 			<form
 				className="w-full space-y-4"
-				onSubmit={handleSubmit(handleSubmitDataForm)}
+				onSubmit={handleSubmit((data) => handleSubmitData('credentials', data))}
 			>
 				<Typography type="headline-4" className="text-center">
 					Sign In
@@ -118,7 +96,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 				<Separator text="Or" />
 				<Button
 					size="full"
-					onClick={handleSubmitDataGoogle}
+					onClick={() => handleSubmitData('google')}
 					disabled={isLoading}
 					icon={Icons.google}
 					iconLeft
@@ -126,11 +104,11 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 				/>
 				<Button
 					size="full"
-					onClick={handleSubmitDataFacebook}
+					onClick={() => handleSubmitData('facebook')}
 					disabled={isLoading}
 					icon={Icons.facebook}
 					iconLeft
-					label="	Sign in with Facebook"
+					label="Sign in with Facebook"
 				/>
 				<Typography type="link-1">
 					{`Don't have an account? `}

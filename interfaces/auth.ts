@@ -9,3 +9,5 @@ export interface LoginRequest {
 	email: string;
 	password: string;
 }
+
+export type providerTypes = 'credentials' | 'google' | 'facebook';

@@ -64,7 +64,7 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 	}, [session]);
 
 	return (
-		<main className={clsx('w-full min-h-screen', classNameLayout)}>
+		<div className={clsx('w-full min-h-screen', classNameLayout)}>
 			{/* Header */}
 			{withHeader && !customHeader && (
 				<HeaderNavbar
@@ -86,13 +86,13 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 					{withSidebar && customSidebar && <>{customSidebar}</>}
 
 					{/* Content */}
-					<div
+					<main
 						className={clsx({
-							'w-full overflow-hidden px-20 py-10': withSidebar,
+							'w-full px-16 py-10 mb-10 overflow-hidden': withSidebar,
 						})}
 					>
 						{children}
-					</div>
+					</main>
 				</div>
 			)}
 
@@ -101,6 +101,6 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 				<Footer companyName="Shokworks" rightsYear="2023" />
 			)}
 			{withFooter && customFooter && <>{customFooter}</>}
-		</main>
+		</div>
 	);
 };

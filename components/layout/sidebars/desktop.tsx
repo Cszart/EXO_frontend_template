@@ -78,9 +78,9 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 		>
 			<nav
 				className={clsx(
-					'h-full p-4 overflow-y-auto',
-					'flex flex-col gap-4',
-					'w-max min-w-[200px] max-w-[250px]',
+					'h-full py-8 overflow-y-auto',
+					'flex flex-col',
+					'w-max min-w-[250px] max-w-[350px]',
 					classNameContainer
 				)}
 			>
@@ -95,7 +95,7 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 					return (
 						<div
 							key={`sideNavbar-item-${item.name}`}
-							className="flex flex-wrap gap-1 w-full justify-start items-center"
+							className="flex flex-wrap gap-2 w-full items-center py-2 px-6"
 						>
 							{/* Icon */}
 							{item.icon && !item.subOptions && (
@@ -109,27 +109,29 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 
 							{/* Dropdown item */}
 							{item.subOptions && (
-								<Disclosure as="div" className="">
+								<Disclosure as="div" className="w-full">
 									<Disclosure.Button
 										className={clsx(
-											'flex flex-wrap justify-start items-center gap-1 w-auto',
+											'flex justify-between items-center w-full',
 											classNameItemButton
 										)}
 									>
-										{/* Icon */}
-										{item.icon && (
-											<div className="w-4">
-												<Icon {...item.iconProps} src={item.icon} />
-											</div>
-										)}
+										<div className="flex items-center gap-2">
+											{/* Icon */}
+											{item.icon && (
+												<div className="w-4">
+													<Icon {...item.iconProps} src={item.icon} />
+												</div>
+											)}
 
-										{/* Label */}
-										<Typography
-											type="subtitle-2"
-											className={clsx(classNameItem)}
-										>
-											{item.label}
-										</Typography>
+											{/* Label */}
+											<Typography
+												type="subtitle-2"
+												className={clsx(classNameItem)}
+											>
+												{item.label}
+											</Typography>
+										</div>
 
 										{/* Arrow Icon */}
 										<ChevronRightIcon className="text-white w-6 ui-open:rotate-90 ui-open:transform" />
@@ -146,7 +148,7 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 												leaveFrom="transform scale-100 opacity-100"
 												leaveTo="transform scale-95 opacity-0"
 											>
-												<Disclosure.Panel className="flex flex-wrap gap-1 w-full justify-start items-center pl-6">
+												<Disclosure.Panel className="flex flex-wrap gap-2 w-full justify-start items-center pl-6 mt-2">
 													{/* SubItem Icon */}
 													{subItem.icon && typeof subItem.icon == 'string' && (
 														<div className="w-4">

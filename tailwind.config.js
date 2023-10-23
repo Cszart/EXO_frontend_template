@@ -45,6 +45,9 @@ module.exports = {
 					error: 'var(--color-alert-error)',
 				},
 				transparent: 'rgba(0, 0, 0, 0)',
+				opacity: {
+					primary: 'var(--color-opacity-primary)',
+				},
 			},
 		},
 	},
