@@ -100,7 +100,7 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 					disabled={isLoading}
 					icon={Icons.google}
 					iconLeft
-					label="Sign in with Google"
+					label="Sign up with Google"
 				/>
 				<Button
 					size="full"

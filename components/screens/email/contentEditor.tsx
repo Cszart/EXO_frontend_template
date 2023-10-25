@@ -4,20 +4,17 @@ import parse from 'html-react-parser';
 import { Layout } from 'components/layout';
 import SimpleTextEditor from 'components/text-editor/textEditor';
 import { Typography } from 'components/common';
+import clsx from 'clsx';
 // import useModal from 'components/hooks/useModal';
 // import { Button, Separator, Typography } from 'components/common';
 // import { XMarkIcon } from '@heroicons/react/24/solid';
 
 const EmailContentEditorScreen = (): JSX.Element => {
 	const [previewContent, setPreviewContent] = React.useState<string>();
-	const [isEmailContent, setIsEmailContent] = React.useState<boolean>(true);
+	const [isEmailContent, setIsEmailContent] = React.useState<boolean>(false);
 
 	// const { Modal, show, hide } = useModal();
 	// const { Modal: ModalRaw, show: showRaw, hide: hideRaw } = useModal();
-
-	const handleChangeOption = () => {
-		setIsEmailContent(!isEmailContent);
-	};
 
 	return (
 		<>
@@ -49,18 +46,35 @@ const EmailContentEditorScreen = (): JSX.Element => {
 					</Button>
 				</div> */}
 				<div className="grid grid-cols-2 gap-x-4">
-					<SimpleTextEditor
-						onChange={(html: string) => {
-							setPreviewContent(html);
-						}}
-					/>
 					<div className="flex flex-col w-full h-auto space-y-4">
 						<div className="flex gap-x-2">
-							<button type="button" onClick={handleChangeOption}>
-								<Typography type="body-1" text="Email preview" />
+							<Typography type="link-1" text="Editor" />
+						</div>
+						<SimpleTextEditor
+							onChange={(html: string) => {
+								setPreviewContent(html);
+							}}
+						/>
+					</div>
+					<div className="flex flex-col w-full h-auto space-y-4">
+						<div className="flex gap-x-2">
+							<button type="button" onClick={() => setIsEmailContent(false)}>
+								<Typography
+									type="link-1"
+									text="Preview raw content"
+									className={clsx({
+										'border-b-2 border-primary': !isEmailContent,
+									})}
+								/>
 							</button>
-							<button type="button" onClick={handleChangeOption}>
-								<Typography type="body-1" text="Preview raw content" />
+							<button type="button" onClick={() => setIsEmailContent(true)}>
+								<Typography
+									type="link-1"
+									text="Email preview"
+									className={clsx({
+										'border-b-2 border-primary': isEmailContent,
+									})}
+								/>
 							</button>
 						</div>
 						<div className="border rounded-lg border-dark-40 h-full p-4">
