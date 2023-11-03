@@ -1,3 +1,8 @@
+/**
+ * In some cases it comes handy to have locally the Icons that are being used
+ * since its easier (by Icon component in this project) to manage their
+ * attributes (path, circle, etc)
+ */
 enum Icons {
 	avatar = '/icons/svg/avatar.svg',
 	envelope = '/icons/svg/envelope.svg',

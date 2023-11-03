@@ -2,6 +2,15 @@ import { NavigationOptions } from 'interfaces';
 import authUtils from './auth';
 import { itemIsNullOrUndefined } from './common';
 
+/**
+ * Filter a set of options based on the user roles and permissions
+ *
+ * The options will be filtered based on the permissions/roles that are inside options prop
+ * and the current user (session user) permissions/roles
+ *
+ * @param baseOptions Initial options to be filtered
+ * @returns Filtered options
+ */
 export function filterOptionsByRolesOrPermissions(
 	baseOptions: NavigationOptions[]
 ): NavigationOptions[] {

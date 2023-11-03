@@ -7,6 +7,16 @@ interface WithAuthorizationComponentProps {
 	allowedRoles?: string[];
 }
 
+/**
+ * This Auth is meant to be used component level, the difference
+ * between withAuthorization is that this renders its children when the user has permissions
+ * or render none (it doesnt redirects)
+ *
+ * @param allowedPermissions The permissions array to compare against (the permissions that can see this)
+ * @param allowedRoles The roles array to compare against (the roles that can see this)
+ * @param children The component to render
+ * @returns a JSX element, depending if the user has or not permissions to see this component
+ */
 const WithAuthorizationComponent: React.FC<
 	PropsWithChildren<WithAuthorizationComponentProps>
 > = ({ allowedPermissions, allowedRoles, children }) => {

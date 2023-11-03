@@ -1,6 +1,9 @@
 import { IconProps } from 'components/common';
 import { ReactNode } from 'react';
 
+/**
+ * General option props
+ */
 export interface Option {
 	name: string;
 	label: string;

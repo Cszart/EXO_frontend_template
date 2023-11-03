@@ -13,7 +13,6 @@ interface DropdownProfileProps {
 
 export const DropdownProfile: React.FC<DropdownProfileProps> = ({ links }) => {
 	return (
-		// <div className="">
 		<Menu as="div" className="relative">
 			<Menu.Button className="inline-flex space-x-2 items-center justify-center focus:outline-none">
 				<Avatar photoUrl={Icons.avatar} size="small" />
@@ -52,6 +51,5 @@ export const DropdownProfile: React.FC<DropdownProfileProps> = ({ links }) => {
 				</Menu.Items>
 			</Transition>
 		</Menu>
-		// </div>
 	);
 };

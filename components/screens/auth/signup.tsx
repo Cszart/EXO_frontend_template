@@ -2,9 +2,9 @@ import { Button, Separator, Typography } from 'components/common';
 import { InputEmail } from 'components/form';
 import InputPassword from 'components/form/input-password/input-password';
 import { LayoutLogin } from 'components/layout';
+import NextAuthProvidersEnum from 'const/auth';
 import Icons from 'const/icons';
 import AppRoutes from 'const/routes';
-import { providerTypes } from 'interfaces';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -12,7 +12,7 @@ import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 interface SignUpProps {
-	providers: providerTypes[];
+	providers: NextAuthProvidersEnum[];
 }
 
 export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
@@ -40,7 +40,7 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 
 	// Sign up
 	const handleSubmitData = async (
-		provider: providerTypes,
+		provider: NextAuthProvidersEnum,
 		data?: FieldValues
 	) => {
 		setIsLoading(true);
@@ -69,7 +69,9 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 		<LayoutLogin>
 			<form
 				className="w-full space-y-4"
-				onSubmit={handleSubmit((data) => handleSubmitData('credentials', data))}
+				onSubmit={handleSubmit((data) =>
+					handleSubmitData(NextAuthProvidersEnum.CREDENTIALS, data)
+				)}
 			>
 				<Typography type="headline-4" className="text-center">
 					Sign Up
@@ -96,7 +98,7 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 				<Separator text="Or" />
 				<Button
 					size="full"
-					onClick={() => handleSubmitData('google')}
+					onClick={() => handleSubmitData(NextAuthProvidersEnum.GOOGLE)}
 					disabled={isLoading}
 					icon={Icons.google}
 					iconLeft
@@ -104,7 +106,7 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 				/>
 				<Button
 					size="full"
-					onClick={() => handleSubmitData('facebook')}
+					onClick={() => handleSubmitData(NextAuthProvidersEnum.FACEBOOK)}
 					disabled={isLoading}
 					icon={Icons.facebook}
 					iconLeft

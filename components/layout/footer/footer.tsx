@@ -10,6 +10,12 @@ export interface Footer_Props {
 	rightsYear?: string;
 }
 
+/**
+ * General footer for the app
+ *
+ * @param links list to show in the footer
+ * @returns JSX element representing the footer container
+ */
 const Footer: React.FC<Footer_Props> = ({ links, companyName, rightsYear }) => {
 	return (
 		<footer className="flex w-full bg-gray-200 border py-4">

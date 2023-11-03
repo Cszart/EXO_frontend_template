@@ -1,4 +1,7 @@
 import { UserType } from 'interfaces';
+/**
+ * Extend Next Auth config
+ */
 
 declare module 'next-auth' {
 	/**

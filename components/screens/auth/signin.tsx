@@ -2,16 +2,16 @@ import { Button, Separator, Typography } from 'components/common';
 import { InputEmail } from 'components/form';
 import InputPassword from 'components/form/input-password/input-password';
 import { LayoutLogin } from 'components/layout';
+import NextAuthProvidersEnum from 'const/auth';
 import Icons from 'const/icons';
 import AppRoutes from 'const/routes';
-import { providerTypes } from 'interfaces';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 interface SignInProps {
-	providers: providerTypes[];
+	providers: NextAuthProvidersEnum[];
 }
 
 export const SignInScreen: React.FC<SignInProps> = () => {
@@ -33,14 +33,14 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 	};
 
 	const handleSubmitData = async (
-		provider: providerTypes,
+		provider: NextAuthProvidersEnum,
 		data?: FieldValues
 	) => {
 		setIsLoading(true);
 		console.log({ data });
 		try {
-			if (provider === 'credentials') {
-				await signIn('credentials', {
+			if (provider === NextAuthProvidersEnum.CREDENTIALS) {
+				await signIn(NextAuthProvidersEnum.CREDENTIALS, {
 					...data,
 					redirect: true,
 					callbackUrl: '/',
@@ -63,7 +63,9 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 		<LayoutLogin>
 			<form
 				className="w-full space-y-4"
-				onSubmit={handleSubmit((data) => handleSubmitData('credentials', data))}
+				onSubmit={handleSubmit((data) =>
+					handleSubmitData(NextAuthProvidersEnum.CREDENTIALS, data)
+				)}
 			>
 				<Typography type="headline-4" className="text-center">
 					Sign In
@@ -96,7 +98,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 				<Separator text="Or" />
 				<Button
 					size="full"
-					onClick={() => handleSubmitData('google')}
+					onClick={() => handleSubmitData(NextAuthProvidersEnum.GOOGLE)}
 					disabled={isLoading}
 					icon={Icons.google}
 					iconLeft
@@ -104,7 +106,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 				/>
 				<Button
 					size="full"
-					onClick={() => handleSubmitData('facebook')}
+					onClick={() => handleSubmitData(NextAuthProvidersEnum.FACEBOOK)}
 					disabled={isLoading}
 					icon={Icons.facebook}
 					iconLeft
