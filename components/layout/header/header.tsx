@@ -16,6 +16,15 @@ interface HeaderNavbarProps {
 	className?: string;
 }
 
+/**
+ *	This component is meant to be rendered as a header navBar
+ * 	Its a basic component mostly customizable from the navBarOptions prop
+ *
+ * @param navBarOptions options to be rendered in the header
+ * @param logoUrl The logo that will be shown in the left side of the header
+ * @param className additional classes
+ * @returns JSX element representing the header
+ */
 const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 	navBarOptions,
 	logoUrl,
@@ -34,7 +43,7 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 
 			setUserProfileOptions(updatedOptions);
 		}
-	}, [authUtils]);
+	}, []);
 
 	return (
 		<nav

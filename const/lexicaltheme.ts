@@ -1,3 +1,7 @@
+/**
+ * This theme is to be used on the lexical Editor (email content editor)
+ */
+
 const exampleTheme = {
 	ltr: 'ltr',
 	rtl: 'rtl',

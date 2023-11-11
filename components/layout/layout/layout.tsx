@@ -27,8 +27,9 @@ export interface Layout_Props {
 /**
  * This is the main layout component to render a page
  * It has a default behaviour/style but it also considers when a custom component is meant to be rendered
+ *
  * @param props they will handle the behaviour of the layout and the styles
- * @returns
+ * @returns JSX element for the layout container
  */
 export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 	withHeader = true,

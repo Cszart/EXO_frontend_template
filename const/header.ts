@@ -1,5 +1,17 @@
 import { NavigationOptions } from 'interfaces';
 
+/**
+ * In this const file should be placed all const related to header,
+ * for example the options that should be rendered
+ *
+ * At first, header can have a single default options array as they will be filtered
+ * by roles/permissions. But you can have more than one possible header options
+ * (for this case you should make a builder function like the ones that were provided)
+ *
+ * An example of having multiple const options for header is when you have two different
+ * sections on the page, lets say a web2 and web3 for example
+ */
+
 // Options to show on the user profile menu in the navbar header
 export const headerUserProfileOptions: NavigationOptions[] = [];
 

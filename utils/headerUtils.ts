@@ -3,8 +3,10 @@ import { signOut } from 'next-auth/react';
 import AppRoutes from 'const/routes';
 
 /**
- * This function is meant to handle the options of the header.
+ * This function is meant to handle the options to be shown under the
+ * user profile in the header
  * It appends the options to the baseOptions and returns the updated array.
+ *
  * @param baseOptions The base options to which the new options will be appended
  * @param sessionStatus The session status to determine the options to add
  * @returns A new array of options
@@ -33,3 +35,5 @@ export function buildHeaderUserProfileOptions(
 
 	return baseOptions;
 }
+
+// Other builders/handlers can be added here with extra logic

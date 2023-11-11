@@ -1,3 +1,8 @@
+/**
+ * General props for tables
+ */
+
+// Props that represent a column
 export interface ColumnProps<T> {
 	header: string;
 	content: (instance: T) => JSX.Element;
@@ -5,29 +10,13 @@ export interface ColumnProps<T> {
 	rightIcon?: JSX.Element;
 }
 
+// Props that represent a row
 export interface RowActionProps<T> {
 	label: string;
 	onClick: (instance: T) => void;
 }
 
-export interface PaginatedTableProps<T> {
-	/**
-	 * The data to show on the rows
-	 * Or a function that will handle fetching the content
-	 */
-	rows: T[] | ((page: number, rowsPerPage: number) => Promise<T[]>);
-
-	/**
-	 * Number of page to show
-	 */
-	page: number;
-
-	/**
-	 * Number of rows to show in a page
-	 */
-	pageSize: number;
-}
-
+// General table props
 export interface SimpleTableProps<T> {
 	/**
 	 * Data for each of the columns of the table
@@ -86,4 +75,23 @@ export interface SimpleTableProps<T> {
 	 * Style for row actions (Tailwind string)
 	 */
 	stylesForRows?: string;
+}
+
+// Props for paginated table (extends simple table props)
+export interface PaginatedTableProps<T> {
+	/**
+	 * The data to show on the rows
+	 * Or a function that will handle fetching the content
+	 */
+	rows: T[] | ((page: number, rowsPerPage: number) => Promise<T[]>);
+
+	/**
+	 * Number of page to show
+	 */
+	page: number;
+
+	/**
+	 * Number of rows to show in a page
+	 */
+	pageSize: number;
 }

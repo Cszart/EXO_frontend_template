@@ -3,6 +3,12 @@ import AppRoutes from './routes';
 import RolesEnum from './role';
 import Icons from './icons';
 
+/**
+ * This file will hold the possible navigation options for the sidebar
+ * like the header const file, initially can be only one const
+ * that will be filtered based on user roles/permissions but
+ * you can have other const and filter them
+ */
 const cmsSidebarNavigation: NavigationOptions[] = [
 	{
 		name: 'dashboard',

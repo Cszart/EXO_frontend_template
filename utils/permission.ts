@@ -1,5 +1,8 @@
 import PermissionsEnum from 'const/permissions';
 
+// Functions that will return a set of permissions
+// Note: They should be updated (if needed) whenever other permissions are added
+
 export function userPermissions(): PermissionsEnum[] {
 	return [
 		PermissionsEnum.USER_MANAGEMENT_VIEW,

@@ -19,6 +19,14 @@ interface SidebarDesktopProps {
 	classNameItemButton?: string; // Dropdown button classes
 }
 
+/**
+ * This component is meant to handle a side navbar
+ *
+ * @param itemOptions The options to be rendered in the navbar
+ * @param logo image to show in the sidebar
+ * @param collapsible to make the sidebar able to collapse
+ * @returns
+ */
 export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 	itemOptions,
 	logo,
@@ -31,6 +39,7 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 	 * This function is to render the proper Element based on the item
 	 * features, this will render the basic elements, the dropdown element will
 	 * be rendered with a condition outside this function for readibility
+	 *
 	 * @param item The item that will be evaluated
 	 * @returns The proper JSX.Element (Link, Text with onClick, Custom)
 	 */

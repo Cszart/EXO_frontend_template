@@ -8,6 +8,17 @@ interface ModalProps {
 	children?: React.ReactNode;
 }
 
+/**
+ * Custom hook to return a modal with its handler functions,
+ * the returned modal has a default layout
+ *
+ * @returns
+ * 		Modal: Default Modal element that will be rendered
+ * 		isOpen: usual modal prop that says when the modal should appear
+ * 		show: Handler function to show the modal
+ * 		hide: Handler function to hide the modal
+ */
+
 const useModal = (): {
 	Modal: React.FC<ModalProps>;
 	isOpen: boolean;

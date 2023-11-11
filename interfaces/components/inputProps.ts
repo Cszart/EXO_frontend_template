@@ -2,6 +2,9 @@ import * as React from 'react';
 import { SyntheticEvent } from 'react';
 import { ErrorOption, RegisterOptions } from 'react-hook-form';
 
+/**
+ * General Props for form input
+ */
 export interface InputProps {
 	name: string;
 	id?: string;

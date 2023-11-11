@@ -11,9 +11,11 @@ interface WithAuthorizationProps {
 }
 
 /**
- * This component is in charge of managing authorization for SCREENS/Pages
+ * This HOC is in charge of managing authorization for SCREENS/Pages
  * it uses the AuthUtils to handle whether the user has the required roles/permissions
  * to see the page if not then redirect the user to the right screen or the given one
+ *
+ * This HOC will get executed client-side
  *
  * @param WrappedComponent The component to be rendered
  * @param allowedPermissions The permissions that the user should meet to see the WrappedComponent
@@ -30,7 +32,10 @@ const withAuthorization = (
 ): React.FC<WithAuthorizationProps> => {
 	const AuthWrapper: React.FC<WithAuthorizationProps> = () => {
 		const router = useRouter();
+
+		// Get the NextJS session
 		const session = useSession();
+		// Save it to the authUtils class
 		authUtils.setSession(session);
 
 		// Set the permissions and roles
@@ -61,6 +66,8 @@ const withAuthorization = (
 				}
 
 				setIsAllowed(isAllowedByPermissions || isAllowedByRoles);
+
+				// If session is unAuth then redirect
 			} else if (
 				session.status == SessionStatus.UNAUTHENTICATED &&
 				!isAllowedByPermissions &&

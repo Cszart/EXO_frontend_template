@@ -5,7 +5,7 @@ import SessionStatus from 'const/session';
 import { UserType } from 'interfaces';
 import { SessionContextValue } from 'next-auth/react';
 
-// Constants to redirect the user
+// --- --- Constants to redirect the user
 
 // If the user is not logged already, it will be redirected to this path
 const PATH_TO_REDIRECT_NOT_LOGGED_USER = AppRoutes.AUTH_SIGN_IN;
@@ -31,6 +31,11 @@ export enum LoginError {
 	TOKEN_EXPIRED,
 }
 
+/**
+ * Utility class for authentication-related operations
+ *
+ * This class should be used client-side
+ */
 class AuthUtils {
 	//  Session instance
 	private session: SessionContextValue | null = null;
