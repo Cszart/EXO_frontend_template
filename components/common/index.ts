@@ -5,4 +5,5 @@ export * from './paginationBar';
 export * from './separator';
 export * from './spinner';
 export * from './tables';
+export * from './tabs';
 export * from './typography';

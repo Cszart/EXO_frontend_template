@@ -8,7 +8,7 @@ import authUtils from 'utils/auth';
 import { headerNavbarOptions } from 'const';
 import cmsSidebarNavigation from 'const/sideBarNavigation';
 import { NavigationOptions } from 'interfaces';
-import { filterOptionsByRolesOrPermissions } from 'utils/sidebar';
+import { filterOptionsByRolesOrPermissions } from 'utils/options';
 
 export interface Layout_Props {
 	withHeader?: boolean;

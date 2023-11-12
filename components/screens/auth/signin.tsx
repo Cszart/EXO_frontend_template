@@ -9,6 +9,7 @@ import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import { useConnect } from 'wagmi';
 
 interface SignInProps {
 	providers: NextAuthProvidersEnum[];
@@ -21,6 +22,18 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({ mode: 'onSubmit' });
+	const {
+		connect,
+		connectors,
+		error,
+		isLoading: isLoadingWallet,
+		pendingConnector,
+	} = useConnect(); // wallet login
+
+	// const { address, connector, isConnected } = useAccount();
+	// const { data: ensAvatar } = useEnsAvatar({ address });
+	// const { data: ensName } = useEnsName({ address });
+	// console.log({ ensAvatar, ensName, address });
 
 	// Inputs rules
 	const rules = {
@@ -59,6 +72,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 		}
 	};
 
+	console.log({ connectors });
 	return (
 		<LayoutLogin>
 			<form
@@ -112,6 +126,19 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 					iconLeft
 					label="Sign in with Facebook"
 				/>
+				{connectors.map((connector) => (
+					<Button
+						key={connector.id}
+						size="full"
+						onClick={() => connect({ connector })}
+						loading={isLoadingWallet && connector.id === pendingConnector?.id}
+						icon={connector.options.appLogoUrl}
+						iconLeft
+						label={connector.name}
+					/>
+				))}
+				{error && <div>{error.message}</div>}
+
 				<Typography type="link-1">
 					{`Don't have an account? `}
 					<Link href={AppRoutes.AUTH_SIGN_UP}>

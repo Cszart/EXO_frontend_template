@@ -121,7 +121,7 @@ class AuthUtils {
 	// Check if user has a set of roles
 	public hasAnyRole(roleNames: string[]): boolean {
 		const user: UserType | null = this.getUser();
-		if (user) return user.roles.some((role) => roleNames.includes(role));
+		if (user) return user.roles?.some((role) => roleNames.includes(role));
 		return false;
 	}
 

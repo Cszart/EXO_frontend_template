@@ -5,6 +5,7 @@
  */
 enum Icons {
 	avatar = '/icons/svg/avatar.svg',
+	coinbase = '/icons/svg/coinbase.svg',
 	envelope = '/icons/svg/envelope.svg',
 	facebook = '/icons/svg/facebook.svg',
 	gear = '/icons/svg/gear.svg',
@@ -12,6 +13,7 @@ enum Icons {
 	google = '/icons/svg/google.svg',
 	home = '/icons/svg/home.svg',
 	invisible = '/icons/svg/invisible.svg',
+	metamask = '/icons/svg/metamask.svg',
 	visible = '/icons/svg/visible.svg',
 }
 
