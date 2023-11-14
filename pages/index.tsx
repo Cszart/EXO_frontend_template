@@ -20,7 +20,7 @@ const HomePage = (): any => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const session = await getSession(context);
-
+	console.log('<- \n\n\n\n SEssion : ', session);
 	const redirect: Redirect | undefined = await withAuthorizationServerSide({
 		session: session,
 		allowedPermissions: crudPermissions(),

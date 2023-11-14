@@ -9,6 +9,7 @@ import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import Logger from 'utils/logger';
 import { useConnect } from 'wagmi';
 
 interface SignInProps {
@@ -16,24 +17,24 @@ interface SignInProps {
 }
 
 export const SignInScreen: React.FC<SignInProps> = () => {
+	// Utils
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
+	const logger = new Logger({ identifier: 'SignIn' });
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({ mode: 'onSubmit' });
+
+	// Wallet connection
 	const {
 		connect,
 		connectors,
 		error,
 		isLoading: isLoadingWallet,
 		pendingConnector,
-	} = useConnect(); // wallet login
-
-	// const { address, connector, isConnected } = useAccount();
-	// const { data: ensAvatar } = useEnsAvatar({ address });
-	// const { data: ensName } = useEnsName({ address });
-	// console.log({ ensAvatar, ensName, address });
+	} = useConnect();
 
 	// Inputs rules
 	const rules = {
@@ -45,10 +46,11 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 		},
 	};
 
+	// SUBMIT function
 	const handleSubmitData = async (
 		provider: NextAuthProvidersEnum,
 		data?: FieldValues
-	) => {
+	): Promise<void> => {
 		setIsLoading(true);
 		console.log({ data });
 		try {
@@ -65,14 +67,14 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 				});
 			}
 		} catch (error) {
-			console.log(error);
-			console.log('Log in ERROR: ', error);
+			logger.error(error);
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
-	console.log({ connectors });
+	logger.info('Connectors: ', { connectors });
+
 	return (
 		<LayoutLogin>
 			<form
