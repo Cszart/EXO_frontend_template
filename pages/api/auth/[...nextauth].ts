@@ -72,6 +72,50 @@ const options: NextAuthOptions = {
 				}
 			},
 		}),
+
+		/**
+		 * This credentials provider has a different ID and name
+		 * this will serve as a trick to store new information to the session
+		 * for the first time. Since the connection to the wallet implies a
+		 * different flow to fetch the user information from address
+		 */
+		CredentialsProvider({
+			id: NextAuthProvidersEnum.WALLET,
+			name: NextAuthProvidersEnum.WALLET,
+			// These credentials represent the object to be stored in session
+			credentials: {
+				address: { label: 'address', type: 'text' },
+			},
+			async authorize(credentials) {
+				if (!credentials) return null;
+
+				try {
+					// Get user data from database based on its address
+					const response_login = await fetch(
+						`${process.env.NEXT_PUBLIC_API}/auth/login/wallet`,
+						{
+							method: 'POST',
+							body: JSON.stringify(credentials),
+							headers: { 'Content-Type': 'application/json' },
+						}
+					);
+
+					const response_json = await response_login.json();
+
+					// If no error and we have user data, return it
+					if (response_login.status == 200 && response_json) {
+						const user = response_json.user;
+						return Promise.resolve(user);
+					}
+
+					// If no error and we have user data, return it
+					// Return null if user data could not be retrieved
+					return Promise.reject(new Error(response_json.message));
+				} catch (error) {
+					return Promise.resolve(error);
+				}
+			},
+		}),
 	],
 
 	pages: {

@@ -13,6 +13,7 @@ import '../components/text-editor/themes/default_theme.css';
 
 // Wagmi Connect
 import { WagmiConfig, createConfig, configureChains, mainnet } from 'wagmi';
+
 // Providers
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';

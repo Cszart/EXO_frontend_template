@@ -85,6 +85,9 @@ class AuthUtils {
 	public getPathToNotAuthorized(): string {
 		return this.pathToNotAuthorized;
 	}
+	public getPathToRedirectLoggedUser(): string {
+		return this.pathToRedirectLoggedUser;
+	}
 
 	// --- --- Util functions --- --- //
 
