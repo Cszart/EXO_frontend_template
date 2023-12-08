@@ -11,8 +11,3 @@ export interface UserType {
 	roles: RolesEnum[];
 	permissions: PermissionsEnum[];
 }
-
-export interface UserTypeData {
-	data: UserType;
-	statusCode: number;
-}

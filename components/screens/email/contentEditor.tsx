@@ -10,8 +10,6 @@ const EmailContentEditorScreen = (): JSX.Element => {
 		'email_content' | 'preview_content'
 	>('email_content');
 
-	console.log({ currentOption });
-
 	return (
 		<Layout withHeader>
 			<Typography

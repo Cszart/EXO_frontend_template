@@ -81,6 +81,8 @@ const withAuthorizationServerSide = async ({
 		);
 	}
 
+	console.log('<- Session : ', { session });
+
 	// Returns null so the server doesnt have to redirect
 	if (isAllowedByPermissions || isAllowedByRoles) {
 		console.log('<- [ServerSideAuth] user is allowed by:', {
