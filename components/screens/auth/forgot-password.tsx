@@ -21,8 +21,8 @@ export const ForgotPasswordScreen = () => {
 		},
 	};
 
-	const handleSubmitDataForm = async (data: any) => {
-		console.log({ data });
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const handleSubmitDataForm = async (data: any): Promise<void> => {
 		setIsLoading(true);
 		router.push('/auth/new-password?code=1234');
 	};

@@ -53,7 +53,6 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 	// Set session for AuthUtils
 	// This is being called in layout to keep session updated
 	React.useEffect(() => {
-		console.log('\n\n<- Layout : session', session);
 		if (session) authUtils.setSession(session);
 	}, [session]);
 

@@ -80,13 +80,6 @@ const withAuthorization = (
 					router.push(authUtils.getPathToNotAuthorized());
 				}
 			}
-
-			console.log('\n\n\n <- auth HOC  : ', {
-				session,
-				session_auth: authUtils.getSession(),
-				isAllowedByPermissions,
-				isAllowedByRoles,
-			});
 		}, [isAllowed, router, session, session.status]);
 
 		// If the user is authorized, render the wrapped component

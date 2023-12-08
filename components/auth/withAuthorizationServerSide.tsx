@@ -81,21 +81,11 @@ const withAuthorizationServerSide = async ({
 		);
 	}
 
-	console.log('<- Session : ', { session });
-
 	// Returns null so the server doesnt have to redirect
 	if (isAllowedByPermissions || isAllowedByRoles) {
-		console.log('<- [ServerSideAuth] user is allowed by:', {
-			isAllowedByPermissions,
-			isAllowedByRoles,
-		});
 		return undefined;
 	}
 
-	console.log('<- [ServerSideAuth] user NOT allowed', {
-		isAllowedByPermissions,
-		isAllowedByRoles,
-	});
 	// By this time session is not null so it doesnt redirect by default
 	// And User is not allowed by neither roles or permissions
 	// Return a redirect with default redirection or given one

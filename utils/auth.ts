@@ -175,7 +175,7 @@ class AuthUtils {
 		// or if the session is null, we want to redirect instead so
 		// this is why we dont re-use the above functions
 		if (typeof window === 'undefined') {
-			console.log('<- Auth utils, window is undefined : ');
+			console.log('<- [Auth utils] window is undefined');
 			return;
 		}
 

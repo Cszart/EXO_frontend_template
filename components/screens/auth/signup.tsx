@@ -10,20 +10,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import Logger from 'utils/logger';
 
 interface SignUpProps {
 	providers: NextAuthProvidersEnum[];
 }
 
-export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
+export const SignUpScreen: React.FC<SignUpProps> = () => {
 	const router = useRouter();
+	const logger = new Logger({ identifier: 'SignUp' });
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({ mode: 'onChange' });
-
-	console.log({ providers });
 
 	// Loading flag
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -44,7 +44,6 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 		data?: FieldValues
 	) => {
 		setIsLoading(true);
-		console.log({ data });
 		try {
 			if (provider === 'credentials') {
 				await signIn('credentials', {
@@ -58,8 +57,7 @@ export const SignUpScreen: React.FC<SignUpProps> = ({ providers }) => {
 			}
 			router.push('/');
 		} catch (error) {
-			console.log(error);
-			console.log('Log in ERROR: ', error);
+			logger.error(error);
 		} finally {
 			setIsLoading(false);
 		}

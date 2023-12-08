@@ -36,12 +36,7 @@ const PaginatedTable = <T,>(
 		} else {
 			// This call wont necessarily be this easy, might need to change this depending on the
 			// backend project
-			console.log('\n\n\n <- Paginated table, fetching pages : ', {
-				currentPage,
-				pageSize: props.pageSize,
-			});
 			const responseRows = await props.rows(currentPage, props.pageSize);
-			console.log('<- Response : ', { responseRows });
 			setRowsData(responseRows);
 		}
 	};
@@ -60,7 +55,6 @@ const PaginatedTable = <T,>(
 				currentPage={currentPage}
 				totalPages={100}
 				onPageChange={(pageNumber: number) => {
-					console.log('\n\n<- On page change : ', { pageNumber });
 					setCurrentPage(pageNumber);
 				}}
 				classNameContainer="self-center"
