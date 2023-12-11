@@ -1,12 +1,7 @@
-import withAuthorizationServerSide from 'components/auth/withAuthorizationServerSide';
-import EmailContentEditorScreen from 'components/screens/email/contentEditor';
-import RolesEnum from 'const/role';
-import AppRoutes from 'const/routes';
-import { GetServerSideProps, Redirect } from 'next';
-import { getSession } from 'next-auth/react';
+import EmailTemplatesListScreen from 'components/screens/email/templatesList';
 
-const EmailContentEditor = (): JSX.Element => {
-	return <EmailContentEditorScreen />;
+const EmailTemplatesList = (): JSX.Element => {
+	return <EmailTemplatesListScreen />;
 };
 
 // export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -26,10 +21,10 @@ const EmailContentEditor = (): JSX.Element => {
 // };
 
 // export default withAuthorization(
-// 	EmailContentEditor,
+// 	EmailTemplatesList,
 // 	undefined,
 // 	[RolesEnum.MODERATOR, RolesEnum.ADMIN],
 // 	AppRoutes.HOME
 // );
 
-export default EmailContentEditor;
+export default EmailTemplatesList;

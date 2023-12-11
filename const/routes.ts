@@ -15,6 +15,7 @@ enum AppRoutes {
 
 	// Email related
 	EMAIL_CONTENT_EDITOR = '/email/contentEditor',
+	EMAIL_TEMPLATES_LIST = '/email/templatesList',
 
 	// Settings / Management
 	SETTINGS_PERMISSIONS = '/settings/permissions',

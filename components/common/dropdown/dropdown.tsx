@@ -27,7 +27,7 @@ export const Dropdown = ({
 	showChevronDownIcon = true,
 	classNameButton = 'w-auto rounded-md p-1',
 	classNameMenuItems = 'w-max bg-white rounded-lg',
-	classNameItem = 'text-gray-800 font-bold text-sm hover:bg-dark-10 rounded-lg',
+	classNameItem = 'text-gray-800 font-bold text-sm hover:bg-dark-10 rounded-lg w-full',
 	...props
 }: DropdownProps): JSX.Element => {
 	return (

@@ -23,7 +23,7 @@ export default function SetDefaultValuePlugin(props: { html?: string }) {
 				$insertNodes(nodes);
 			});
 		}
-	}, []);
+	}, [editor, props.html]);
 
 	return <></>;
 }

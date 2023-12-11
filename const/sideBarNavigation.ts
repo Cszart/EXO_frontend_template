@@ -57,6 +57,11 @@ const cmsSidebarNavigation: NavigationOptions[] = [
 				label: 'Editor',
 				href: AppRoutes.EMAIL_CONTENT_EDITOR,
 			},
+			{
+				name: 'emailTemplates',
+				label: 'Templates',
+				href: AppRoutes.EMAIL_TEMPLATES_LIST,
+			},
 		],
 	},
 	{
