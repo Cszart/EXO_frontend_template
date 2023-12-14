@@ -2,7 +2,7 @@ import PermissionsEnum from 'const/permissions';
 import RolesEnum from 'const/role';
 
 // General user structure/payload
-export interface UserType {
+export interface UserI {
 	id: string;
 	email: string;
 	username: string;

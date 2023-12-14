@@ -1,9 +1,4 @@
-import withAuthorizationServerSide from 'components/auth/withAuthorizationServerSide';
 import EmailContentEditorScreen from 'components/screens/email/contentEditor';
-import RolesEnum from 'const/role';
-import AppRoutes from 'const/routes';
-import { GetServerSideProps, Redirect } from 'next';
-import { getSession } from 'next-auth/react';
 
 const EmailContentEditor = (): JSX.Element => {
 	return <EmailContentEditorScreen />;

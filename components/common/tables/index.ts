@@ -1,1 +1,2 @@
-export * from './table';
+export * from './paginatedTable';
+export * from './simpleTable';

@@ -2,7 +2,7 @@ import PermissionsEnum from 'const/permissions';
 import RolesEnum from 'const/role';
 import AppRoutes from 'const/routes';
 import SessionStatus from 'const/session';
-import { UserType } from 'interfaces';
+import { UserI } from 'interfaces';
 import { SessionContextValue } from 'next-auth/react';
 
 // --- --- Constants to redirect the user
@@ -92,7 +92,7 @@ class AuthUtils {
 	// --- --- Util functions --- --- //
 
 	// Get session user, devs might follow manual useSession approach without any problem
-	public getUser(): UserType | null {
+	public getUser(): UserI | null {
 		this.checkSession();
 		if (this.isAuthenticatedSession() && this.session && this.session.data)
 			return this.session.data.user;
@@ -115,7 +115,7 @@ class AuthUtils {
 
 	// Check if user has an specific role
 	public hasRole(roleName: string): boolean {
-		const user: UserType | null = this.getUser();
+		const user: UserI | null = this.getUser();
 
 		if (user) return user.roles.some((role) => role === roleName);
 		return false;
@@ -123,14 +123,14 @@ class AuthUtils {
 
 	// Check if user has a set of roles
 	public hasAnyRole(roleNames: string[]): boolean {
-		const user: UserType | null = this.getUser();
+		const user: UserI | null = this.getUser();
 		if (user) return user.roles?.some((role) => roleNames.includes(role));
 		return false;
 	}
 
 	// Check if user has a specific permission
 	public hasPermissionFor(permission: string): boolean {
-		const user: UserType | null = this.getUser();
+		const user: UserI | null = this.getUser();
 
 		if (user) return user.permissions.some((p) => p == permission);
 		return false;
@@ -138,7 +138,7 @@ class AuthUtils {
 
 	// Check if user has any of the permission provided
 	public hasAnyPermission(permissions: string[]): boolean {
-		const user: UserType | null = this.getUser();
+		const user: UserI | null = this.getUser();
 		if (user) {
 			return user.permissions.some((p) => permissions.includes(p));
 		}

@@ -1,9 +1,9 @@
-import { UserType } from './user';
+import { UserI } from './user';
 
 // Session interface
 export interface AuthSession {
 	accessToken?: string;
-	user?: UserType;
+	user?: UserI;
 }
 
 // Login payload
@@ -16,5 +16,5 @@ export interface LoginRequest {
 export interface LoginResponse {
 	status: number;
 	message: string;
-	user: UserType;
+	user: UserI;
 }

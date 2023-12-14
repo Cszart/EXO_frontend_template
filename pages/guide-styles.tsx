@@ -8,7 +8,7 @@ import InputPassword from 'components/form/input-password/input-password';
 import { Layout } from 'components/layout';
 import Icons from 'const/icons';
 import DummyUsersData from 'data/tables/userDummyData';
-import { UserType } from 'interfaces';
+import { UserI } from 'interfaces';
 import { useForm } from 'react-hook-form';
 
 const GuideStyles = (): JSX.Element => {
@@ -167,7 +167,7 @@ const GuideStyles = (): JSX.Element => {
 				<div className="flex flex-col gap-2 justify-center align-center w-full h-auto">
 					<Typography type="headline-4" text="Simple Table" />
 					<Typography type="caption-3" text="Static array" />
-					<SimpleTable<UserType>
+					<SimpleTable<UserI>
 						columns={[
 							{
 								header: 'ID',
@@ -195,7 +195,7 @@ const GuideStyles = (): JSX.Element => {
 							},
 						]}
 						rows={DummyUsersData}
-						rowActions={(instance: UserType) => {
+						rowActions={(instance: UserI) => {
 							return [
 								{
 									label: 'Action 1',
@@ -220,7 +220,7 @@ const GuideStyles = (): JSX.Element => {
 				<div className="flex flex-col gap-2 justify-center align-center w-full h-auto">
 					<Typography type="headline-4" text="Paginated Table" />
 					<Typography type="caption-3" text="Static array" />
-					<PaginatedTable<UserType>
+					<PaginatedTable<UserI>
 						page={1}
 						pageSize={DummyUsersData.length}
 						columns={[
@@ -250,7 +250,7 @@ const GuideStyles = (): JSX.Element => {
 							},
 						]}
 						rows={DummyUsersData}
-						rowActions={(instance: UserType) => {
+						rowActions={(instance: UserI) => {
 							return [
 								{
 									label: 'Action 1',
