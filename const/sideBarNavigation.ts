@@ -40,6 +40,11 @@ const cmsSidebarNavigation: NavigationOptions[] = [
 				label: 'Permissions',
 				href: AppRoutes.SETTINGS_ROLES,
 			},
+			{
+				name: 'users',
+				label: 'Users',
+				href: AppRoutes.SETTINGS_USER,
+			},
 		],
 	},
 	{

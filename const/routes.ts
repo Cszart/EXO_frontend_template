@@ -20,6 +20,7 @@ enum AppRoutes {
 	// Settings / Management
 	SETTINGS_PERMISSIONS = '/settings/permissions',
 	SETTINGS_ROLES = '/settings/roles',
+	SETTINGS_USER = '/settings/user',
 }
 
 export default AppRoutes;
