@@ -1,66 +1,7 @@
-import { useState, useEffect } from 'react';
-import { Layout } from 'components/layout';
-import { Typography } from 'components/common';
-import { RoleI } from 'interfaces';
-import SimpleTable from 'components/common/tables/simpleTable';
-import { rolesService } from 'api_services';
+import RolesScreen from 'components/screens/settings/roles';
 
-const RolesScreen = (): JSX.Element => {
-	// Data
-	const [rolesData, setRolesData] = useState<RoleI[]>([]);
-
-	// Fetch roles
-	useEffect(() => {
-		async function fetchRoles(): Promise<void> {
-			const rolesResponse = await rolesService.getAll();
-
-			if (rolesResponse.status == 200) {
-				setRolesData(rolesResponse.data);
-			}
-		}
-
-		fetchRoles();
-	}, []);
-
-	return (
-		<Layout withHeader withSidebar>
-			<Typography
-				type="custom-h1"
-				text="Roles Management"
-				className="text-xl font-bold text-gray-800 text-center mb-10"
-			/>
-
-			<SimpleTable<RoleI>
-				columns={[
-					{
-						header: 'UUID',
-						content: (instance) => <p>{instance.uuid}</p>,
-					},
-					{
-						header: 'Role',
-						content: (instance) => <p>{instance.role}</p>,
-					},
-					{
-						header: 'Created at',
-						content: (instance) => <p>{instance.createdAt}</p>,
-					},
-					{
-						header: 'Modified at',
-						content: (instance) => <p>{instance.modifiedAt}</p>,
-					},
-				]}
-				rows={rolesData}
-				rowActions={() => [
-					{
-						label: 'Edit',
-						onClick: (instance) => {
-							alert(instance.uuid);
-						},
-					},
-				]}
-			/>
-		</Layout>
-	);
+const RolesPage = (): JSX.Element => {
+	return <RolesScreen />;
 };
 
 // export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -80,10 +21,10 @@ const RolesScreen = (): JSX.Element => {
 // };
 
 // export default withAuthorization(
-// 	RolesScreen,
+// 	Roles,
 // 	crudRoles(),
 // 	[RolesEnum.ADMIN],
 // 	AppRoutes.HOME
 // );
 
-export default RolesScreen;
+export default RolesPage;
