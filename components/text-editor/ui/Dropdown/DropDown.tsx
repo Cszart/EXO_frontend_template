@@ -6,6 +6,7 @@
  *
  */
 
+import * as React from 'react';
 import {
 	ReactNode,
 	useCallback,
@@ -14,14 +15,16 @@ import {
 	useRef,
 	useState,
 } from 'react';
-import * as React from 'react';
 import { createPortal } from 'react-dom';
+import iconStyles from '../icons.module.css';
 
 type DropDownContextType = {
 	registerItem: (ref: React.RefObject<HTMLButtonElement>) => void;
 };
 
 const DropDownContext = React.createContext<DropDownContextType | null>(null);
+
+const dropDownPadding = 4;
 
 export function TextEditorDropDownItem({
 	children,
@@ -33,7 +36,7 @@ export function TextEditorDropDownItem({
 	className: string;
 	onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	title?: string;
-}): JSX.Element {
+}): React.JSX.Element {
 	const ref = useRef<HTMLButtonElement>(null);
 
 	const dropDownContext = React.useContext(DropDownContext);
@@ -71,7 +74,7 @@ function DropDownItems({
 	children: React.ReactNode;
 	dropDownRef: React.Ref<HTMLDivElement>;
 	onClose: () => void;
-}): JSX.Element {
+}): React.JSX.Element {
 	const [items, setItems] = useState<React.RefObject<HTMLButtonElement>[]>();
 	const [highlightedItem, setHighlightedItem] =
 		useState<React.RefObject<HTMLButtonElement>>();
@@ -140,6 +143,7 @@ export default function TextEditorDropDown({
 	buttonAriaLabel,
 	buttonClassName,
 	buttonIconClassName,
+	buttonIconName,
 	children,
 	stopCloseOnClickSelf,
 }: {
@@ -147,6 +151,7 @@ export default function TextEditorDropDown({
 	buttonAriaLabel?: string;
 	buttonClassName: string;
 	buttonIconClassName?: string;
+	buttonIconName?: string;
 	buttonLabel?: string;
 	children: ReactNode;
 	stopCloseOnClickSelf?: boolean;
@@ -168,7 +173,7 @@ export default function TextEditorDropDown({
 
 		if (showDropDown && button !== null && dropDown !== null) {
 			const { top, left } = button.getBoundingClientRect();
-			dropDown.style.top = `${top + 40}px`;
+			dropDown.style.top = `${top + button.offsetHeight + dropDownPadding}px`;
 			dropDown.style.left = `${Math.min(
 				left,
 				window.innerWidth - dropDown.offsetWidth - 20
@@ -201,17 +206,43 @@ export default function TextEditorDropDown({
 		}
 	}, [dropDownRef, buttonRef, showDropDown, stopCloseOnClickSelf]);
 
+	useEffect(() => {
+		const handleButtonPositionUpdate = () => {
+			if (showDropDown) {
+				const button = buttonRef.current;
+				const dropDown = dropDownRef.current;
+				if (button !== null && dropDown !== null) {
+					const { top } = button.getBoundingClientRect();
+					const newPosition = top + button.offsetHeight + dropDownPadding;
+					if (newPosition !== dropDown.getBoundingClientRect().top) {
+						dropDown.style.top = `${newPosition}px`;
+					}
+				}
+			}
+		};
+
+		document.addEventListener('scroll', handleButtonPositionUpdate);
+
+		return () => {
+			document.removeEventListener('scroll', handleButtonPositionUpdate);
+		};
+	}, [buttonRef, dropDownRef, showDropDown]);
+
 	return (
 		<>
 			<button
+				type="button"
 				disabled={disabled}
 				aria-label={buttonAriaLabel || buttonLabel}
 				className={buttonClassName}
 				onClick={() => setShowDropDown(!showDropDown)}
 				ref={buttonRef}
-				type="button"
 			>
-				{buttonIconClassName && <span className={buttonIconClassName} />}
+				{buttonIconClassName && buttonIconName && (
+					<span
+						className={`${buttonIconClassName} ${iconStyles[buttonIconName]}`}
+					/>
+				)}
 				{buttonLabel && (
 					<span className="text dropdown-button-text">{buttonLabel}</span>
 				)}

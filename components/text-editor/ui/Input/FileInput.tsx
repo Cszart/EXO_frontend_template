@@ -14,9 +14,10 @@ type Props = Readonly<{
 	'data-test-id'?: string;
 	accept?: string;
 	label: string;
-	onChange: (files: FileList) => void;
+	onChange: (files: FileList | null) => void;
 }>;
 
+// Replace class names in the JSX with styles from the CSS Module
 export default function TextEditorFileInput({
 	accept,
 	label,
@@ -30,7 +31,7 @@ export default function TextEditorFileInput({
 				type="file"
 				accept={accept}
 				className={styles.Input__input}
-				onChange={(e) => e.target.files && onChange(e.target.files)}
+				onChange={(e) => onChange(e.target.files)}
 				data-test-id={dataTestId}
 			/>
 		</div>

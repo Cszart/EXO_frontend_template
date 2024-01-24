@@ -6,9 +6,11 @@
  *
  */
 
+import joinClasses from 'components/text-editor/utils/joinClasses';
 import styles from './Button.module.css';
+
 import * as React from 'react';
-import joinClasses from '../utils/join-classes';
+import { ReactNode } from 'react';
 
 export default function TextEditorButton({
 	'data-test-id': dataTestId,
@@ -20,7 +22,7 @@ export default function TextEditorButton({
 	title,
 }: {
 	'data-test-id'?: string;
-	children: JSX.Element | string | (JSX.Element | string)[];
+	children: ReactNode;
 	className?: string;
 	disabled?: boolean;
 	onClick: () => void;

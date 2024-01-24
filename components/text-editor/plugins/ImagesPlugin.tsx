@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $wrapNodeInElement, mergeRegister } from '@lexical/utils';
 import {
@@ -35,10 +27,10 @@ import {
 	ImageNode,
 	TextEditorImagePayload,
 } from '../nodes/ImageNode';
-import TextEditorButton from '../ui/Button';
 import { TextEditorDialogActions } from '../ui/Dialog';
-import TextEditorFileInput from '../ui/FileInput';
-import TextEditorTextInput from '../ui/TextInput';
+import TextEditorTextInput from '../ui/Input/TextInput';
+import TextEditorButton from '../ui/Button/Button';
+import TextEditorFileInput from '../ui/Input/FileInput';
 
 export type InsertImagePayload = Readonly<TextEditorImagePayload>;
 
@@ -137,17 +129,17 @@ export function InsertImageUploadedDialogBody({
 			<TextEditorTextInput
 				label="Width"
 				placeholder="Width"
-				inputType="number"
+				type="number"
 				onChange={(value: string) => setWidth(parseInt(value))}
-				value={width}
+				value={width?.toLocaleString() ?? ''}
 				data-test-id="image-modal-alt-text-input"
 			/>
 			<TextEditorTextInput
 				label="Height"
 				placeholder="Height"
-				inputType="number"
+				type="number"
 				onChange={(value: string) => setHeight(parseInt(value))}
-				value={height}
+				value={height?.toLocaleString() ?? ''}
 				data-test-id="image-modal-alt-text-input"
 			/>
 			<TextEditorDialogActions>

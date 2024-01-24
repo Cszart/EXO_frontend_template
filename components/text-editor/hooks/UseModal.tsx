@@ -8,8 +8,7 @@
 
 import { useCallback, useMemo, useState } from 'react';
 import * as React from 'react';
-
-import TextEditorModal from '../ui/Modal';
+import TextEditorModal from '../ui/Modal/Modal';
 
 export default function TextEditorUseModal(): [
 	JSX.Element | null,

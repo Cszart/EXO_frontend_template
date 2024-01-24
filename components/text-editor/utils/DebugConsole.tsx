@@ -1,7 +1,7 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { TreeView } from '@lexical/react/LexicalTreeView';
 
-export default function DebugConsole() {
+export default function DebugConsole(): JSX.Element {
 	return (
 		<TreeView
 			viewClassName="tree-view-output"

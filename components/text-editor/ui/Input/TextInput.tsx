@@ -9,33 +9,34 @@
 import styles from './Input.module.css';
 
 import * as React from 'react';
+import { HTMLInputTypeAttribute } from 'react';
 
 type Props = Readonly<{
 	'data-test-id'?: string;
 	label: string;
-	onChange: (arg0: string) => void;
+	onChange: (val: string) => void;
 	placeholder?: string;
-	value?: string | number;
-	inputType?: React.HTMLInputTypeAttribute;
+	value: string;
+	type?: HTMLInputTypeAttribute;
 }>;
 
+// Replace class names in the JSX with styles from the CSS Module
 export default function TextEditorTextInput({
 	label,
 	value,
 	onChange,
 	placeholder = '',
 	'data-test-id': dataTestId,
-	inputType,
+	type = 'text',
 }: Props): JSX.Element {
-	const initValue = '';
 	return (
 		<div className={styles.Input__wrapper}>
 			<label className={styles.Input__label}>{label}</label>
 			<input
-				type={inputType || 'text'}
+				type={type}
 				className={styles.Input__input}
 				placeholder={placeholder}
-				value={value || initValue}
+				value={value}
 				onChange={(e) => {
 					onChange(e.target.value);
 				}}

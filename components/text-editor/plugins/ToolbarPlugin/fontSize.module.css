@@ -1,0 +1,37 @@
+.font-size-input {
+	font-weight: bold;
+	font-size: 14px;
+	color: #777;
+	border-radius: 5px;
+	border: 1px solid grey;
+	height: 21px;
+	margin-top: 5px;
+	padding: 2px 4px;
+	text-align: center;
+	width: 20px;
+}
+
+.number-input {
+	appearance: textfield;
+	-moz-appearance: textfield; /* Firefox */
+}
+
+.number-input::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.number-input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+button.font-decrement {
+	padding: 0px;
+	margin-right: 3px;
+}
+
+button.font-increment {
+	padding: 0px;
+	margin-left: 3px;
+}

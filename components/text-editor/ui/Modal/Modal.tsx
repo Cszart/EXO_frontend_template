@@ -1,6 +1,16 @@
-import React, { useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
 import styles from './Modal.module.css';
+
+import * as React from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 function PortalImpl({
 	onClose,
@@ -8,23 +18,23 @@ function PortalImpl({
 	title,
 	closeOnClickOutside,
 }: {
-	children: JSX.Element | string | (JSX.Element | string)[];
+	children: ReactNode;
 	closeOnClickOutside: boolean;
 	onClose: () => void;
 	title: string;
-}): JSX.Element {
-	const modalRef = useRef<HTMLDivElement | null>(null);
+}): React.JSX.Element {
+	const modalRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		if (modalRef.current !== null) {
-			modalRef.current?.focus();
+			modalRef.current.focus();
 		}
 	}, []);
 
 	useEffect(() => {
-		let modalOverlayElement: HTMLElement | null | undefined = null;
-		const handler = (event: KeyboardEvent): void => {
-			if (event.keyCode === 27) {
+		let modalOverlayElement: HTMLElement | null = null;
+		const handler = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') {
 				onClose();
 			}
 		};
@@ -32,16 +42,17 @@ function PortalImpl({
 			const target = event.target;
 			if (
 				modalRef.current !== null &&
-				!modalRef.current?.contains(target as Node) &&
+				!modalRef.current.contains(target as Node) &&
 				closeOnClickOutside
 			) {
 				onClose();
 			}
 		};
-		if (modalRef.current !== null) {
-			modalOverlayElement = modalRef.current?.parentElement;
+		const modelElement = modalRef.current;
+		if (modelElement !== null) {
+			modalOverlayElement = modelElement.parentElement;
 			if (modalOverlayElement !== null) {
-				modalOverlayElement?.addEventListener('click', clickOutsideHandler);
+				modalOverlayElement.addEventListener('click', clickOutsideHandler);
 			}
 		}
 
@@ -77,12 +88,12 @@ export default function TextEditorModal({
 	onClose,
 	children,
 	title,
-	closeOnClickOutside = true,
+	closeOnClickOutside = false,
 }: {
-	onClose: () => void;
-	children: JSX.Element | string | (JSX.Element | string)[];
-	title: string;
+	children: ReactNode;
 	closeOnClickOutside?: boolean;
+	onClose: () => void;
+	title: string;
 }): JSX.Element {
 	return createPortal(
 		<PortalImpl

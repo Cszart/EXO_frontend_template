@@ -1,0 +1,41 @@
+.add-icon {
+	background-image: url(../../../public/icons/svg/add-sign.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.minus-icon {
+	background-image: url(../../../public/icons/svg/minus-sign.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.bg-color-icon {
+	background-image: url(../../../public/icons/svg/bg-color.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.dropdown-more-icon {
+	background-image: url(../../../public/icons/svg/dropdown-more.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.font-color-icon {
+	background-image: url(../../../public/icons/svg/font-color.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.paint-bucket-icon {
+	background-image: url(../../../public/icons/svg/paint-bucket.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.plus-icon {
+	background-image: url(../../../public/icons/svg/plus.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
