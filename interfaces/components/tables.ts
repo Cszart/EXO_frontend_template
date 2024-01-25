@@ -27,7 +27,7 @@ export interface SimpleTableProps<T> {
 	 * The data to show on the rows
 	 * Or a function that will handle fetching the content
 	 */
-	rows: T[];
+	rows?: T[];
 
 	/**
 	 * Actions specified here will be added to the Actions menu

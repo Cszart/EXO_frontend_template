@@ -2,14 +2,14 @@ import * as React from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { Typography } from '../typography';
-import Spinner from '../spinner/spinner';
 import { Icon } from '../icon';
+import { Spinner } from '../spinner';
 
 export interface ButtonProps {
 	type?: 'submit' | 'reset' | 'button';
 	className?: string;
 	disabled?: boolean;
-	decoration?: 'fill' | 'line-white' | 'line-primary' | 'none';
+	decoration?: 'fill' | 'not-fill' | 'line-primary' | 'none';
 	size?: 'extra-small' | 'small' | 'medium' | 'large' | 'full' | 'fit';
 	onClick?: () => void;
 	label?: string;
@@ -64,11 +64,11 @@ const ButtonContent: React.FC<
 
 				// not fill white
 				{
-					'text-blue border-blue': decoration === 'line-white',
+					'text-blue border-blue': decoration === 'not-fill',
 				},
 				{
-					'hover:bg-primary hover:text-gray-0 hover:border-primary':
-						decoration === 'line-white' && !disabled,
+					'hover:bg-blue hover:text-white hover:border-blue':
+						decoration === 'not-fill' && !disabled,
 				},
 
 				// not fill primary
@@ -76,7 +76,7 @@ const ButtonContent: React.FC<
 					'text-primary border-primary': decoration === 'line-primary',
 				},
 				{
-					'hover:bg-primary hover:text-gray-0 hover:border-primary':
+					'hover:bg-primary hover:text-white hover:border-primary':
 						decoration === 'line-primary' && !disabled,
 				},
 

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Layout } from 'components/layout';
-import { Typography } from 'components/common';
 import { RoleI } from 'interfaces';
 import SimpleTable from 'components/common/tables/simpleTable';
 import { rolesService } from 'api_services';
@@ -23,13 +22,7 @@ const RolesScreen = (): JSX.Element => {
 	}, []);
 
 	return (
-		<Layout withHeader withSidebar>
-			<Typography
-				type="custom-h1"
-				text="Roles Management"
-				className="text-xl font-bold text-gray-800 text-center mb-10"
-			/>
-
+		<Layout withHeader withSidebar title="Roles Management">
 			<SimpleTable<RoleI>
 				columns={[
 					{

@@ -8,6 +8,7 @@ import { Button, Tabs, Typography } from 'components/common';
 import { emailService } from 'api_services/email';
 import { useRouter } from 'next/router';
 import { EmailTemplate } from 'interfaces';
+import Icons from 'const/icons';
 
 const saveHtmlToFile = (htmlContent: string, fileName: string): void => {
 	const blob = new Blob([htmlContent], { type: 'text/html' });
@@ -45,18 +46,25 @@ const EmailContentEditorScreen = (): JSX.Element => {
 	}, [editMode]);
 
 	return (
-		<Layout withHeader>
-			<Typography
-				type="custom-h1"
-				text="Content editor for Email"
-				className="text-2xl font-bold text-gray-800 mb-5"
-			/>
+		<Layout withHeader title="Content editor for Email">
+			{/* Download HTML button */}
+			<div className="flex w-full justify-end mb-10">
+				<Button
+					label="Download"
+					decoration="not-fill"
+					size="extra-small"
+					iconRight
+					icon={Icons.download}
+					className="rounded-[32px]"
+					onClick={() => saveHtmlToFile(previewContent ?? '', 'template.html')}
+				/>
+			</div>
 
 			{/* Page content - Two columns */}
-			<div className="grid grid-cols-2 gap-4 w-full">
+			<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
 				{/* First column - Editor */}
 				<div className="flex flex-col gap-2 w-full">
-					<Typography type="link-1" text="Editor" />
+					<Typography type="link-1" text="Editor" className="mb-2" />
 
 					<SimpleTextEditor
 						onChange={(html: string) => {
@@ -87,34 +95,26 @@ const EmailContentEditorScreen = (): JSX.Element => {
 								},
 							]}
 						/>
-
-						{/* Actions buttons */}
-						<div className="flex flex-wrap gap-2">
-							<Button
-								label="Download"
-								decoration="fill"
-								size="extra-small"
-								onClick={() =>
-									saveHtmlToFile(previewContent ?? '', 'template.html')
-								}
-							/>
-							<Button
-								label="Save"
-								decoration="line-primary"
-								size="extra-small"
-								onClick={() =>
-									previewContent && emailService.saveTemplate(previewContent)
-								}
-							/>
-						</div>
 					</div>
 
-					<div className="border rounded-lg border-dark-40 h-full p-4">
+					<div className="border rounded-lg border-dark-40 h-full min-h-[400px] p-4">
 						{currentOption === 'email_content'
 							? parse(previewContent ?? '')
 							: previewContent}
 					</div>
 				</div>
+			</div>
+
+			{/* Save button */}
+			<div className="flex w-full justify-end mt-10">
+				<Button
+					label="Save changes"
+					decoration="line-primary"
+					size="extra-small"
+					onClick={() =>
+						previewContent && emailService.saveTemplate(previewContent)
+					}
+				/>
 			</div>
 		</Layout>
 	);

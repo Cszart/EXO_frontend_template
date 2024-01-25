@@ -9,8 +9,12 @@ import { headerNavbarOptions } from 'const';
 import cmsSidebarNavigation from 'const/sideBarNavigation';
 import { NavigationOptions } from 'interfaces';
 import { filterOptionsByRolesOrPermissions } from 'utils/options';
+import { Typography } from 'components/common';
 
 export interface Layout_Props {
+	title?: string;
+	classNameTitle?: string;
+
 	withHeader?: boolean;
 	customHeader?: React.ReactNode;
 
@@ -32,6 +36,9 @@ export interface Layout_Props {
  * @returns JSX element for the layout container
  */
 export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
+	title,
+	classNameTitle,
+
 	withHeader = true,
 	customHeader = undefined,
 
@@ -64,7 +71,7 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 	}, [session]);
 
 	return (
-		<div className={clsx('w-full min-h-screen', classNameLayout)}>
+		<div className={clsx('w-full h-screen overflow-hidden', classNameLayout)}>
 			{/* Header */}
 			{withHeader && !customHeader && (
 				<HeaderNavbar
@@ -78,7 +85,9 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 
 			{/* Content of the layout */}
 			{children && (
-				<div className={clsx('flex min-h-screen', classNameChildren)}>
+				<div
+					className={clsx('flex h-screen overflow-hidden', classNameChildren)}
+				>
 					{/* Sidebar */}
 					{withSidebar && !customSidebar && (
 						<SidebarDesktop itemOptions={sideBarOptions} />
@@ -88,10 +97,23 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 					{/* Content */}
 					<main
 						className={clsx({
-							'w-full px-16 py-10 mb-10 overflow-hidden': withSidebar,
+							'relative w-full px-9 md:px-16 py-10 mb-10 overflow-y-auto':
+								withSidebar,
 						})}
 					>
-						{children}
+						<div>
+							{title && (
+								<Typography
+									type="custom-h1"
+									text={title}
+									className={clsx(
+										'text-xl font-bold text-gray-800 mb-10',
+										classNameTitle
+									)}
+								/>
+							)}
+							{children}
+						</div>
 					</main>
 				</div>
 			)}

@@ -8,6 +8,7 @@ import { Disclosure, Transition } from '@headlessui/react';
 import { Icon, Typography } from 'components/common';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { itemIsNotNullAndNotUndefined } from 'utils';
+import { useRouter } from 'next/router';
 
 interface SidebarDesktopProps {
 	itemOptions: NavigationOptions[];
@@ -35,6 +36,7 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 	classNameItem = 'text-white',
 	classNameItemButton = '',
 }) => {
+	const router = useRouter();
 	/**
 	 * This function is to render the proper Element based on the item
 	 * features, this will render the basic elements, the dropdown element will
@@ -53,7 +55,15 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 			case item.href != undefined && item.href != null:
 				return (
 					<Link href={item.href ?? '#'}>
-						<Typography type="subtitle-2" className={clsx(classNameItem)}>
+						<Typography
+							type="subtitle-2"
+							className={clsx(
+								{
+									'border-b-2 border-white': router.pathname === item.href,
+								},
+								classNameItem
+							)}
+						>
 							{item.label}
 						</Typography>
 					</Link>
@@ -77,10 +87,15 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 		}
 	};
 
+	const getDefaultOpen = (item: NavigationOptions): boolean => {
+		const hrefs = item.subOptions?.map((elem) => elem.href);
+		return hrefs?.includes(router.pathname) || false;
+	};
+
 	return (
 		<div
 			className={clsx(
-				'sticky top-0 left-0 z-30 h-screen',
+				'hidden md:flex flex-shrink-0 w-max min-w-[250px] max-w-[350px]',
 				'transition-transform -translate-x-full sm:translate-x-0',
 				classNameContainer
 			)}
@@ -88,8 +103,7 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 			<nav
 				className={clsx(
 					'h-full py-8 overflow-y-auto',
-					'flex flex-col',
-					'w-max min-w-[250px] max-w-[350px]',
+					'flex flex-col flex-1',
 					classNameContainer
 				)}
 			>
@@ -104,7 +118,7 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 					return (
 						<div
 							key={`sideNavbar-item-${item.name}`}
-							className="flex flex-wrap gap-2 w-full items-center py-2 px-6"
+							className="flex flex-wrap gap-2 w-full items-center py-3 px-6"
 						>
 							{/* Icon */}
 							{item.icon && !item.subOptions && (
@@ -118,7 +132,11 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 
 							{/* Dropdown item */}
 							{item.subOptions && (
-								<Disclosure as="div" className="w-full">
+								<Disclosure
+									as="div"
+									className="w-full"
+									defaultOpen={getDefaultOpen(item)}
+								>
 									<Disclosure.Button
 										className={clsx(
 											'flex justify-between items-center w-full',
@@ -157,7 +175,7 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 												leaveFrom="transform scale-100 opacity-100"
 												leaveTo="transform scale-95 opacity-0"
 											>
-												<Disclosure.Panel className="flex flex-wrap gap-2 w-full justify-start items-center pl-6 mt-2">
+												<Disclosure.Panel className="flex flex-wrap gap-2 w-full justify-start items-center pl-6 mt-3">
 													{/* SubItem Icon */}
 													{subItem.icon && typeof subItem.icon == 'string' && (
 														<div className="w-4">

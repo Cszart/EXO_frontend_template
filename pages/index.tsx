@@ -6,13 +6,24 @@ import RolesEnum from 'const/role';
 import AppRoutes from 'const/routes';
 import { GetServerSideProps, Redirect } from 'next';
 import { getSession } from 'next-auth/react';
+import Image from 'next/image';
 import { crudPermissions } from 'utils';
 
 const HomePage = (): any => {
 	return (
 		<Layout withSidebar>
-			<div className="flex justify-center items-center h-screen w-full text-2xl font-bold">
+			<div className="flex flex-col justify-center text-center items-center mt-20 w-full">
+				<Image
+					src="/icons/svg/welcome.svg"
+					width={300}
+					height={400}
+					alt="welcome"
+					className="mb-10"
+				/>
 				<Typography type="headline-2">Welcome to the Dashboard</Typography>
+				<Typography type="subtitle-1" className="mt-3">
+					Frontend Template
+				</Typography>
 			</div>
 		</Layout>
 	);

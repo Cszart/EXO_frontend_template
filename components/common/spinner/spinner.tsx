@@ -10,7 +10,7 @@ interface SpinnerProps {
 	className?: string;
 }
 
-const Spinner: React.FC<SpinnerProps> = ({
+export const Spinner: React.FC<SpinnerProps> = ({
 	type,
 	width = type === 'loadingPage' ? 'w-10' : 'w-6',
 	circleFill = 'currentColor',
@@ -45,5 +45,3 @@ const Spinner: React.FC<SpinnerProps> = ({
 		</div>
 	);
 };
-
-export default Spinner;

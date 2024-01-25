@@ -1,28 +1,93 @@
-import { Typography, Separator, Button, Avatar } from 'components/common';
+import {
+	Typography,
+	Separator,
+	Button,
+	Avatar,
+	Spinner,
+} from 'components/common';
 import { Dropdown } from 'components/common/dropdown';
-import Spinner from 'components/common/spinner/spinner';
 import PaginatedTable from 'components/common/tables/paginatedTable';
 import SimpleTable from 'components/common/tables/simpleTable';
 import { InputText, InputEmail } from 'components/form';
 import InputPassword from 'components/form/input-password/input-password';
 import { Layout } from 'components/layout';
 import Icons from 'const/icons';
-import DummyUsersData from 'data/tables/userDummyData';
+// import DummyUsersData from 'data/tables/userDummyData';
 import { UserI } from 'interfaces';
 import { useForm } from 'react-hook-form';
+
+const DummyUsersData = [
+	{
+		id: '1',
+		email: 'john@example.com',
+		username: 'john_doe',
+		name: 'John Doe',
+		image: 'path-to-image',
+		roles: ['admin'],
+		permissions: [
+			'user:management:view',
+			'user:management:create',
+			'user:management:edit',
+			'user:management:delete',
+			'role:management:view',
+			'role:management:create',
+			'role:management:edit',
+			'role:management:delete',
+			'permission:management:view',
+			'permission:management:create',
+			'permission:management:edit',
+			'permission:management:delete',
+		],
+		accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3Mi...Ix-E',
+	},
+	{
+		id: '2',
+		email: 'jane@example.com',
+		username: 'jane_smith',
+		name: 'Jane Smith',
+		image: 'path-to-image',
+		roles: ['moderator'],
+		permissions: [
+			'user:management:view',
+			'user:management:edit',
+			'role:management:view',
+			'role:management:edit',
+		],
+		accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3Mi...Ix-E',
+	},
+	{
+		id: '3',
+		email: 'mike@example.com',
+		username: 'mike_jones',
+		name: 'Mike Jones',
+		image: 'path-to-image',
+		roles: ['user'],
+		permissions: ['user:management:view'],
+		accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3Mi...Ix-E',
+	},
+	{
+		id: '4',
+		email: 'sara@example.com',
+		username: 'sara_adams',
+		name: 'Sara Adams',
+		image: 'path-to-image',
+		roles: ['user'],
+		permissions: ['user:management:view'],
+		accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3Mi...Ix-E',
+	},
+];
 
 const GuideStyles = (): JSX.Element => {
 	const { register } = useForm({ mode: 'onChange' });
 	return (
-		<Layout withFooter withHeader withSidebar>
-			<div className="flex flex-col items-start justify-center gap-20 w-full py-14">
-				<Typography
-					type="custom-h1"
-					className="text-3xl font-bold text-gray-900 text-center"
-				>
-					Guide Styles
-				</Typography>
-
+		<Layout
+			withFooter
+			withHeader
+			withSidebar
+			title="Guide Styles"
+			classNameTitle="!text-3xl"
+		>
+			<div className="flex flex-col items-start justify-center gap-20 w-full">
 				{/* *** Typography *** */}
 				<Separator text="Typography" />
 				<div className="flex flex-wrap space-x-10 w-full">
@@ -63,8 +128,8 @@ const GuideStyles = (): JSX.Element => {
 					<Button decoration="line-primary" size="medium">
 						Button line-primary
 					</Button>
-					<Button decoration="line-white" size="medium">
-						Button line-white
+					<Button decoration="not-fill" size="medium">
+						Button not-fill
 					</Button>
 				</div>
 
@@ -77,8 +142,8 @@ const GuideStyles = (): JSX.Element => {
 					<Button decoration="line-primary" size="medium" disabled>
 						Button line-primary disabled
 					</Button>
-					<Button decoration="line-white" size="medium" disabled>
-						Button line-white disabled
+					<Button decoration="not-fill" size="medium" disabled>
+						Button not-fill disabled
 					</Button>
 				</div>
 
@@ -103,6 +168,52 @@ const GuideStyles = (): JSX.Element => {
 					<Button decoration="fill" size="full">
 						Button full
 					</Button>
+				</div>
+
+				<Separator text="With icons" className="max-w-[200px] self-center" />
+				<div className="flex flex-wrap justify-between gap-4 w-full">
+					<Button
+						decoration="fill"
+						size="fit"
+						iconLeft
+						icon={Icons.home}
+						label="Button iconLeft"
+					></Button>
+					<Button
+						decoration="fill"
+						size="fit"
+						iconRight
+						icon={Icons.home}
+						label="Button iconRight"
+					></Button>
+					<Button
+						decoration="line-primary"
+						size="fit"
+						iconLeft
+						icon={Icons.home}
+						label="Button iconLeft"
+					></Button>
+					<Button
+						decoration="line-primary"
+						size="fit"
+						iconRight
+						icon={Icons.home}
+						label="Button iconRight"
+					></Button>
+					<Button
+						decoration="not-fill"
+						size="fit"
+						iconLeft
+						icon={Icons.home}
+						label="Button iconLeft"
+					></Button>
+					<Button
+						decoration="not-fill"
+						size="fit"
+						iconRight
+						icon={Icons.home}
+						label="Button iconRight"
+					></Button>
 				</div>
 
 				<Separator text="Dropdown" className="max-w-[200px] self-center" />
@@ -134,10 +245,10 @@ const GuideStyles = (): JSX.Element => {
 				<Separator text="Avatars" />
 				{/* Avatar */}
 				<div className="flex flex-wrap justify-betwen gap-10 w-full">
-					<Avatar photoUrl={Icons.avatar} size="small" />
-					<Avatar photoUrl={Icons.avatar} size="medium" />
-					<Avatar photoUrl={Icons.avatar} size="large" />
 					<Avatar photoUrl={Icons.avatar} className="w-20 h-20" />
+					<Avatar photoUrl={Icons.avatar} size="large" />
+					<Avatar photoUrl={Icons.avatar} size="medium" />
+					<Avatar photoUrl={Icons.avatar} size="small" />
 				</div>
 
 				{/* Inputs */}
@@ -156,10 +267,24 @@ const GuideStyles = (): JSX.Element => {
 				</div>
 
 				{/* Spinner and misc */}
-				<Separator text="MISC" />
-				<div className="flex flex-col gap-2 justify-center align-center w-auto">
-					<Typography type="caption-1" text="Spinner" />
-					<Spinner width="w-8" circleFill="grey" loadingBarFill="black" />
+				<Separator text="Spinners" />
+				<div className="flex items-start gap-10">
+					<div className="flex flex-col gap-2 justify-center items-center w-auto">
+						<Typography type="caption-1" text="Simple" />
+						<Spinner />
+					</div>
+					<div className="flex flex-col gap-2 justify-center items-center w-auto">
+						<Typography type="caption-1" text="LoadingPage" />
+						<Spinner type="loadingPage" />
+					</div>
+					<div className="flex flex-col gap-2 justify-center items-center w-auto">
+						<Typography type="caption-1" text="Custom props" />
+						<Spinner width="w-8" circleFill="grey" loadingBarFill="black" />
+					</div>
+					<div className="flex flex-col gap-2 justify-center items-center w-auto">
+						<Typography type="caption-1" text="Color" />
+						<Spinner circleFill="violet" loadingBarFill="purple" />
+					</div>
 				</div>
 
 				{/* Tables */}
@@ -170,50 +295,51 @@ const GuideStyles = (): JSX.Element => {
 					<SimpleTable<UserI>
 						columns={[
 							{
-								header: 'ID',
-								content: (instance) => <>{instance.id}</>,
-							},
-							{
-								header: 'Email',
-								content: (instance) => <>{instance.email}</>,
+								header: 'Name',
+								content: (instance) => <p>{instance.name}</p>,
 							},
 							{
 								header: 'Username',
-								content: (instance) => <>{instance.username}</>,
-							},
-							{
-								header: 'Name',
-								content: (instance) => <>{instance.name}</>,
+								content: (instance) => <p>{instance.username}</p>,
 							},
 							{
 								header: 'Roles',
-								content: (instance) => <>{instance.roles.join(', ')}</>,
+								content: (instance) => (
+									<ul>
+										{instance.roles.map((item) => {
+											return (
+												<li key={`roles-user-${instance.id}-${item}`}>
+													{item}
+												</li>
+											);
+										})}
+									</ul>
+								),
 							},
 							{
 								header: 'Permissions',
-								content: (instance) => <>{instance.permissions.join(', ')}</>,
+								content: (instance) => (
+									<ul>
+										{instance.permissions.map((item) => {
+											return (
+												<li key={`permissions-user-${instance.id}-${item}`}>
+													{item}
+												</li>
+											);
+										})}
+									</ul>
+								),
 							},
 						]}
-						rows={DummyUsersData}
-						rowActions={(instance: UserI) => {
-							return [
-								{
-									label: 'Action 1',
-									onClick: () =>
-										alert(`This Action 1 for user ${instance.name}`),
+						rows={DummyUsersData as UserI[]}
+						rowActions={() => [
+							{
+								label: 'Edit',
+								onClick: (instance) => {
+									alert(instance.id);
 								},
-								{
-									label: 'Action 2',
-									onClick: () =>
-										alert(`This Action 2 for user ${instance.email}`),
-								},
-								{
-									label: 'Action 3',
-									onClick: () =>
-										alert(`This Action 3 for user ${instance.username}`),
-								},
-							];
-						}}
+							},
+						]}
 					/>
 				</div>
 
@@ -249,7 +375,7 @@ const GuideStyles = (): JSX.Element => {
 								content: (instance) => <>{instance.permissions.join(', ')}</>,
 							},
 						]}
-						rows={DummyUsersData}
+						rows={DummyUsersData as UserI[]}
 						rowActions={(instance: UserI) => {
 							return [
 								{

@@ -6,6 +6,7 @@
 enum Icons {
 	avatar = '/icons/svg/avatar.svg',
 	coinbase = '/icons/svg/coinbase.svg',
+	download = '/icons/svg/download.svg',
 	envelope = '/icons/svg/envelope.svg',
 	facebook = '/icons/svg/facebook.svg',
 	gear = '/icons/svg/gear.svg',
@@ -14,6 +15,7 @@ enum Icons {
 	home = '/icons/svg/home.svg',
 	invisible = '/icons/svg/invisible.svg',
 	metamask = '/icons/svg/metamask.svg',
+	nodata = '/icons/svg/no_data.svg',
 	visible = '/icons/svg/visible.svg',
 }
 

@@ -20,7 +20,7 @@ export function buildHeaderUserProfileOptions(
 			{
 				name: 'signout',
 				label: 'Sign Out',
-				onClick: async () => await signOut(),
+				onClick: async () => await signOut({ callbackUrl: '/' }),
 			},
 		]);
 	} else if (sessionStatus === 'unauthenticated') {

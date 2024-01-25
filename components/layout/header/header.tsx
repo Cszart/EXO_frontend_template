@@ -48,8 +48,7 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 	return (
 		<nav
 			className={clsx(
-				'flex items-center justify-between w-full shadow-sm px-6 py-3',
-				'bg-primary sticky top-0 z-50',
+				'flex items-center justify-between w-full shadow-sm px-6 py-3 bg-primary',
 				className
 			)}
 		>

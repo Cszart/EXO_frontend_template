@@ -11,7 +11,7 @@ const EmailTemplatesListScreen = (): JSX.Element => {
 	const router = useRouter();
 
 	// Templates data
-	const [templatesData, setTemplatesData] = React.useState<EmailTemplate[]>([]);
+	const [templatesData, setTemplatesData] = React.useState<EmailTemplate[]>();
 
 	// Fetch templates data
 	// NOTE: implementation might change
@@ -25,16 +25,16 @@ const EmailTemplatesListScreen = (): JSX.Element => {
 	}, []);
 
 	return (
-		<Layout withHeader>
+		<Layout withHeader title="Templates List">
 			<SimpleTable<EmailTemplate>
 				columns={[
 					{
-						header: 'UUID',
-						content: (instance) => <p>{instance.uuid}</p>,
-					},
-					{
 						header: 'Name',
 						content: (instance) => <p>{instance.name}</p>,
+					},
+					{
+						header: 'UUID',
+						content: (instance) => <p>{instance.uuid}</p>,
 					},
 					{
 						header: 'Created at',

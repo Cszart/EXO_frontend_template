@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { Typography, Button } from 'components/common';
+import { Typography, Button, Spinner } from 'components/common';
 import InputPassword from 'components/form/input-password/input-password';
 import Link from 'next/link';
 import AppRoutes from 'const/routes';
-import Spinner from 'components/common/spinner/spinner';
 import { LayoutLogin } from 'components/layout';
 
 export const NewPasswordScreen = () => {

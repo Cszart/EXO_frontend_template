@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Layout } from 'components/layout';
-import { Typography } from 'components/common';
 import { PermissionI } from 'interfaces';
 import { permissionService } from 'api_services';
 import SimpleTable from 'components/common/tables/simpleTable';
@@ -23,13 +22,7 @@ const PermissionsScreen = (): JSX.Element => {
 	}, []);
 
 	return (
-		<Layout withHeader withSidebar>
-			<Typography
-				type="custom-h1"
-				text="Permissions Management"
-				className="text-xl font-bold text-gray-800 text-center mb-10"
-			/>
-
+		<Layout withHeader withSidebar title="Permissions Management">
 			<SimpleTable<PermissionI>
 				columns={[
 					{

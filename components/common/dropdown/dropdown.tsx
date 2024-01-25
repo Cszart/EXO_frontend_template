@@ -93,6 +93,7 @@ export const Dropdown = ({
 									{itemIsNotNullAndNotUndefined(item.onClick) &&
 										itemIsNullOrUndefined(item.href) && (
 											<button
+												type="button"
 												className={clsx('cursor-pointer p-2', classNameItem)}
 												onClick={item.onClick}
 											>

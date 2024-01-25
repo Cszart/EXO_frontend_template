@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Layout } from 'components/layout';
-import { Typography } from 'components/common';
 import { UserI } from 'interfaces';
 import SimpleTable from 'components/common/tables/simpleTable';
 import { userService } from 'api_services';
 
 const UsersScreen = (): JSX.Element => {
 	// Data
-	const [usersData, setUsersData] = useState<UserI[]>([]);
+	const [usersData, setUsersData] = useState<UserI[]>();
 
 	// Fetch users
 	useEffect(() => {
@@ -23,22 +22,16 @@ const UsersScreen = (): JSX.Element => {
 	}, []);
 
 	return (
-		<Layout withHeader withSidebar>
-			<Typography
-				type="custom-h1"
-				text="Users Management"
-				className="text-xl font-bold text-gray-800 text-center mb-10"
-			/>
-
+		<Layout withHeader withSidebar title="Users Management">
 			<SimpleTable<UserI>
 				columns={[
 					{
-						header: 'Username',
-						content: (instance) => <p>{instance.username}</p>,
-					},
-					{
 						header: 'Name',
 						content: (instance) => <p>{instance.name}</p>,
+					},
+					{
+						header: 'Username',
+						content: (instance) => <p>{instance.username}</p>,
 					},
 					{
 						header: 'Roles',
