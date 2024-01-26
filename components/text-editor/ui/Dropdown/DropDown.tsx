@@ -16,7 +16,7 @@ import {
 	useState,
 } from 'react';
 import { createPortal } from 'react-dom';
-import iconStyles from '../icons.module.css';
+import iconStyles from '../../themes/icons.module.css';
 
 type DropDownContextType = {
 	registerItem: (ref: React.RefObject<HTMLButtonElement>) => void;

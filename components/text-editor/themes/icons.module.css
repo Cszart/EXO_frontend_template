@@ -1,41 +1,450 @@
+/* icons.module.css */
 .add-icon {
-	background-image: url(../../../public/icons/svg/add-sign.svg);
+	background-image: url(./images/icons/add-sign.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.arrow-clockwise {
+	background-image: url(./images/icons/arrow-clockwise.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.arrow-counterclockwise {
+	background-image: url(./images/icons/arrow-counterclockwise.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.bg-color {
+	background-image: url(./images/icons/bg-color.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.camera {
+	background-image: url(./images/icons/camera.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.card-checklist {
+	background-image: url(./images/icons/card-checklist.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.caret-right-fill {
+	background-image: url(./images/icons/caret-right-fill.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.chat-left-text {
+	background-image: url(./images/icons/chat-left-text.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.chat-right {
+	background-image: url(./images/icons/chat-right.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.chat-right-dots {
+	background-image: url(./images/icons/chat-right-dots.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.chat-right-text {
+	background-image: url(./images/icons/chat-right-text.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.chat-square-quote {
+	background-image: url(./images/icons/chat-square-quote.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.chevron-down {
+	background-image: url(./images/icons/chevron-down.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.clipboard {
+	background-image: url(./images/icons/clipboard.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.close {
+	background-image: url(./images/icons/close.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.code {
+	background-image: url(./images/icons/code.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.comments {
+	background-image: url(./images/icons/comments.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.copy {
+	background-image: url(./images/icons/copy.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.diagram-2 {
+	background-image: url(./images/icons/diagram-2.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.download {
+	background-image: url(./images/icons/download.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.draggable-block-menu {
+	background-image: url(./images/icons/draggable-block-menu.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.dropdown-more {
+	background-image: url(./images/icons/dropdown-more.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.file-earmark-text {
+	background-image: url(./images/icons/file-earmark-text.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.file-image {
+	background-image: url(./images/icons/file-image.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.figma {
+	background-image: url(./images/icons/figma.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.font-color {
+	background-image: url(./images/icons/font-color.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.font-family {
+	background-image: url(./images/icons/font-family.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.gear {
+	background-image: url(./images/icons/gear.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.horizontal-rule {
+	background-image: url(./images/icons/horizontal-rule.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.indent {
+	background-image: url(./images/icons/indent.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.journal-code {
+	background-image: url(./images/icons/journal-code.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.journal-text {
+	background-image: url(./images/icons/journal-text.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.justify {
+	background-image: url(./images/icons/justify.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.link {
+	background-image: url(./images/icons/link.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.list-ol {
+	background-image: url(./images/icons/list-ol.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.list-ul {
+	background-image: url(./images/icons/list-ul.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.lock {
+	background-image: url(./images/icons/lock.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.lock-fill {
+	background-image: url(./images/icons/lock-fill.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.markdown {
+	background-image: url(./images/icons/markdown.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.mic {
+	background-image: url(./images/icons/mic.svg);
 	background-repeat: no-repeat;
 	background-position: center;
 }
 
 .minus-icon {
-	background-image: url(../../../public/icons/svg/minus-sign.svg);
+	background-image: url(./images/icons/minus-sign.svg);
 	background-repeat: no-repeat;
 	background-position: center;
 }
 
-.bg-color-icon {
-	background-image: url(../../../public/icons/svg/bg-color.svg);
+.outdent {
+	background-image: url(./images/icons/outdent.svg);
 	background-repeat: no-repeat;
 	background-position: center;
 }
 
-.dropdown-more-icon {
-	background-image: url(../../../public/icons/svg/dropdown-more.svg);
+.palette {
+	background-image: url(./images/icons/palette.svg);
 	background-repeat: no-repeat;
 	background-position: center;
 }
 
-.font-color-icon {
-	background-image: url(../../../public/icons/svg/font-color.svg);
+.paint-bucket {
+	background-image: url(./images/icons/paint-bucket.svg);
 	background-repeat: no-repeat;
 	background-position: center;
 }
 
-.paint-bucket-icon {
-	background-image: url(../../../public/icons/svg/paint-bucket.svg);
+.pencil-fill {
+	background-image: url(./images/icons/pencil-fill.svg);
 	background-repeat: no-repeat;
 	background-position: center;
 }
 
-.plus-icon {
-	background-image: url(../../../public/icons/svg/plus.svg);
+.plus {
+	background-image: url(./images/icons/plus.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.plus-slash-minus {
+	background-image: url(./images/icons/plus-slash-minus.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.prettier {
+	background-image: url(./images/icons/prettier.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.prettier-error {
+	background-image: url(./images/icons/prettier-error.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.send {
+	background-image: url(./images/icons/send.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.sticky {
+	background-image: url(./images/icons/sticky.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.success {
+	background-image: url(./images/icons/success.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.success-alt {
+	background-image: url(./images/icons/success-alt.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.table {
+	background-image: url(./images/icons/table.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.text-center {
+	background-image: url(./images/icons/text-center.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.text-left {
+	background-image: url(./images/icons/text-left.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.text-paragraph {
+	background-image: url(./images/icons/text-paragraph.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.text-right {
+	background-image: url(./images/icons/text-right.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.trash {
+	background-image: url(./images/icons/trash.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.trash3 {
+	background-image: url(./images/icons/trash3.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.type-bold {
+	background-image: url(./images/icons/type-bold.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.type-h1 {
+	background-image: url(./images/icons/type-h1.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.type-h2 {
+	background-image: url(./images/icons/type-h2.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.type-h3 {
+	background-image: url(./images/icons/type-h3.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.type-h4 {
+	background-image: url(./images/icons/type-h4.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.type-h5 {
+	background-image: url(./images/icons/type-h5.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.type-h6 {
+	background-image: url(./images/icons/type-h6.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.type-italic {
+	background-image: url(./images/icons/type-italic.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.type-strikethrough {
+	background-image: url(./images/icons/type-strikethrough.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.type-subscript {
+	background-image: url(./images/icons/type-subscript.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.type-superscript {
+	background-image: url(./images/icons/type-superscript.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.type-underline {
+	background-image: url(./images/icons/type-underline.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.upload {
+	background-image: url(./images/icons/upload.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.user {
+	background-image: url(./images/icons/user.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.youtube {
+	background-image: url(./images/icons/youtube.svg);
 	background-repeat: no-repeat;
 	background-position: center;
 }

@@ -3,12 +3,12 @@ import parse from 'html-react-parser';
 import { saveAs } from 'file-saver';
 
 import { Layout } from 'components/layout';
-import SimpleTextEditor from 'components/text-editor/textEditor';
 import { Button, Tabs, Typography } from 'components/common';
 import { emailService } from 'api_services/email';
 import { useRouter } from 'next/router';
 import { EmailTemplate } from 'interfaces';
 import Icons from 'const/icons';
+import SimpleTextEditor from 'components/text-editor/textEditor';
 
 const saveHtmlToFile = (htmlContent: string, fileName: string): void => {
 	const blob = new Blob([htmlContent], { type: 'text/html' });

@@ -7,7 +7,7 @@
  */
 
 import styles from './fontSize.module.css';
-import iconStyles from '../../ui/icons.module.css';
+import iconStyles from '../../themes/icons.module.css';
 
 import { $patchStyleText } from '@lexical/selection';
 import { $getSelection, LexicalEditor } from 'lexical';

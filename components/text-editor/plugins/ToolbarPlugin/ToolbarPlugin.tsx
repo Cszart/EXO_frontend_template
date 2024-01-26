@@ -1,10 +1,45 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+// React Related
 import {
-	CODE_LANGUAGE_FRIENDLY_NAME_MAP,
+	useCallback,
+	Dispatch,
+	useState,
+	useEffect,
+	SetStateAction,
+} from 'react';
+
+// Lexical
+import {
+	ElementFormatType,
+	LexicalEditor,
+	$getSelection,
+	$createParagraphNode,
+	$isRangeSelection,
+	FORMAT_ELEMENT_COMMAND,
+	OUTDENT_CONTENT_COMMAND,
+	INDENT_CONTENT_COMMAND,
+	NodeKey,
+	$isRootOrShadowRoot,
+	$isElementNode,
+	$isTextNode,
+	$getNodeByKey,
+	SELECTION_CHANGE_COMMAND,
+	COMMAND_PRIORITY_CRITICAL,
+	CAN_UNDO_COMMAND,
+	CAN_REDO_COMMAND,
+	KEY_MODIFIER_COMMAND,
+	COMMAND_PRIORITY_NORMAL,
+	UNDO_COMMAND,
+	REDO_COMMAND,
+	FORMAT_TEXT_COMMAND,
+} from 'lexical';
+
+import {
 	$createCodeNode,
 	$isCodeNode,
+	CODE_LANGUAGE_FRIENDLY_NAME_MAP,
 	CODE_LANGUAGE_MAP,
 	getLanguageFriendlyName,
 } from '@lexical/code';
@@ -39,40 +74,17 @@ import {
 	mergeRegister,
 	$findMatchingParent,
 } from '@lexical/utils';
+
+// Text Editor UI
 import { TextEditorDropDownItem } from 'components/text-editor/ui';
 import TextEditorDropDown from 'components/text-editor/ui/Dropdown/DropDown';
 import TextEditorDropdownColorPicker from 'components/text-editor/ui/DropdownColorPicker/DropdownColorPicker';
 import { getSelectedNode, sanitizeUrl } from 'components/text-editor/utils';
-import {
-	ElementFormatType,
-	LexicalEditor,
-	$getSelection,
-	$createParagraphNode,
-	$isRangeSelection,
-	FORMAT_ELEMENT_COMMAND,
-	OUTDENT_CONTENT_COMMAND,
-	INDENT_CONTENT_COMMAND,
-	NodeKey,
-	$isRootOrShadowRoot,
-	$isElementNode,
-	$isTextNode,
-	$getNodeByKey,
-	SELECTION_CHANGE_COMMAND,
-	COMMAND_PRIORITY_CRITICAL,
-	CAN_UNDO_COMMAND,
-	CAN_REDO_COMMAND,
-	KEY_MODIFIER_COMMAND,
-	COMMAND_PRIORITY_NORMAL,
-	UNDO_COMMAND,
-	REDO_COMMAND,
-	FORMAT_TEXT_COMMAND,
-} from 'lexical';
-import { useCallback, Dispatch, useState, useEffect } from 'react';
-import { InsertImageDialog } from '../ImagesPlugin';
-import FontSize from './fontSize';
-import TextEditorUseModal from '../../hooks/UseModal';
 
-import IconStyles from '../../ui/icons.module.css';
+// Other
+import FontSize from './fontSize';
+import { InsertImageDialog } from '../ImagesPlugin';
+import TextEditorUseModal from '../../hooks/UseModal';
 
 // --- --- UTILS CONST --- --- //
 // Usually options for the toolbar
@@ -82,7 +94,7 @@ const rootTypeToRootName = {
 	table: 'Table',
 };
 
-const blockTypeToBlockName: { [key: string]: string } = {
+export const blockTypeToBlockName: { [key: string]: string } = {
 	bullet: 'Bulleted List',
 	check: 'Check List',
 	code: 'Code Block',
@@ -517,8 +529,12 @@ function ElementFormatDropdown({
 }
 
 export default function ToolbarPlugin({
+	blockType,
+	setBlockType,
 	setIsLinkEditMode,
 }: {
+	blockType: string | number;
+	setBlockType: Dispatch<SetStateAction<string | number>>;
 	setIsLinkEditMode: Dispatch<boolean>;
 }): JSX.Element {
 	// --- --- Util variables --- --- //
@@ -533,8 +549,6 @@ export default function ToolbarPlugin({
 		null
 	);
 
-	const [blockType, setBlockType] =
-		useState<keyof typeof blockTypeToBlockName>('paragraph');
 	const [rootType, setRootType] =
 		useState<keyof typeof rootTypeToRootName>('root');
 	const [fontSize, setFontSize] = useState<string>('15px');

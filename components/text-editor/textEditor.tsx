@@ -39,7 +39,10 @@ import {
 	AutoLinkPlugin,
 	createLinkMatcherWithRegExp,
 } from '@lexical/react/LexicalAutoLinkPlugin';
-import ToolbarPlugin from './plugins/ToolbarPlugin/ToolbarPlugin';
+import ToolbarPlugin, {
+	blockTypeToBlockName,
+} from './plugins/ToolbarPlugin/ToolbarPlugin';
+import { $getRoot } from 'lexical';
 
 // Const
 // For Auto Link
@@ -58,10 +61,12 @@ const MATCHERS = [
 	}),
 ];
 
+// Placeholder element for editor
 function Placeholder(): JSX.Element {
 	return <div className="editor-placeholder">Enter some text...</div>;
 }
 
+// Editor configuration
 const editorConfig: InitialConfigType = {
 	namespace: 'SimpleTextEditor',
 	// The editor theme
@@ -88,18 +93,26 @@ const editorConfig: InitialConfigType = {
 	],
 };
 
+// Editor component
 export interface SimpleTextEditorProps {
 	onChange: (editorState: string) => void;
 	defaultHtml?: string;
 }
 
 const SimpleTextEditor = (props: SimpleTextEditorProps): JSX.Element => {
+	// To see what type of block the editor is actually using
+	const [blockType, setBlockType] =
+		useState<keyof typeof blockTypeToBlockName>('paragraph');
 	const [, setIsLinkEditMode] = useState(false);
 
 	return (
 		<LexicalComposer initialConfig={editorConfig}>
 			<div className="editor-container">
-				<ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} />
+				<ToolbarPlugin
+					blockType={blockType}
+					setBlockType={setBlockType}
+					setIsLinkEditMode={setIsLinkEditMode}
+				/>
 
 				<div className="editor-inner">
 					<RichTextPlugin
@@ -111,6 +124,13 @@ const SimpleTextEditor = (props: SimpleTextEditorProps): JSX.Element => {
 						onChange={async (editorState, editor) => {
 							props.onChange(
 								editorState.read(() => {
+									// Return the text content of the Editor
+									// This will return the raw HTML written inside
+									if (blockType === 'code') {
+										return $getRoot().getTextContent();
+									}
+
+									// Else, return the HTML generated based on the content of the editor
 									return $generateHtmlFromNodes(editor, null);
 								})
 							);

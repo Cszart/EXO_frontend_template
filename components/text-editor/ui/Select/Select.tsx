@@ -27,7 +27,7 @@ export default function TextEditorSelect({
 			<label style={{ marginTop: '-1em' }} className={styles.Input__label}>
 				{label}
 			</label>
-			<select {...other} className={className || styles.select}>
+			<select {...other} className={className || styles.selectContainer}>
 				{children}
 			</select>
 		</div>
