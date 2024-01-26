@@ -117,7 +117,7 @@ class AuthUtils {
 	public hasRole(roleName: string): boolean {
 		const user: UserI | null = this.getUser();
 
-		if (user) return user.roles.some((role) => role === roleName);
+		if (user) return user.roles?.some((role) => role === roleName);
 		return false;
 	}
 
@@ -132,7 +132,7 @@ class AuthUtils {
 	public hasPermissionFor(permission: string): boolean {
 		const user: UserI | null = this.getUser();
 
-		if (user) return user.permissions.some((p) => p == permission);
+		if (user) return user.permissions?.some((p) => p == permission);
 		return false;
 	}
 
@@ -140,7 +140,7 @@ class AuthUtils {
 	public hasAnyPermission(permissions: string[]): boolean {
 		const user: UserI | null = this.getUser();
 		if (user) {
-			return user.permissions.some((p) => permissions.includes(p));
+			return user.permissions?.some((p) => permissions.includes(p));
 		}
 
 		return false;

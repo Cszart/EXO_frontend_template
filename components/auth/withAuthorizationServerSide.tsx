@@ -76,9 +76,7 @@ const withAuthorizationServerSide = async ({
 	}
 
 	if (allowedRoles && allowedRoles.length > 0) {
-		isAllowedByRoles = session.user.permissions.some((p) =>
-			allowedRoles.includes(p)
-		);
+		isAllowedByRoles = session.user.roles.some((p) => allowedRoles.includes(p));
 	}
 
 	// Returns null so the server doesnt have to redirect
