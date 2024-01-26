@@ -7,8 +7,8 @@ import { Dropdown } from 'components/common/dropdown';
 import { Avatar, Typography } from 'components/common';
 import Icons from 'const/icons';
 import { buildHeaderUserProfileOptions } from 'utils';
-import authUtils from 'utils/auth';
 import { headerUserProfileOptions } from 'const';
+import { useSession } from 'next-auth/react';
 
 interface HeaderNavbarProps {
 	navBarOptions?: NavigationOptions[];
@@ -30,20 +30,20 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 	logoUrl,
 	className,
 }) => {
+	const session = useSession();
 	const [userProfileOptions, setUserProfileOptions] = useState<Option[]>([]);
 
 	// Build dropdown menu for user profile
 	useEffect(() => {
-		const utilSession = authUtils.getSession();
-		if (utilSession != null) {
+		if (session != null) {
 			const updatedOptions = buildHeaderUserProfileOptions(
 				headerUserProfileOptions,
-				utilSession.status
+				session.status
 			);
 
 			setUserProfileOptions(updatedOptions);
 		}
-	}, []);
+	}, [session]);
 
 	return (
 		<nav
