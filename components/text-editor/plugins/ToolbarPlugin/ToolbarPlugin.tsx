@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import {
@@ -199,7 +200,7 @@ function BlockFormatDropDown({
 	editor: LexicalEditor;
 	disabled?: boolean;
 }): JSX.Element {
-	const formatParagraph = () => {
+	const formatParagraph = (): void => {
 		editor.update(() => {
 			const selection = $getSelection();
 			$setBlocksType(selection as any, () => $createParagraphNode());

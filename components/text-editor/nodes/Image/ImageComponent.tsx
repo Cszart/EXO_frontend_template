@@ -5,7 +5,7 @@ import { Suspense, useRef } from 'react';
 
 const imageCache = new Set();
 
-function useSuspenseImage(src: string) {
+function useSuspenseImage(src: string): void {
 	if (!imageCache.has(src)) {
 		throw new Promise((resolve) => {
 			const img = new Image();
@@ -37,6 +37,7 @@ function LazyImage({
 }): JSX.Element {
 	useSuspenseImage(src);
 	return (
+		// eslint-disable-next-line @next/next/no-img-element
 		<img
 			className={className || undefined}
 			src={src}

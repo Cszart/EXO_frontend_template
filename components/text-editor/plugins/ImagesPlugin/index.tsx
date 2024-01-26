@@ -1,6 +1,16 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $wrapNodeInElement, mergeRegister } from '@lexical/utils';
 import {
+	$createImageNode,
+	$isImageNode,
+	ImageNode,
+	TextEditorImagePayload,
+} from 'components/text-editor/nodes';
+import { TextEditorDialogActions } from 'components/text-editor/ui';
+import TextEditorButton from 'components/text-editor/ui/Button/Button';
+import TextEditorFileInput from 'components/text-editor/ui/Input/FileInput';
+import TextEditorTextInput from 'components/text-editor/ui/Input/TextInput';
+import {
 	$createParagraphNode,
 	$createRangeSelection,
 	$getSelection,
@@ -20,17 +30,6 @@ import {
 } from 'lexical';
 import { useEffect, useRef, useState } from 'react';
 import * as React from 'react';
-
-import {
-	$createImageNode,
-	$isImageNode,
-	ImageNode,
-	TextEditorImagePayload,
-} from '../nodes/ImageNode';
-import { TextEditorDialogActions } from '../ui/Dialog';
-import TextEditorTextInput from '../ui/Input/TextInput';
-import TextEditorButton from '../ui/Button/Button';
-import TextEditorFileInput from '../ui/Input/FileInput';
 
 export type InsertImagePayload = Readonly<TextEditorImagePayload>;
 
@@ -170,7 +169,7 @@ export function InsertImageDialog({
 
 	useEffect(() => {
 		hasModifier.current = false;
-		const handler = (e: KeyboardEvent) => {
+		const handler = (e: KeyboardEvent): void => {
 			hasModifier.current = e.altKey;
 		};
 		document.addEventListener('keydown', handler);
@@ -179,7 +178,7 @@ export function InsertImageDialog({
 		};
 	}, [activeEditor]);
 
-	const onClick = (payload: InsertImagePayload) => {
+	const onClick = (payload: InsertImagePayload): void => {
 		activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
 		onClose();
 	};
@@ -277,6 +276,7 @@ export default function ImagesPlugin({
 				COMMAND_PRIORITY_HIGH
 			)
 		);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [captionsEnabled, editor]);
 
 	return null;

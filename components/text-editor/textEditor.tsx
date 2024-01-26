@@ -31,7 +31,7 @@ import CodeHighlightPlugin from './plugins/CodeHighlightPlugin';
 import ActionsPlugin from './plugins/ActionsPlugin';
 
 // Nodes
-import { ImageNode } from './nodes/ImageNode';
+import { ImageNode } from './nodes/Image/ImageNode';
 
 // Styles
 import TextEditorDefaultTheme from './themes/DefaultTheme';

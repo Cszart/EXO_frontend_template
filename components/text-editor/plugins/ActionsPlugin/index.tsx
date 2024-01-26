@@ -4,10 +4,10 @@ import {
 	$convertToMarkdownString,
 } from '@lexical/markdown';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { PLAYGROUND_TRANSFORMERS } from 'components/text-editor/utils';
 import { $createTextNode, $getRoot } from 'lexical';
 import * as React from 'react';
 import { useCallback } from 'react';
-import { PLAYGROUND_TRANSFORMERS } from '../utils/MarkdownTransformers';
 
 export default function ActionsPlugin(): JSX.Element {
 	const [editor] = useLexicalComposerContext();

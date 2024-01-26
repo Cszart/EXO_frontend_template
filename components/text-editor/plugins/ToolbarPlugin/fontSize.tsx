@@ -134,7 +134,7 @@ export default function FontSize({
 		[editor]
 	);
 
-	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
 		const inputValueNumber = Number(inputValue);
 
 		if (['e', 'E', '+', '-'].includes(e.key) || isNaN(inputValueNumber)) {
@@ -157,7 +157,7 @@ export default function FontSize({
 		}
 	};
 
-	const handleButtonClick = (updateType: updateFontSizeType) => {
+	const handleButtonClick = (updateType: updateFontSizeType): void => {
 		if (inputValue !== '') {
 			const nextFontSize = calculateNextFontSize(
 				Number(inputValue),
