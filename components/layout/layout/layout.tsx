@@ -73,10 +73,6 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 		setSideBarOptions(filteredOptions);
 	}, [session]);
 
-	React.useEffect(() => {
-		console.log({ showSidebar });
-	}, [showSidebar]);
-
 	return (
 		<div className={clsx('w-full h-screen overflow-hidden', classNameLayout)}>
 			{/* Header */}

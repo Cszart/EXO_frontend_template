@@ -5,11 +5,11 @@ import clsx from 'clsx';
 import { NavigationOptions, Option } from 'interfaces';
 import { Dropdown } from 'components/common/dropdown';
 import { Avatar, Typography } from 'components/common';
-import Icons from 'const/icons';
 import { buildHeaderUserProfileOptions } from 'utils';
 import authUtils from 'utils/auth';
 import { headerUserProfileOptions } from 'const';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
+import { useSession } from 'next-auth/react';
 
 interface HeaderNavbarProps {
 	navBarOptions?: NavigationOptions[];
@@ -36,6 +36,7 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 	showSidebar,
 	setShowSidebar,
 }) => {
+	const { data } = useSession();
 	const [userProfileOptions, setUserProfileOptions] = useState<Option[]>([]);
 
 	// Build dropdown menu for user profile
@@ -63,7 +64,7 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 				<img src={logoUrl} alt="Logo" className="h-8 max-h-8" />
 			</Link>
 
-			{/* Menu Icon (Show sidebar) */}
+			{/* Menu Icon (Show sidebar only mobile screen) */}
 			<button
 				type="button"
 				className="md:hidden"
@@ -131,7 +132,9 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 
 			{/* Profile */}
 			<Dropdown
-				buttonContent={<Avatar photoUrl={Icons.avatar} size="small" />}
+				buttonContent={
+					<Avatar photoUrl={data?.user.image || ''} size="small" />
+				}
 				showChevronDownIcon={true}
 				items={userProfileOptions}
 				classNameButton="w-auto text-white"
