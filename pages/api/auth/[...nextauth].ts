@@ -25,6 +25,7 @@ const options: NextAuthOptions = {
 			clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',
 			clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || '',
 			profile: (data) => ({
+				id: data.sub,
 				provider: 'google',
 				...data,
 			}),
