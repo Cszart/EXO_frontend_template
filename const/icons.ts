@@ -7,6 +7,7 @@ enum Icons {
 	avatar = '/icons/svg/avatar.svg',
 	coinbase = '/icons/svg/coinbase.svg',
 	download = '/icons/svg/download.svg',
+	edit = '/icons/svg/edit.svg',
 	envelope = '/icons/svg/envelope.svg',
 	facebook = '/icons/svg/facebook.svg',
 	gear = '/icons/svg/gear.svg',

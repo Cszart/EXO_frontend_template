@@ -335,8 +335,9 @@ const GuideStyles = (): JSX.Element => {
 						rowActions={() => [
 							{
 								label: 'Edit',
+								icon: Icons.edit,
 								onClick: (instance) => {
-									alert(instance.id);
+									alert('You are editing item ' + instance.id);
 								},
 							},
 						]}

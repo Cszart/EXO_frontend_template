@@ -13,6 +13,7 @@ export interface ColumnProps<T> {
 // Props that represent a row
 export interface RowActionProps<T> {
 	label: string;
+	icon?: string;
 	onClick: (instance: T) => void;
 }
 

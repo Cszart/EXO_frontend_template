@@ -30,6 +30,7 @@ const SimpleTable = <T,>({
 								return {
 									name: item.label,
 									label: item.label,
+									icon: item.icon,
 									onClick: () => item.onClick(instance),
 								};
 							});
