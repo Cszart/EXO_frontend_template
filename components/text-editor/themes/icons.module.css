@@ -196,6 +196,11 @@
 	background-repeat: no-repeat;
 	background-position: center;
 }
+.justify-align {
+	background-image: url(./images/icons/justify.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
 
 .link {
 	background-image: url(./images/icons/link.svg);
@@ -328,8 +333,18 @@
 	background-repeat: no-repeat;
 	background-position: center;
 }
+.center-align {
+	background-image: url(./images/icons/text-center.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
 
 .text-left {
+	background-image: url(./images/icons/text-left.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.left-align {
 	background-image: url(./images/icons/text-left.svg);
 	background-repeat: no-repeat;
 	background-position: center;
@@ -340,8 +355,18 @@
 	background-repeat: no-repeat;
 	background-position: center;
 }
+.paragraph {
+	background-image: url(./images/icons/text-paragraph.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
 
 .text-right {
+	background-image: url(./images/icons/text-right.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.right-align {
 	background-image: url(./images/icons/text-right.svg);
 	background-repeat: no-repeat;
 	background-position: center;
