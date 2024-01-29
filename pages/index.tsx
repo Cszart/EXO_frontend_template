@@ -9,6 +9,7 @@ import { getSession } from 'next-auth/react';
 import Image from 'next/image';
 import { crudPermissions } from 'utils';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const HomePage = (): any => {
 	return (
 		<Layout withSidebar>

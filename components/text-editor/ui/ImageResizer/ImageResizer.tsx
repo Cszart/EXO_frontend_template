@@ -84,7 +84,7 @@ export default function TextEditorImageResizer({
 	const minWidth = 100;
 	const minHeight = 100;
 
-	const setStartCursor = (direction: number) => {
+	const setStartCursor = (direction: number): void => {
 		const ew = direction === Direction.east || direction === Direction.west;
 		const ns = direction === Direction.north || direction === Direction.south;
 		const nwse =
@@ -120,7 +120,7 @@ export default function TextEditorImageResizer({
 		}
 	};
 
-	const setEndCursor = () => {
+	const setEndCursor = (): void => {
 		if (editorRootElement !== null) {
 			editorRootElement.style.setProperty('cursor', 'text');
 		}
@@ -137,7 +137,7 @@ export default function TextEditorImageResizer({
 	const handlePointerDown = (
 		event: React.PointerEvent<HTMLDivElement>,
 		direction: number
-	) => {
+	): void => {
 		if (!editor.isEditable()) {
 			return;
 		}
@@ -170,7 +170,7 @@ export default function TextEditorImageResizer({
 			document.addEventListener('pointerup', handlePointerUp);
 		}
 	};
-	const handlePointerMove = (event: PointerEvent) => {
+	const handlePointerMove = (event: PointerEvent): void => {
 		const image = imageRef.current;
 		const positioning = positioningRef.current;
 
@@ -223,7 +223,7 @@ export default function TextEditorImageResizer({
 			}
 		}
 	};
-	const handlePointerUp = () => {
+	const handlePointerUp = (): void => {
 		const image = imageRef.current;
 		const positioning = positioningRef.current;
 		const controlWrapper = controlWrapperRef.current;

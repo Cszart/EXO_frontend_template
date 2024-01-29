@@ -287,6 +287,7 @@ function BlockFormatDropDown({
 			disabled={disabled}
 			buttonClassName="toolbar-item block-controls"
 			buttonIconClassName={'icon block-type ' + blockType}
+			buttonIconName="block-type"
 			buttonLabel={blockTypeToBlockName[blockType]}
 			buttonAriaLabel="Formatting options for text style"
 		>
@@ -318,7 +319,7 @@ function BlockFormatDropDown({
 				<i className="icon h3" />
 				<span className="text">Heading 3</span>
 			</TextEditorDropDownItem>
-			<TextEditorDropDownItem
+			{/* <TextEditorDropDownItem
 				className={'item ' + dropDownActiveClass(blockType === 'bullet')}
 				onClick={formatBulletList}
 			>
@@ -338,7 +339,7 @@ function BlockFormatDropDown({
 			>
 				<i className="icon check-list" />
 				<span className="text">Check List</span>
-			</TextEditorDropDownItem>
+			</TextEditorDropDownItem> */}
 			<TextEditorDropDownItem
 				className={'item ' + dropDownActiveClass(blockType === 'quote')}
 				onClick={formatQuote}
@@ -396,6 +397,7 @@ function FontDropDown({
 			buttonIconClassName={
 				style === 'font-family' ? 'icon block-type font-family' : ''
 			}
+			buttonIconName="font-family"
 			buttonAriaLabel={buttonAriaLabel}
 		>
 			{(style === 'font-family' ? FONT_FAMILY_OPTIONS : FONT_SIZE_OPTIONS).map(
@@ -433,9 +435,8 @@ function ElementFormatDropdown({
 		<TextEditorDropDown
 			disabled={disabled}
 			buttonLabel={formatOption.name}
-			buttonIconClassName={`icon ${
-				isRTL ? formatOption.iconRTL : formatOption.icon
-			}`}
+			buttonIconClassName={'icon'}
+			buttonIconName={isRTL ? formatOption.iconRTL : formatOption.icon}
 			buttonClassName="toolbar-item spaced alignment"
 			buttonAriaLabel="Formatting options for text alignment"
 		>
@@ -685,6 +686,7 @@ export default function ToolbarPlugin({
 					: parent?.getFormatType() || 'left'
 			);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeEditor]);
 
 	const applyStyleText = useCallback(
@@ -1020,28 +1022,28 @@ export default function ToolbarPlugin({
 					</button>
 
 					{/* COLOR for text */}
-					<TextEditorDropdownColorPicker
+					{/* <TextEditorDropdownColorPicker
 						disabled={!isEditable}
 						buttonClassName="toolbar-item color-picker"
 						buttonAriaLabel="Formatting text color"
 						buttonIconClassName="icon"
-						buttonIconName="font-color-icon"
+						buttonIconName="font-color"
 						color={fontColor}
 						onChange={onFontColorSelect}
 						title="text color"
-					/>
+					/> */}
 
 					{/* COLOR for background */}
-					<TextEditorDropdownColorPicker
+					{/* <TextEditorDropdownColorPicker
 						disabled={!isEditable}
 						buttonClassName="toolbar-item color-picker"
 						buttonAriaLabel="Formatting background color"
 						buttonIconClassName="icon"
-						buttonIconName="bg-color-icon"
+						buttonIconName="bg-color"
 						color={bgColor}
 						onChange={onBgColorSelect}
 						title="bg color"
-					/>
+					/> */}
 
 					{/* Other formatting text options */}
 
@@ -1051,7 +1053,7 @@ export default function ToolbarPlugin({
 						buttonLabel=""
 						buttonAriaLabel="Formatting options for additional text styles"
 						buttonIconClassName="icon"
-						buttonIconName="dropdown-more-icon"
+						buttonIconName="dropdown-more"
 					>
 						{/* Strikethrough */}
 						<TextEditorDropDownItem
@@ -1105,7 +1107,7 @@ export default function ToolbarPlugin({
 							title="Clear text formatting"
 							aria-label="Clear all text formatting"
 						>
-							<i className="icon clear" />
+							<i className="icon trash" />
 							<span className="text">Clear Formatting</span>
 						</TextEditorDropDownItem>
 					</TextEditorDropDown>

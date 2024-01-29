@@ -30,6 +30,7 @@ const SimpleTable = <T,>({
 								return {
 									name: item.label,
 									label: item.label,
+									icon: item.icon,
 									onClick: () => item.onClick(instance),
 								};
 							});
@@ -48,6 +49,7 @@ const SimpleTable = <T,>({
 			]);
 			setColumnsData(updatedColumns);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.columns, hideRowActions]);
 
 	return (

@@ -20,6 +20,7 @@ export interface DropdownProps {
 	// Styles
 	classNameButton?: string;
 	classNameMenuItems?: string;
+	classNameMenuItem?: string;
 	classNameItem?: string;
 }
 
@@ -27,11 +28,12 @@ export const Dropdown = ({
 	showChevronDownIcon = true,
 	classNameButton = 'w-auto rounded-md p-1',
 	classNameMenuItems = 'w-max bg-white rounded-lg',
-	classNameItem = 'text-gray-800 font-bold text-sm hover:bg-dark-10 rounded-lg w-full',
+	classNameMenuItem = 'flex items-center gap-x-2 p-2 hover:bg-dark-10 rounded-lg',
+	classNameItem = 'text-gray-800 text-left text-sm rounded-lg w-full',
 	...props
 }: DropdownProps): JSX.Element => {
 	return (
-		<Menu as="div" className="relative">
+		<Menu as="div" className="relative w-fit">
 			<Menu.Button
 				className={clsx(
 					'flex justify-center items-center',
@@ -76,25 +78,30 @@ export const Dropdown = ({
 								<Menu.Item
 									as="div"
 									key={`dropDown-option-${item.label}-${index}`}
+									className={classNameMenuItem}
 								>
-									{item.icon && <Icon src={item.icon} className="w-4 h-4" />}
+									{item.icon && (
+										<Icon src={item.icon} className="max-w-4 max-h-4" />
+									)}
 
+									{/* If it's a link */}
 									{item.href && itemIsNullOrUndefined(item.onClick) && (
 										<Link href={item.href}>
 											<Typography
 												type="subtitle-2"
-												className={clsx('cursor-pointer p-2', classNameItem)}
+												className={clsx(classNameItem)}
 											>
 												{item.label}
 											</Typography>
 										</Link>
 									)}
 
+									{/* If it's a onClick */}
 									{itemIsNotNullAndNotUndefined(item.onClick) &&
 										itemIsNullOrUndefined(item.href) && (
 											<button
 												type="button"
-												className={clsx('cursor-pointer p-2', classNameItem)}
+												className={clsx('cursor-pointer', classNameItem)}
 												onClick={item.onClick}
 											>
 												{item.label}

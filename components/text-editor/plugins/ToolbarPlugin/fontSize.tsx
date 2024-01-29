@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -174,7 +175,7 @@ export default function FontSize({
 	}, [selectionFontSize]);
 
 	return (
-		<>
+		<div className="flex justify-center items-center w-auto">
 			<button
 				type="button"
 				disabled={
@@ -185,7 +186,7 @@ export default function FontSize({
 				onClick={() => handleButtonClick(updateFontSizeType.decrement)}
 				className={`${styles['toolbar-item']} ${styles['font-decrement']}`}
 			>
-				<i className={iconStyles['minus-icon']} />
+				<i className={`flex w-4 h-4 ${iconStyles['minus-icon']}`} />
 			</button>
 
 			<input
@@ -209,8 +210,8 @@ export default function FontSize({
 				onClick={() => handleButtonClick(updateFontSizeType.increment)}
 				className={`${styles['toolbar-item']} ${styles['font-increment']}`}
 			>
-				<i className={iconStyles['add-icon']} />
+				<i className={`flex w-4 h-4 ${iconStyles['add-icon']}`} />
 			</button>
-		</>
+		</div>
 	);
 }

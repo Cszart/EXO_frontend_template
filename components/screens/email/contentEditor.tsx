@@ -111,9 +111,10 @@ const EmailContentEditorScreen = (): JSX.Element => {
 					label="Save changes"
 					decoration="line-primary"
 					size="extra-small"
-					onClick={() =>
-						previewContent && emailService.saveTemplate(previewContent)
-					}
+					onClick={() => {
+						previewContent && emailService.saveTemplate(previewContent);
+						alert('Changes Saved!');
+					}}
 				/>
 			</div>
 		</Layout>

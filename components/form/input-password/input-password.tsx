@@ -10,7 +10,7 @@ const InputPassword: React.FC<
 		}
 > = ({ rules, validate = true, ...props }) => {
 	const [isVisible, setIsVisible] = React.useState(false);
-	const handleClick = () => {
+	const handleClick = (): void => {
 		setIsVisible(!isVisible);
 	};
 

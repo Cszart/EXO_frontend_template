@@ -33,12 +33,12 @@ function PortalImpl({
 
 	useEffect(() => {
 		let modalOverlayElement: HTMLElement | null = null;
-		const handler = (event: KeyboardEvent) => {
+		const handler = (event: KeyboardEvent): void => {
 			if (event.key === 'Escape') {
 				onClose();
 			}
 		};
-		const clickOutsideHandler = (event: MouseEvent) => {
+		const clickOutsideHandler = (event: MouseEvent): void => {
 			const target = event.target;
 			if (
 				modalRef.current !== null &&

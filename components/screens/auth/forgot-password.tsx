@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import { InputEmail } from 'components/form';
 import { useForm } from 'react-hook-form';
@@ -5,7 +6,7 @@ import { useRouter } from 'next/router';
 import { Typography, Button } from 'components/common';
 import { LayoutLogin } from 'components/layout';
 
-export const ForgotPasswordScreen = () => {
+export const ForgotPasswordScreen = (): JSX.Element => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const {
