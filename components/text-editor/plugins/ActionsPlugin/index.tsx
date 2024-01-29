@@ -1,15 +1,29 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
 import { $createCodeNode, $isCodeNode } from '@lexical/code';
 import {
 	$convertFromMarkdownString,
 	$convertToMarkdownString,
 } from '@lexical/markdown';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { PLAYGROUND_TRANSFORMERS } from 'components/text-editor/utils';
 import { $createTextNode, $getRoot } from 'lexical';
 import * as React from 'react';
 import { useCallback } from 'react';
 
-export default function ActionsPlugin(): JSX.Element {
+import { PLAYGROUND_TRANSFORMERS } from '../MarkdownTransformers';
+
+export default function ActionsPlugin({
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	isRichText,
+}: {
+	isRichText?: boolean;
+}): JSX.Element {
 	const [editor] = useLexicalComposerContext();
 
 	const handleMarkdownToggle = useCallback(() => {
@@ -34,9 +48,9 @@ export default function ActionsPlugin(): JSX.Element {
 	}, [editor]);
 
 	return (
-		<div className="actions flex flex-row flex-wrap items-center justify-end">
+		<div className="actions">
 			<button
-				className="action-button p-1 rounded-full border border-gray-700"
+				className="action-button"
 				onClick={handleMarkdownToggle}
 				title="Convert From Markdown"
 				aria-label="Convert from markdown"

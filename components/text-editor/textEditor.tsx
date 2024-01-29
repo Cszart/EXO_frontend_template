@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 // Lexical
+import { $getRoot } from 'lexical';
 import { $generateHtmlFromNodes } from '@lexical/html';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
@@ -22,27 +23,31 @@ import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
+import LexicalClickableLinkPlugin from '@lexical/react/LexicalClickableLinkPlugin';
+import {
+	AutoLinkPlugin,
+	createLinkMatcherWithRegExp,
+} from '@lexical/react/LexicalAutoLinkPlugin';
+
 import { TRANSFORMERS } from '@lexical/markdown';
 
 // Custom plugins
+import ToolbarPlugin, {
+	blockTypeToBlockName,
+} from './plugins/ToolbarPlugin/ToolbarPlugin';
 import ImagesPlugin from './plugins/ImagesPlugin';
 import SetDefaultValuePlugin from './plugins/SetDefaultValuePlugin';
 import CodeHighlightPlugin from './plugins/CodeHighlightPlugin';
 import ActionsPlugin from './plugins/ActionsPlugin';
+import FloatingTextFormatToolbarPlugin from './plugins/FloatingTextFormatToolbarPlugin';
 
 // Nodes
 import { ImageNode } from './nodes/Image/ImageNode';
 
 // Styles
 import TextEditorDefaultTheme from './themes/DefaultTheme';
-import {
-	AutoLinkPlugin,
-	createLinkMatcherWithRegExp,
-} from '@lexical/react/LexicalAutoLinkPlugin';
-import ToolbarPlugin, {
-	blockTypeToBlockName,
-} from './plugins/ToolbarPlugin/ToolbarPlugin';
-import { $getRoot } from 'lexical';
+import KeywordsPlugin from './plugins/KeywordsPlugin';
+import { KeywordNode } from './nodes/keywords';
 
 // Const
 // For Auto Link
@@ -90,6 +95,7 @@ const editorConfig: InitialConfigType = {
 		AutoLinkNode,
 		LinkNode,
 		ImageNode,
+		KeywordNode,
 	],
 };
 
@@ -103,8 +109,18 @@ const SimpleTextEditor = (props: SimpleTextEditorProps): JSX.Element => {
 	// To see what type of block the editor is actually using
 	const [blockType, setBlockType] =
 		useState<keyof typeof blockTypeToBlockName>('paragraph');
+	const [floatingAnchorElem, setFloatingAnchorElem] =
+		useState<HTMLDivElement | null>(null);
+
+	// Prop for the toolbar
 	const [, setIsLinkEditMode] = useState(false);
 
+	// Util Functions
+	const onRef = (_floatingAnchorElem: HTMLDivElement): void => {
+		if (_floatingAnchorElem !== null) {
+			setFloatingAnchorElem(_floatingAnchorElem);
+		}
+	};
 	return (
 		<LexicalComposer initialConfig={editorConfig}>
 			<div className="editor-container">
@@ -116,7 +132,13 @@ const SimpleTextEditor = (props: SimpleTextEditorProps): JSX.Element => {
 
 				<div className="editor-inner">
 					<RichTextPlugin
-						contentEditable={<ContentEditable className="editor-input" />}
+						contentEditable={
+							<div className="editor-scroller">
+								<div className="editor" ref={onRef}>
+									<ContentEditable className="editor-input" />
+								</div>
+							</div>
+						}
 						placeholder={<Placeholder />}
 						ErrorBoundary={LexicalErrorBoundary}
 					/>
@@ -137,18 +159,31 @@ const SimpleTextEditor = (props: SimpleTextEditorProps): JSX.Element => {
 						}}
 						ignoreSelectionChange
 					/>
+					{/* Lexical plugins */}
 					<AutoFocusPlugin />
 					<HistoryPlugin />
 					<LinkPlugin />
 					<ListPlugin />
 					<MarkdownShortcutPlugin transformers={TRANSFORMERS} />
-
 					<AutoLinkPlugin matchers={MATCHERS} />
+					<LexicalClickableLinkPlugin />
+
+					{/* Local plugins */}
 					<CodeHighlightPlugin />
 					<ImagesPlugin />
+					<KeywordsPlugin />
+
+					{floatingAnchorElem && (
+						<>
+							<FloatingTextFormatToolbarPlugin
+								anchorElem={floatingAnchorElem}
+							/>
+						</>
+					)}
 				</div>
+
 				<SetDefaultValuePlugin html={props.defaultHtml} />
-				<ActionsPlugin />
+				<ActionsPlugin isRichText={true} />
 			</div>
 		</LexicalComposer>
 	);
