@@ -2,7 +2,6 @@ import React from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { NavigationOptions } from 'interfaces';
-import Image from 'next/image';
 import AppRoutes from 'const/routes';
 import { Disclosure, Transition } from '@headlessui/react';
 import { Icon, Typography } from 'components/common';
@@ -12,29 +11,34 @@ import { useRouter } from 'next/router';
 
 interface SidebarDesktopProps {
 	itemOptions: NavigationOptions[];
-	logo?: string;
+	logoUrl?: string;
 	collapsible?: boolean;
 
 	classNameContainer?: string; // Container classes
 	classNameItem?: string; // Typography classes
 	classNameItemButton?: string; // Dropdown button classes
+
+	showSidebar?: boolean;
 }
 
 /**
  * This component is meant to handle a side navbar
  *
  * @param itemOptions The options to be rendered in the navbar
- * @param logo image to show in the sidebar
+ * @param logoUrl image to show in the sidebar
  * @param collapsible to make the sidebar able to collapse
+ * @param showSidebar to show sidebar when it's mobile screen
  * @returns
  */
 export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 	itemOptions,
-	logo,
+	logoUrl,
 
 	classNameContainer = 'bg-primary',
 	classNameItem = 'text-white',
 	classNameItemButton = '',
+
+	showSidebar,
 }) => {
 	const router = useRouter();
 	/**
@@ -95,21 +99,26 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 	return (
 		<div
 			className={clsx(
-				'hidden md:flex flex-shrink-0 w-max min-w-[250px] max-w-[350px]',
-				'transition-transform -translate-x-full sm:translate-x-0',
+				'-translate-x-full transition-transform', // general
+				'absolute w-full h-full z-10', // mobile
+				'md:relative md:flex md:flex-shrink-0 md:z-0', // desktop
+				'md:w-max md:min-w-[250px] md:max-w-[350px] md:translate-x-0', // desktop
+				{ '-translate-x-full': !showSidebar },
+				{ 'translate-x-0': showSidebar },
 				classNameContainer
 			)}
 		>
 			<nav
 				className={clsx(
-					'h-full py-8 overflow-y-auto',
+					'h-full overflow-y-auto',
 					'flex flex-col flex-1',
+					'py-4 md:py-8',
 					classNameContainer
 				)}
 			>
-				{logo && (
+				{logoUrl && (
 					<Link href={AppRoutes.HOME}>
-						<Image src={logo} alt="Sidebar Logo" className="max-w-[50px]" />
+						<img src={logoUrl} alt="Logo" className="h-8 max-h-8 px-6" />
 					</Link>
 				)}
 

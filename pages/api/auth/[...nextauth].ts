@@ -13,10 +13,29 @@ const options: NextAuthOptions = {
 			name: NextAuthProvidersEnum.FACEBOOK,
 			clientId: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID || '',
 			clientSecret: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_SECRET || '',
-			profile: (data) => ({
-				provider: 'facebook',
-				...data,
-			}),
+			profile: (data) => {
+				console.log(data);
+				console.log(data.picture.data);
+				return {
+					provider: 'facebook',
+					roles: ['admin'], // You can change it if you want to follow another way of assigning a role
+					permissions: [
+						'user:management:view',
+						'user:management:create',
+						'user:management:edit',
+						'user:management:delete',
+						'role:management:view',
+						'role:management:create',
+						'role:management:edit',
+						'role:management:delete',
+						'permission:management:view',
+						'permission:management:create',
+						'permission:management:edit',
+						'permission:management:delete',
+					],
+					...data,
+				};
+			},
 		}),
 
 		GoogleProvider({
@@ -26,6 +45,23 @@ const options: NextAuthOptions = {
 			clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || '',
 			profile: (data) => ({
 				provider: 'google',
+				id: data.sub,
+				roles: ['admin'], // You can change it if you want to follow another way of assigning a role
+				image: data.picture,
+				permissions: [
+					'user:management:view',
+					'user:management:create',
+					'user:management:edit',
+					'user:management:delete',
+					'role:management:view',
+					'role:management:create',
+					'role:management:edit',
+					'role:management:delete',
+					'permission:management:view',
+					'permission:management:create',
+					'permission:management:edit',
+					'permission:management:delete',
+				],
 				...data,
 			}),
 		}),

@@ -5,15 +5,17 @@ import clsx from 'clsx';
 import { NavigationOptions, Option } from 'interfaces';
 import { Dropdown } from 'components/common/dropdown';
 import { Avatar, Typography } from 'components/common';
-import Icons from 'const/icons';
 import { buildHeaderUserProfileOptions } from 'utils';
 import { headerUserProfileOptions } from 'const';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import { useSession } from 'next-auth/react';
 
 interface HeaderNavbarProps {
 	navBarOptions?: NavigationOptions[];
 	logoUrl: string;
 	className?: string;
+	showSidebar?: boolean;
+	setShowSidebar?: (value: boolean) => void;
 }
 
 /**
@@ -23,12 +25,15 @@ interface HeaderNavbarProps {
  * @param navBarOptions options to be rendered in the header
  * @param logoUrl The logo that will be shown in the left side of the header
  * @param className additional classes
+ * @param showSidebar to show sidebar when it's mobile version
  * @returns JSX element representing the header
  */
 const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 	navBarOptions,
 	logoUrl,
 	className,
+	showSidebar,
+	setShowSidebar,
 }) => {
 	const session = useSession();
 	const [userProfileOptions, setUserProfileOptions] = useState<Option[]>([]);
@@ -53,9 +58,22 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 			)}
 		>
 			{/* Logo */}
-			<Link href="/">
+			<Link href="/" className="hidden md:block">
 				<img src={logoUrl} alt="Logo" className="h-8 max-h-8" />
 			</Link>
+
+			{/* Menu Icon (Show sidebar only mobile screen) */}
+			<button
+				type="button"
+				className="md:hidden"
+				onClick={() => setShowSidebar && setShowSidebar(!showSidebar)}
+			>
+				{showSidebar ? (
+					<XMarkIcon width={32} height={32} className="text-white" />
+				) : (
+					<Bars3Icon width={32} height={32} className="text-white" />
+				)}
+			</button>
 
 			{navBarOptions && (
 				<div className="flex flex-wrap justify-center items-center gap-3 w-auto">
@@ -112,7 +130,9 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 
 			{/* Profile */}
 			<Dropdown
-				buttonContent={<Avatar photoUrl={Icons.avatar} size="small" />}
+				buttonContent={
+					<Avatar photoUrl={session?.data?.user.image || ''} size="small" />
+				}
 				showChevronDownIcon={true}
 				items={userProfileOptions}
 				classNameButton="w-auto text-white"
