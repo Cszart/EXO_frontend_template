@@ -1025,7 +1025,7 @@ export default function ToolbarPlugin({
 						buttonClassName="toolbar-item color-picker"
 						buttonAriaLabel="Formatting text color"
 						buttonIconClassName="icon"
-						buttonIconName="font-color-icon"
+						buttonIconName="font-color"
 						color={fontColor}
 						onChange={onFontColorSelect}
 						title="text color"
@@ -1037,7 +1037,7 @@ export default function ToolbarPlugin({
 						buttonClassName="toolbar-item color-picker"
 						buttonAriaLabel="Formatting background color"
 						buttonIconClassName="icon"
-						buttonIconName="bg-color-icon"
+						buttonIconName="bg-color"
 						color={bgColor}
 						onChange={onBgColorSelect}
 						title="bg color"
@@ -1051,7 +1051,7 @@ export default function ToolbarPlugin({
 						buttonLabel=""
 						buttonAriaLabel="Formatting options for additional text styles"
 						buttonIconClassName="icon"
-						buttonIconName="dropdown-more-icon"
+						buttonIconName="dropdown-more"
 					>
 						{/* Strikethrough */}
 						<TextEditorDropDownItem
@@ -1105,7 +1105,7 @@ export default function ToolbarPlugin({
 							title="Clear text formatting"
 							aria-label="Clear all text formatting"
 						>
-							<i className="icon clear" />
+							<i className="icon trash" />
 							<span className="text">Clear Formatting</span>
 						</TextEditorDropDownItem>
 					</TextEditorDropDown>

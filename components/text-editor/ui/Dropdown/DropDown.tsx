@@ -160,7 +160,7 @@ export default function TextEditorDropDown({
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const [showDropDown, setShowDropDown] = useState(false);
 
-	const handleClose = () => {
+	const handleClose = (): void => {
 		setShowDropDown(false);
 		if (buttonRef && buttonRef.current) {
 			buttonRef.current.focus();

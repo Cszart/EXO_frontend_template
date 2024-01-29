@@ -87,6 +87,15 @@
 	text-decoration: underline line-through;
 }
 
+.editor-text-subscript {
+	font-size: 0.8em;
+	vertical-align: sub !important;
+}
+.editor-text-superscript {
+	font-size: 0.8em;
+	vertical-align: super;
+}
+
 .editor-text-code {
 	background-color: rgb(240, 242, 245);
 	padding: 1px 0.25rem;
@@ -97,6 +106,11 @@
 .editor-link {
 	color: rgb(33, 111, 219);
 	text-decoration: none;
+}
+
+.editor-link:hover {
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .tree-view-output {
@@ -115,6 +129,11 @@
 	line-height: 14px;
 }
 
+.editor-characterLimit {
+	display: inline;
+	background-color: #ffbbbb !important;
+}
+
 .editor-code {
 	background-color: rgb(240, 242, 245);
 	font-family: Menlo, Consolas, Monaco, monospace;
@@ -125,10 +144,9 @@
 	margin: 0;
 	margin-top: 8px;
 	margin-bottom: 8px;
-	tab-size: 2;
-	/* white-space: pre; */
 	overflow-x: auto;
 	position: relative;
+	tab-size: 2;
 }
 
 .editor-code:before {
@@ -197,6 +215,18 @@
 	margin-bottom: 0;
 }
 
+.editor-embedBlock {
+	user-select: none;
+}
+.editor-embedBlockFocus {
+	outline: 2px solid rgb(60, 132, 244);
+}
+
+.editor-hashtag {
+	background-color: rgba(88, 144, 255, 0.15);
+	border-bottom: 1px solid rgba(88, 144, 255, 0.3);
+}
+
 .editor-heading-h1 {
 	font-size: 24px;
 	color: rgb(5, 5, 5);
@@ -219,12 +249,47 @@
 .editor-quote {
 	margin: 0;
 	margin-left: 20px;
+	margin-bottom: 10px;
 	font-size: 15px;
 	color: rgb(101, 103, 107);
 	border-left-color: rgb(206, 208, 212);
 	border-left-width: 4px;
 	border-left-style: solid;
 	padding-left: 16px;
+}
+
+.editor-list-ol1 {
+	padding: 0;
+	margin: 0;
+	list-style-position: inside;
+}
+
+.editor-list-ol2 {
+	padding: 0;
+	margin: 0;
+	list-style-type: upper-alpha;
+	list-style-position: inside;
+}
+
+.editor-list-ol3 {
+	padding: 0;
+	margin: 0;
+	list-style-type: lower-alpha;
+	list-style-position: inside;
+}
+
+.editor-list-ol4 {
+	padding: 0;
+	margin: 0;
+	list-style-type: upper-roman;
+	list-style-position: inside;
+}
+
+.editor-list-ol5 {
+	padding: 0;
+	margin: 0;
+	list-style-type: lower-roman;
+	list-style-position: inside;
 }
 
 .editor-list-ol {
@@ -237,14 +302,87 @@
 	padding: 0;
 	margin: 0;
 	margin-left: 16px;
+	list-style-position: inside;
 }
 
-.editor-listitem {
+.editor-listItem {
 	margin: 8px 32px 8px 32px;
 }
 
-.editor-nested-listitem {
+.editor-nested-listItem {
 	list-style-type: none;
+}
+.editor-nested-listItem::before,
+.editor-nested-listItem::after {
+	display: none;
+}
+
+.editor-listItemChecked,
+.editor-listItemUnchecked {
+	position: relative;
+	margin-left: 8px;
+	margin-right: 8px;
+	padding-left: 24px;
+	padding-right: 24px;
+	list-style-type: none;
+	outline: none;
+}
+
+.editor-listItemChecked {
+	text-decoration: line-through;
+}
+
+.editor-listItemUnchecked:before,
+.editor-listItemChecked:before {
+	content: '';
+	width: 16px;
+	height: 16px;
+	top: 2px;
+	left: 0;
+	cursor: pointer;
+	display: block;
+	background-size: cover;
+	position: absolute;
+}
+
+.editor-listItemUnchecked[dir='rtl']:before,
+.editor-listItemChecked[dir='rtl']:before {
+	left: auto;
+	right: 0;
+}
+
+.editor-listItemUnchecked:focus:before,
+.editor-listItemChecked:focus:before {
+	box-shadow: 0 0 0 2px #a6cdfe;
+	border-radius: 2px;
+}
+
+.editor-listItemUnchecked:before {
+	border: 1px solid #999;
+	border-radius: 2px;
+}
+
+.editor-listItemChecked:before {
+	border: 1px solid rgb(61, 135, 245);
+	border-radius: 2px;
+	background-color: #3d87f5;
+	background-repeat: no-repeat;
+}
+
+.editor-listItemChecked:after {
+	content: '';
+	cursor: pointer;
+	border-color: #fff;
+	border-style: solid;
+	position: absolute;
+	display: block;
+	top: 6px;
+	width: 3px;
+	left: 7px;
+	right: 7px;
+	height: 6px;
+	transform: rotate(45deg);
+	border-width: 0 2px 2px 0;
 }
 
 pre::-webkit-scrollbar {
@@ -657,6 +795,42 @@ i.chevron-down {
 	background-color: #eee;
 }
 
+.editor-indent {
+	--lexical-indent-base-value: 40px;
+}
+
+.editor-layout-container {
+	display: grid;
+	gap: 10px;
+	margin: 10px 0;
+}
+
+.editor-layout-item {
+	border: 1px dashed #ddd;
+	padding: 8px 16px;
+}
+
+.editor-mark {
+	background: rgba(255, 212, 0, 0.14);
+	border-bottom: 2px solid rgba(255, 212, 0, 0.3);
+	padding-bottom: 2px;
+}
+
+.editor-markOverlap {
+	background: rgba(255, 212, 0, 0.3);
+	border-bottom: 2px solid rgba(255, 212, 0, 0.7);
+}
+
+.editor-mark.selected {
+	background: rgba(255, 212, 0, 0.5);
+	border-bottom: 2px solid rgba(255, 212, 0, 1);
+}
+
+.editor-markOverlap.selected {
+	background: rgba(255, 212, 0, 0.7);
+	border-bottom: 2px solid rgba(255, 212, 0, 0.7);
+}
+
 .link-editor .button i,
 .actions i {
 	background-size: contain;
@@ -664,14 +838,6 @@ i.chevron-down {
 	height: 20px;
 	width: 20px;
 	vertical-align: -0.25em;
-}
-
-i.undo {
-	background-image: url(./images/icons/arrow-counterclockwise.svg);
-}
-
-i.redo {
-	background-image: url(./images/icons/arrow-clockwise.svg);
 }
 
 .icon.paragraph {
@@ -739,6 +905,13 @@ i.redo {
 	background-image: url(./images/icons/outdent.svg);
 }
 
+i.undo {
+	background-image: url(./images/icons/arrow-counterclockwise.svg);
+}
+
+i.redo {
+	background-image: url(./images/icons/arrow-clockwise.svg);
+}
 i.bold {
 	background-image: url(./images/icons/type-bold.svg);
 }
@@ -753,6 +926,18 @@ i.underline {
 
 i.strikethrough {
 	background-image: url(./images/icons/type-strikethrough.svg);
+}
+
+i.subscript {
+	background-image: url(./images/icons/type-subscript.svg);
+}
+
+i.superscript {
+	background-image: url(./images/icons/type-superscript.svg);
+}
+
+i.trash {
+	background-image: url(./images/icons/trash.svg);
 }
 
 i.code {
