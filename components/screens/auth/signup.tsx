@@ -42,7 +42,7 @@ export const SignUpScreen: React.FC<SignUpProps> = () => {
 	const handleSubmitData = async (
 		provider: NextAuthProvidersEnum,
 		data?: FieldValues
-	) => {
+	): Promise<void> => {
 		setIsLoading(true);
 		try {
 			if (provider === 'credentials') {

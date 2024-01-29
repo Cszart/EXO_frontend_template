@@ -83,6 +83,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 	// Check for connectors (delete)
 	React.useEffect(() => {
 		logger.info('Connectors: ', { connectors });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [connectors]);
 
 	/**
@@ -109,6 +110,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 		};
 
 		isConnectedFunction();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [address, connectAttempt, isConnected]);
 
 	return (

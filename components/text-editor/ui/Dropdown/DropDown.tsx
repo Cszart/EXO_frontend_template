@@ -86,7 +86,7 @@ function DropDownItems({
 		[setItems]
 	);
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
 		if (!items) return;
 
 		const key = event.key;
@@ -185,7 +185,7 @@ export default function TextEditorDropDown({
 		const button = buttonRef.current;
 
 		if (button !== null && showDropDown) {
-			const handle = (event: MouseEvent) => {
+			const handle = (event: MouseEvent): void => {
 				const target = event.target;
 				if (stopCloseOnClickSelf) {
 					if (
@@ -207,7 +207,7 @@ export default function TextEditorDropDown({
 	}, [dropDownRef, buttonRef, showDropDown, stopCloseOnClickSelf]);
 
 	useEffect(() => {
-		const handleButtonPositionUpdate = () => {
+		const handleButtonPositionUpdate = (): void => {
 			if (showDropDown) {
 				const button = buttonRef.current;
 				const dropDown = dropDownRef.current;

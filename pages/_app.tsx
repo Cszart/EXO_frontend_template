@@ -61,7 +61,8 @@ const config = createConfig({
 export default function App({
 	Component,
 	pageProps: { session, ...pageProps },
-}: AppProps): any {
+}: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+AppProps): any {
 	return (
 		<>
 			<Head>

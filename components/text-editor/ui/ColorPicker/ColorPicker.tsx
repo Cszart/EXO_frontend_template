@@ -63,7 +63,7 @@ export default function TextEditorColorPicker({
 		[selfColor.hsv]
 	);
 
-	const onSetHex = (hex: string) => {
+	const onSetHex = (hex: string): void => {
 		setInputColor(hex);
 		if (/^#[0-9A-Fa-f]{6}$/i.test(hex)) {
 			const newColor = transformColor('hex', hex);
@@ -71,7 +71,7 @@ export default function TextEditorColorPicker({
 		}
 	};
 
-	const onMoveSaturation = ({ x, y }: Position) => {
+	const onMoveSaturation = ({ x, y }: Position): void => {
 		const newHsv = {
 			...selfColor.hsv,
 			s: (x / WIDTH) * 100,
@@ -82,7 +82,7 @@ export default function TextEditorColorPicker({
 		setInputColor(newColor.hex);
 	};
 
-	const onMoveHue = ({ x }: Position) => {
+	const onMoveHue = ({ x }: Position): void => {
 		const newHsv = { ...selfColor.hsv, h: (x / WIDTH) * 360 };
 		const newColor = transformColor('hsv', newHsv);
 
@@ -170,7 +170,7 @@ function MoveWrapper({
 	style,
 	onChange,
 	children,
-}: MoveWrapperProps) {
+}: MoveWrapperProps): JSX.Element {
 	const divRef = useRef<HTMLDivElement>(null);
 	const draggedRef = useRef(false);
 
@@ -225,7 +225,7 @@ function MoveWrapper({
 	);
 }
 
-function clamp(value: number, max: number, min: number) {
+function clamp(value: number, max: number, min: number): number {
 	return value > max ? max : value < min ? min : value;
 }
 

@@ -686,6 +686,7 @@ export default function ToolbarPlugin({
 					: parent?.getFormatType() || 'left'
 			);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeEditor]);
 
 	const applyStyleText = useCallback(

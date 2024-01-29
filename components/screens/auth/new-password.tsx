@@ -7,7 +7,7 @@ import Link from 'next/link';
 import AppRoutes from 'const/routes';
 import { LayoutLogin } from 'components/layout';
 
-export const NewPasswordScreen = () => {
+export const NewPasswordScreen = (): JSX.Element => {
 	const CODE_VALUE = '1234';
 	const router = useRouter();
 	const { code } = router.query;
@@ -53,7 +53,7 @@ export const NewPasswordScreen = () => {
 	}, [code]);
 
 	// Sign in with Data
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
 	const handleSubmitDataForm = async (data: any): Promise<void> => {
 		setIsLoading(true);
 		setIsPasswordSaved(true);

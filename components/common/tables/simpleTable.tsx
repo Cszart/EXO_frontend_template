@@ -49,6 +49,7 @@ const SimpleTable = <T,>({
 			]);
 			setColumnsData(updatedColumns);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.columns, hideRowActions]);
 
 	return (

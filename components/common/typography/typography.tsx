@@ -30,6 +30,7 @@ export interface TypographyProps {
 	text?: string;
 	className?: string;
 	children?: React.ReactNode;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	onClick?: (data?: any) => void;
 }
 
