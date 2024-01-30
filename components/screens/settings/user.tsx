@@ -15,6 +15,8 @@ const UsersScreen = (): JSX.Element => {
 
 			if (usersResponse.status == 200) {
 				setUsersData(usersResponse.data);
+			} else {
+				setUsersData([]);
 			}
 		}
 

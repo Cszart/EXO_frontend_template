@@ -6,7 +6,7 @@ import { rolesService } from 'api_services';
 
 const RolesScreen = (): JSX.Element => {
 	// Data
-	const [rolesData, setRolesData] = useState<RoleI[]>([]);
+	const [rolesData, setRolesData] = useState<RoleI[]>();
 
 	// Fetch roles
 	useEffect(() => {
@@ -15,6 +15,8 @@ const RolesScreen = (): JSX.Element => {
 
 			if (rolesResponse.status == 200) {
 				setRolesData(rolesResponse.data);
+			} else {
+				setRolesData([]);
 			}
 		}
 
