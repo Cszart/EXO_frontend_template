@@ -65,7 +65,7 @@ const EmailContentEditorAceScreen = (): JSX.Element => {
 			{/* Page content - Two columns */}
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
 				{/* First column - Editor */}
-				<div className="flex flex-col gap-2 w-full">
+				<div className="flex flex-col gap-2 w-full !font-mono">
 					<Typography type="link-1" text="Editor" className="mb-2" />
 
 					<AceEditor
