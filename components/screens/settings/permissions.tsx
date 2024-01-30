@@ -6,7 +6,7 @@ import SimpleTable from 'components/common/tables/simpleTable';
 
 const PermissionsScreen = (): JSX.Element => {
 	// Data
-	const [permissionsData, setPermissionsData] = useState<PermissionI[]>([]);
+	const [permissionsData, setPermissionsData] = useState<PermissionI[]>();
 
 	// Fetch permissions
 	useEffect(() => {
@@ -15,6 +15,8 @@ const PermissionsScreen = (): JSX.Element => {
 
 			if (permissionsResponse.status == 200) {
 				setPermissionsData(permissionsResponse.data);
+			} else {
+				setPermissionsData([]);
 			}
 		}
 

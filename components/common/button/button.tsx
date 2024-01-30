@@ -88,7 +88,7 @@ const ButtonContent: React.FC<
 				// global
 				'group flex items-center justify-center border rounded-lg px-4 py-2',
 				'outline-none transition-colors duration-200',
-				'focus:outline-none disabled:cursor-not-allowed',
+				'focus:outline-none disabled:cursor-not-allowed disabled:opacity-30',
 				className
 			)}
 		>
