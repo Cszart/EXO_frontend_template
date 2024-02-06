@@ -47,11 +47,14 @@ const useModal = (): {
 					leaveFrom="opacity-100"
 					leaveTo="opacity-0"
 				>
-					<div className="fixed inset-0 bg-opacity-primary" />
+					<div
+						className="fixed inset-0"
+						style={{ background: 'rgba(33, 37, 41, 0.4)' }}
+					/>
 				</Transition.Child>
 
 				<div className={clsx('fixed inset-0 overflow-y-auto', props.className)}>
-					<div className="flex min-h-full items-center  justify-center p-4 text-center">
+					<div className="flex h-full items-center  justify-center p-4 text-center">
 						<Transition.Child
 							as={Fragment}
 							enter="ease-out duration-300"
@@ -69,7 +72,7 @@ const useModal = (): {
 							>
 								<Dialog.Title
 									as="h3"
-									className="text-lg font-medium leading-6 text-gray-900"
+									className="text-lg font-bold text-gray-900"
 								>
 									{props.title}
 								</Dialog.Title>

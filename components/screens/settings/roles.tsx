@@ -3,10 +3,20 @@ import { Layout } from 'components/layout';
 import { RoleI } from 'interfaces';
 import SimpleTable from 'components/common/tables/simpleTable';
 import { rolesService } from 'api_services';
+import useModal from 'hooks/useModal';
+import { InputText } from 'components/form';
+import { useForm } from 'react-hook-form';
+import { Button } from 'components/common';
 
 const RolesScreen = (): JSX.Element => {
 	// Data
 	const [rolesData, setRolesData] = useState<RoleI[]>();
+	const { register, reset, handleSubmit } = useForm({ mode: 'onChange' });
+	const {
+		Modal: ModalCreateRole,
+		show: showCreateRole,
+		hide: hideCreateRole,
+	} = useModal();
 
 	// Fetch roles
 	useEffect(() => {
@@ -23,8 +33,20 @@ const RolesScreen = (): JSX.Element => {
 		fetchRoles();
 	}, []);
 
+	// here you can do all the logic to create a role
+	const handleCreateRol = () => {
+		reset();
+		hideCreateRole();
+	};
+
 	return (
-		<Layout withHeader withSidebar title="Roles Management">
+		<Layout
+			withHeader
+			withSidebar
+			title="Roles Management"
+			buttonTitle="Create a Role"
+			onClickButton={showCreateRole}
+		>
 			<SimpleTable<RoleI>
 				columns={[
 					{
@@ -54,6 +76,30 @@ const RolesScreen = (): JSX.Element => {
 					},
 				]}
 			/>
+			<ModalCreateRole title="Create a Role">
+				<form className="mt-4" onSubmit={handleSubmit(handleCreateRol)}>
+					<InputText
+						register={register}
+						name="role"
+						title="Role"
+						customPlaceholder="Role"
+					/>
+					<div className="flex gap-x-4 w-full justify-center mt-8">
+						<Button
+							label="Cancel"
+							decoration="line-primary"
+							size="extra-small"
+							onClick={handleCreateRol}
+						/>
+						<Button
+							label="Save"
+							type="submit"
+							decoration="fill"
+							size="extra-small"
+						/>
+					</div>
+				</form>
+			</ModalCreateRole>
 		</Layout>
 	);
 };

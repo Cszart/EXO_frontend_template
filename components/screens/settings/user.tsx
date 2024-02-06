@@ -3,10 +3,20 @@ import { Layout } from 'components/layout';
 import { UserI } from 'interfaces';
 import SimpleTable from 'components/common/tables/simpleTable';
 import { userService } from 'api_services';
+import useModal from 'hooks/useModal';
+import { useForm } from 'react-hook-form';
+import { InputText } from 'components/form';
+import { Button, Dropdown } from 'components/common';
 
 const UsersScreen = (): JSX.Element => {
 	// Data
 	const [usersData, setUsersData] = useState<UserI[]>();
+	const { register, reset, handleSubmit } = useForm({ mode: 'onChange' });
+	const {
+		Modal: ModalCreateUser,
+		show: showCreateUser,
+		hide: hideCreateUser,
+	} = useModal();
 
 	// Fetch users
 	useEffect(() => {
@@ -23,8 +33,20 @@ const UsersScreen = (): JSX.Element => {
 		fetchUsers();
 	}, []);
 
+	// here you can do all the logic to create a role
+	const handleCreateUser = () => {
+		reset();
+		hideCreateUser();
+	};
+
 	return (
-		<Layout withHeader withSidebar title="Users Management">
+		<Layout
+			withHeader
+			withSidebar
+			title="Users Management"
+			buttonTitle="Create a User"
+			onClickButton={showCreateUser}
+		>
 			<SimpleTable<UserI>
 				columns={[
 					{
@@ -72,6 +94,49 @@ const UsersScreen = (): JSX.Element => {
 					},
 				]}
 			/>
+			<ModalCreateUser title="Create a User">
+				<form
+					className="mt-4 space-y-4"
+					onSubmit={handleSubmit(handleCreateUser)}
+				>
+					<InputText
+						register={register}
+						name="name"
+						title="Name"
+						customPlaceholder="Name"
+					/>
+					<InputText
+						register={register}
+						name="username"
+						title="Username"
+						customPlaceholder="Username"
+					/>
+					<Dropdown
+						buttonContent={'Role'}
+						showChevronDownIcon={false}
+						items={[
+							{
+								name: 'admin',
+								label: 'Admin',
+							},
+						]}
+					/>
+					<div className="flex gap-x-4 w-full justify-center mt-8">
+						<Button
+							label="Cancel"
+							decoration="line-primary"
+							size="extra-small"
+							onClick={handleCreateUser}
+						/>
+						<Button
+							label="Save"
+							type="submit"
+							decoration="fill"
+							size="extra-small"
+						/>
+					</div>
+				</form>
+			</ModalCreateUser>
 		</Layout>
 	);
 };

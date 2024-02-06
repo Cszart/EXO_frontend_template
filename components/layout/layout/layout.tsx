@@ -9,7 +9,7 @@ import { headerNavbarOptions } from 'const';
 import cmsSidebarNavigation from 'const/sideBarNavigation';
 import { NavigationOptions } from 'interfaces';
 import { filterOptionsByRolesOrPermissions } from 'utils/options';
-import { Typography } from 'components/common';
+import { Button, Typography } from 'components/common';
 
 export interface Layout_Props {
 	title?: string;
@@ -23,6 +23,11 @@ export interface Layout_Props {
 
 	withSidebar?: boolean;
 	customSidebar?: React.ReactNode;
+
+	buttonTitle?: string;
+	classNameButton?: string;
+	hrefButton?: string;
+	onClickButton?: () => void;
 
 	classNameChildren?: string;
 	classNameLayout?: string;
@@ -47,6 +52,11 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 
 	withSidebar = true,
 	customSidebar = undefined,
+
+	buttonTitle,
+	classNameButton = undefined,
+	hrefButton,
+	onClickButton,
 
 	children,
 	classNameChildren,
@@ -108,19 +118,29 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 							'-z-10': showSidebar,
 						})}
 					>
-						<div>
+						<div className="flex gap-x-2 justify-between items-center mb-10">
 							{title && (
 								<Typography
 									type="custom-h1"
 									text={title}
 									className={clsx(
-										'text-xl font-bold text-gray-800 mb-10',
+										'text-xl font-bold text-gray-800',
 										classNameTitle
 									)}
 								/>
 							)}
-							{children}
+							{buttonTitle && (
+								<Button
+									label={buttonTitle}
+									decoration="fill"
+									size="fit"
+									className={classNameButton}
+									onClick={onClickButton}
+									href={hrefButton}
+								/>
+							)}
 						</div>
+						{children}
 					</main>
 				</div>
 			)}
