@@ -16,6 +16,22 @@ class PermissionsService {
 	async getAll(): Promise<HttpResponse<PermissionI[]>> {
 		return this.client.get('/permissions');
 	}
+
+	async getOne(id: number): Promise<HttpResponse<PermissionI>> {
+		return this.client.get(`/permissions/${id}`);
+	}
+
+	async create(data: PermissionI): Promise<HttpResponse<PermissionI>> {
+		return this.client.post('/permissions', data);
+	}
+
+	async update(id: number, data: Partial<PermissionI>): Promise<PermissionI> {
+		return this.client.put(`/permissions/${id}`, data);
+	}
+
+	async delete(id: number): Promise<HttpResponse<any>> {
+		return this.client.delete(`/permissions/${id}`);
+	}
 }
 
 export const permissionService = new PermissionsService(axiosClient);
