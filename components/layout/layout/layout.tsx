@@ -113,7 +113,7 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 					{/* Content */}
 					<main
 						className={clsx({
-							'relative w-full px-9 md:px-16 py-10 mb-10 overflow-y-auto':
+							'relative w-full px-9 md:px-16 py-10 mb-10 overflow-y-scroll scroll-custom':
 								withSidebar,
 							'-z-10': showSidebar,
 						})}
