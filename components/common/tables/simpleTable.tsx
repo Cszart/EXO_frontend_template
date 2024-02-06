@@ -56,7 +56,7 @@ const SimpleTable = <T,>({
 		<>
 			{props.rows ? (
 				props.rows.length > 0 ? (
-					<div className="relative overflow-x-auto shadow-md sm:rounded-lg border border-dark-10">
+					<div className="relative overflow-x-auto scroll-custom shadow-md sm:rounded-lg border border-dark-10">
 						{/* Table Container */}
 						<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 							{/* Header columns */}

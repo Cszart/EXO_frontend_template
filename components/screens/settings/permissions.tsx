@@ -3,10 +3,20 @@ import { Layout } from 'components/layout';
 import { PermissionI } from 'interfaces';
 import { permissionService } from 'api_services';
 import SimpleTable from 'components/common/tables/simpleTable';
+import useModal from 'hooks/useModal';
+import { useForm } from 'react-hook-form';
+import { InputText } from 'components/form';
+import { Button } from 'components/common';
 
 const PermissionsScreen = (): JSX.Element => {
 	// Data
 	const [permissionsData, setPermissionsData] = useState<PermissionI[]>();
+	const { register, reset, handleSubmit } = useForm({ mode: 'onChange' });
+	const {
+		Modal: ModalCreatePermission,
+		show: showCreatePermission,
+		hide: hideCreatePermission,
+	} = useModal();
 
 	// Fetch permissions
 	useEffect(() => {
@@ -23,8 +33,20 @@ const PermissionsScreen = (): JSX.Element => {
 		fetchPermissions();
 	}, []);
 
+	// here you can do all the logic to create a permisson
+	const handleCreatePermission = () => {
+		reset();
+		hideCreatePermission();
+	};
+
 	return (
-		<Layout withHeader withSidebar title="Permissions Management">
+		<Layout
+			withHeader
+			withSidebar
+			title="Permissions Management"
+			buttonTitle="Create a Permission"
+			onClickButton={showCreatePermission}
+		>
 			<SimpleTable<PermissionI>
 				columns={[
 					{
@@ -40,7 +62,7 @@ const PermissionsScreen = (): JSX.Element => {
 						content: (instance) => <p>{instance.subCategory}</p>,
 					},
 					{
-						header: 'Name',
+						header: 'Permission',
 						content: (instance) => <p>{instance.permission}</p>,
 					},
 				]}
@@ -54,6 +76,45 @@ const PermissionsScreen = (): JSX.Element => {
 					},
 				]}
 			/>
+			<ModalCreatePermission title="Create a Permission">
+				<form
+					className="mt-4 space-y-4"
+					onSubmit={handleSubmit(handleCreatePermission)}
+				>
+					<InputText
+						register={register}
+						name="category"
+						title="Category"
+						customPlaceholder="Category"
+					/>
+					<InputText
+						register={register}
+						name="subcategory"
+						title="Sub Category"
+						customPlaceholder="Sub Category"
+					/>
+					<InputText
+						register={register}
+						name="permission"
+						title="Permission"
+						customPlaceholder="Permission"
+					/>
+					<div className="flex gap-x-4 w-full justify-center mt-8">
+						<Button
+							label="Cancel"
+							decoration="line-primary"
+							size="extra-small"
+							onClick={handleCreatePermission}
+						/>
+						<Button
+							type="submit"
+							label="Save"
+							decoration="fill"
+							size="extra-small"
+						/>
+					</div>
+				</form>
+			</ModalCreatePermission>
 		</Layout>
 	);
 };
