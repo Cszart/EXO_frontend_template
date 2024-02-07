@@ -2,7 +2,7 @@ import { Button, Typography } from 'components/common';
 import { Layout } from 'components/layout';
 import Icons from 'const/icons';
 import saveAs from 'file-saver';
-import { EmailTemplate } from 'interfaces';
+import { EmailTemplateI } from 'interfaces';
 import { useRouter } from 'next/router';
 import parse from 'html-react-parser';
 
@@ -39,7 +39,7 @@ const EmailContentEditorAceScreen = (): JSX.Element => {
 
 			if (stringTemplateToEdit) {
 				// Use the JSON object as needed
-				const templateToEditContent: EmailTemplate =
+				const templateToEditContent: EmailTemplateI =
 					JSON.parse(stringTemplateToEdit);
 				setPreviewContent(templateToEditContent.content);
 				setDefaultHtml(templateToEditContent.content);

@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import axiosClient from './axiosClientConfig';
-import { LoginResponse } from 'interfaces';
+import { HttpResponse, UserI } from 'interfaces';
 
 /**
  * This class should hold all the routes to the endpoints that are
@@ -10,12 +10,16 @@ import { LoginResponse } from 'interfaces';
 class Auth {
 	constructor(private client: AxiosInstance) {}
 
-	async login(email: string, password: string): Promise<LoginResponse> {
+	async login(email: string, password: string): Promise<HttpResponse<UserI>> {
 		return this.client.post('/auth/login', { email, password });
 	}
 
-	async loginWallet(address: string): Promise<LoginResponse> {
+	async loginWallet(address: string): Promise<HttpResponse<UserI>> {
 		return this.client.post('/auth/login/wallet', { address });
+	}
+
+	async signUp(userData: UserI): Promise<HttpResponse<UserI>> {
+		return this.client.post('/auth/signup', userData);
 	}
 }
 

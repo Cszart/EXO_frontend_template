@@ -1,7 +1,6 @@
 import { AxiosInstance } from 'axios';
+import { EmailTemplateI, HttpResponse } from 'interfaces';
 import axiosClient from './axiosClientConfig';
-import { EmailTemplate } from 'interfaces';
-import { HttpResponse } from 'interfaces/httpClient';
 
 /**
  * This class should hold all the routes to the endpoints that are
@@ -13,14 +12,29 @@ import { HttpResponse } from 'interfaces/httpClient';
 class EmailService {
 	constructor(private client: AxiosInstance) {}
 
-	async saveTemplate(html: string): Promise<HttpResponse<EmailTemplate>> {
-		return this.client.post('/email/save', { html });
+	async getAllTemplates(): Promise<HttpResponse<EmailTemplateI[]>> {
+		return this.client.get('/email-templates');
 	}
 
-	// NOTE: implementation might change per project this is just an example
-	// Might be useful to handle pagination
-	async getTemplates(): Promise<HttpResponse<EmailTemplate[]>> {
-		return this.client.get('/email/template');
+	async getTemplateById(id: number): Promise<HttpResponse<EmailTemplateI>> {
+		return this.client.get(`/email-templates/${id}`);
+	}
+
+	async createTemplate(
+		emailTemplateData: EmailTemplateI
+	): Promise<HttpResponse<EmailTemplateI>> {
+		return this.client.post('/email-templates', emailTemplateData);
+	}
+
+	async updateTemplate(
+		id: number,
+		updatedTemplateData: Partial<EmailTemplateI>
+	): Promise<HttpResponse<EmailTemplateI>> {
+		return this.client.put(`/email-templates/${id}`, updatedTemplateData);
+	}
+
+	async deleteTemplate(id: number): Promise<HttpResponse<void>> {
+		return this.client.delete(`/email-templates/${id}`);
 	}
 }
 

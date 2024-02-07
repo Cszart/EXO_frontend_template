@@ -7,14 +7,7 @@ export interface AuthSession {
 }
 
 // Login payload
-export interface LoginRequest {
+export interface LoginPayload {
 	email: string;
 	password: string;
-}
-
-// Login response payload
-export interface LoginResponse {
-	status: number;
-	message: string;
-	user: UserI;
 }

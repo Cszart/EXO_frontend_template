@@ -6,7 +6,7 @@ import { Layout } from 'components/layout';
 import { Button, Tabs, Typography } from 'components/common';
 import { emailService } from 'api_services/email';
 import { useRouter } from 'next/router';
-import { EmailTemplate } from 'interfaces';
+import { EmailTemplateI } from 'interfaces';
 import Icons from 'const/icons';
 import SimpleTextEditor from 'components/text-editor/textEditor';
 
@@ -37,7 +37,7 @@ const EmailContentEditorScreen = (): JSX.Element => {
 
 			if (stringTemplateToEdit) {
 				// Use the JSON object as needed
-				const templateToEditContent: EmailTemplate =
+				const templateToEditContent: EmailTemplateI =
 					JSON.parse(stringTemplateToEdit);
 				setPreviewContent(templateToEditContent.content);
 				setDefaultHtml(templateToEditContent.content);

@@ -2,7 +2,7 @@ import { emailService } from 'api_services';
 import SimpleTable from 'components/common/tables/simpleTable';
 import { Layout } from 'components/layout';
 import AppRoutes from 'const/routes';
-import { EmailTemplate } from 'interfaces';
+import { EmailTemplateI } from 'interfaces';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 
@@ -11,7 +11,7 @@ const EmailTemplatesListScreen = (): JSX.Element => {
 	const router = useRouter();
 
 	// Templates data
-	const [templatesData, setTemplatesData] = React.useState<EmailTemplate[]>();
+	const [templatesData, setTemplatesData] = React.useState<EmailTemplateI[]>();
 
 	// Fetch templates data
 	// NOTE: implementation might change
@@ -26,7 +26,7 @@ const EmailTemplatesListScreen = (): JSX.Element => {
 
 	return (
 		<Layout withHeader title="Templates List">
-			<SimpleTable<EmailTemplate>
+			<SimpleTable<EmailTemplateI>
 				columns={[
 					{
 						header: 'Name',
