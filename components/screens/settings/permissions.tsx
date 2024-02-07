@@ -34,7 +34,7 @@ const PermissionsScreen = (): JSX.Element => {
 	}, []);
 
 	// here you can do all the logic to create a permisson
-	const handleCreatePermission = () => {
+	const handleCreatePermission = (): void => {
 		reset();
 		hideCreatePermission();
 	};

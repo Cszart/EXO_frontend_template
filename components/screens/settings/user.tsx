@@ -34,7 +34,7 @@ const UsersScreen = (): JSX.Element => {
 	}, []);
 
 	// here you can do all the logic to create a role
-	const handleCreateUser = () => {
+	const handleCreateUser = (): void => {
 		reset();
 		hideCreateUser();
 	};

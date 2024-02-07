@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import NextAuthProvidersEnum from 'const/auth';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth, { NextAuthOptions } from 'next-auth';
@@ -212,5 +213,6 @@ const options: NextAuthOptions = {
 	// database: process.env.DATABASE_URL,
 };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (req: NextApiRequest, res: NextApiResponse) =>
 	NextAuth(req, res, options);
