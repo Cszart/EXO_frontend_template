@@ -21,7 +21,7 @@ class RolesService {
 		return this.client.get(`/roles/${id}`);
 	}
 
-	async create(data: RoleI): Promise<HttpResponse<RoleI>> {
+	async create(data: Partial<RoleI>): Promise<HttpResponse<RoleI>> {
 		return this.client.post('/roles', data);
 	}
 

@@ -36,11 +36,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	};
 };
 
+export default EmailContentEditor;
+
 // export default withAuthorization(
 // 	EmailContentEditor,
 // 	undefined,
 // 	[RolesEnum.MODERATOR, RolesEnum.ADMIN],
 // 	AppRoutes.HOME
 // );
-
-export default EmailContentEditor;

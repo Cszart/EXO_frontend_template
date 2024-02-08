@@ -25,11 +25,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	};
 };
 
+export default EmailTemplatesList;
+
 // export default withAuthorization(
 // 	EmailTemplatesList,
 // 	undefined,
 // 	[RolesEnum.MODERATOR, RolesEnum.ADMIN],
 // 	AppRoutes.HOME
 // );
-
-export default EmailTemplatesList;

@@ -26,11 +26,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	};
 };
 
+export default RolesPage;
+
 // export default withAuthorization(
 // 	Roles,
 // 	crudRoles(),
 // 	[RolesEnum.ADMIN],
 // 	AppRoutes.HOME
 // );
-
-export default RolesPage;

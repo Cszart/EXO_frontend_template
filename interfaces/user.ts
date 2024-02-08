@@ -3,11 +3,11 @@ import RolesEnum from 'const/role';
 
 // General user structure/payload
 export interface UserI {
-	id: string;
+	id: number;
 	email: string;
 	username: string;
 	name: string;
 	image: string;
-	roles: RolesEnum[];
-	permissions: PermissionsEnum[];
+	roles: RolesEnum[] | string[];
+	permissions: PermissionsEnum[] | string[];
 }

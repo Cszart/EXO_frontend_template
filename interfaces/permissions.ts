@@ -4,6 +4,6 @@ export interface PermissionI {
 	category: string;
 	subCategory: string;
 	permission: string;
-	createdAt: string;
-	modifiedAt: string;
+	createdAt?: string;
+	modifiedAt?: string;
 }

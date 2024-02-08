@@ -9,14 +9,53 @@ import { useForm } from 'react-hook-form';
 import { Button } from 'components/common';
 
 const RolesScreen = (): JSX.Element => {
-	// Data
-	const [rolesData, setRolesData] = useState<RoleI[]>();
-	const { register, reset, handleSubmit } = useForm({ mode: 'onChange' });
+	//Utils
+	const { register, reset, handleSubmit, setValue } = useForm({
+		mode: 'onChange',
+	});
 	const {
 		Modal: ModalCreateRole,
 		show: showCreateRole,
 		hide: hideCreateRole,
 	} = useModal();
+
+	// Data
+	const [rolesData, setRolesData] = useState<RoleI[]>();
+	const [editRoleID, setEditRoleID] = useState<number | undefined>();
+
+	// - Functions
+	// Create role handler - TODO: implement own logic
+	const handleSubmitData = async (formData: any): Promise<void> => {
+		const { role } = formData;
+
+		if (editRoleID) {
+			const updateResponse = await rolesService.update(editRoleID, {
+				role,
+			});
+
+			alert(updateResponse.message);
+		} else {
+			const createResponse = await rolesService.create({
+				uuid: role,
+				role: role,
+			});
+
+			alert(createResponse.message);
+		}
+
+		hideCreateRole();
+		reset();
+	};
+
+	// Function to handle editing a role
+	const handleEditrole = (role: RoleI): void => {
+		// Set the initial values for the form fields
+		setValue('role', role.role);
+		setEditRoleID(role.id);
+
+		// Show the modal for editing the role
+		showCreateRole();
+	};
 
 	// Fetch roles
 	useEffect(() => {
@@ -32,12 +71,6 @@ const RolesScreen = (): JSX.Element => {
 
 		fetchRoles();
 	}, []);
-
-	// here you can do all the logic to create a role
-	const handleCreateRol = (): void => {
-		reset();
-		hideCreateRole();
-	};
 
 	return (
 		<Layout
@@ -71,13 +104,21 @@ const RolesScreen = (): JSX.Element => {
 					{
 						label: 'Edit',
 						onClick: (instance) => {
-							alert(instance.uuid);
+							handleEditrole(instance);
+						},
+					},
+					{
+						label: 'Delete',
+						onClick: (instance) => {
+							rolesService
+								.delete(instance.id)
+								.then((response) => alert(response.message));
 						},
 					},
 				]}
 			/>
 			<ModalCreateRole title="Create a Role">
-				<form className="mt-4" onSubmit={handleSubmit(handleCreateRol)}>
+				<form className="mt-4" onSubmit={handleSubmit(handleSubmitData)}>
 					<InputText
 						register={register}
 						name="role"
@@ -89,11 +130,16 @@ const RolesScreen = (): JSX.Element => {
 							label="Cancel"
 							decoration="line-primary"
 							size="extra-small"
-							onClick={handleCreateRol}
+							type="button"
+							onClick={() => {
+								hideCreateRole();
+								reset();
+								setEditRoleID(undefined);
+							}}
 						/>
 						<Button
-							label="Save"
 							type="submit"
+							label="Save"
 							decoration="fill"
 							size="extra-small"
 						/>

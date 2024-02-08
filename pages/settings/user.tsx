@@ -26,11 +26,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	};
 };
 
+export default UsersPage;
+
 // export default withAuthorization(
 // 	UsersScreen,
 // 	crudUsers(),
 // 	[UsersEnum.ADMIN],
 // 	AppRoutes.HOME
 // );
-
-export default UsersPage;

@@ -1,22 +1,76 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import { Layout } from 'components/layout';
-import { UserI } from 'interfaces';
+import { RoleI, UserI } from 'interfaces';
 import SimpleTable from 'components/common/tables/simpleTable';
-import { userService } from 'api_services';
+import { rolesService, userService } from 'api_services';
 import useModal from 'hooks/useModal';
 import { useForm } from 'react-hook-form';
 import { InputText } from 'components/form';
 import { Button, Dropdown } from 'components/common';
+import { crudPermissions } from 'utils';
 
 const UsersScreen = (): JSX.Element => {
-	// Data
-	const [usersData, setUsersData] = useState<UserI[]>();
-	const { register, reset, handleSubmit } = useForm({ mode: 'onChange' });
+	// Utils
+	const { register, reset, handleSubmit, setValue } = useForm({
+		mode: 'onChange',
+	});
 	const {
 		Modal: ModalCreateUser,
 		show: showCreateUser,
 		hide: hideCreateUser,
 	} = useModal();
+
+	// Data
+	const [usersData, setUsersData] = useState<UserI[]>();
+	const [rolesData, setRolesData] = useState<RoleI[]>([]);
+	const [editUserID, setEditUserID] = useState<number | undefined>();
+	const [selectedRole, setSelectedRole] = useState<string | undefined>();
+
+	// - Functions
+	// Create user handler - TODO: implement own logic
+	const handleSubmitData = async (formData: any): Promise<void> => {
+		if (editUserID) {
+			const updateResponse = await userService.update(editUserID, {
+				name: formData.name,
+				email: formData.email,
+				username: formData.username,
+				image: formData.image,
+				roles: selectedRole ? [selectedRole] : undefined,
+			});
+
+			alert(updateResponse.message);
+		} else {
+			const createResponse = await userService.create({
+				name: formData.name,
+				email: formData.email,
+				username: formData.username,
+				image: formData.image,
+				roles: selectedRole ? [selectedRole] : undefined,
+				permissions: crudPermissions(),
+			});
+
+			alert(createResponse.message);
+		}
+
+		hideCreateUser();
+		reset();
+		setEditUserID(undefined);
+		setSelectedRole(undefined);
+	};
+
+	// Function to handle editing a user
+	const handleEditUser = (user: UserI): void => {
+		// Set the initial values for the form fields
+		setValue('name', user.name);
+		setValue('email', user.email);
+		setValue('username', user.username);
+		setValue('image', user.image);
+		setEditUserID(user.id);
+
+		// Show the modal for editing the user
+		showCreateUser();
+	};
 
 	// Fetch users
 	useEffect(() => {
@@ -33,11 +87,20 @@ const UsersScreen = (): JSX.Element => {
 		fetchUsers();
 	}, []);
 
-	// here you can do all the logic to create a role
-	const handleCreateUser = (): void => {
-		reset();
-		hideCreateUser();
-	};
+	// Fetch roles
+	useEffect(() => {
+		async function fetchRoles(): Promise<void> {
+			const rolesRespose = await rolesService.getAll();
+
+			if (rolesRespose.status == 200) {
+				setRolesData(rolesRespose.data);
+			} else {
+				setRolesData([]);
+			}
+		}
+
+		fetchRoles();
+	}, []);
 
 	return (
 		<Layout
@@ -75,9 +138,7 @@ const UsersScreen = (): JSX.Element => {
 							<ul>
 								{instance.permissions.map((item) => {
 									return (
-										<li key={`permissions-user-${instance.id}-${item}`}>
-											{item}
-										</li>
+										<li key={`users-user-${instance.id}-${item}`}>{item}</li>
 									);
 								})}
 							</ul>
@@ -89,15 +150,24 @@ const UsersScreen = (): JSX.Element => {
 					{
 						label: 'Edit',
 						onClick: (instance) => {
-							alert(instance.id);
+							handleEditUser(instance);
+						},
+					},
+					{
+						label: 'Delete',
+						onClick: (instance) => {
+							userService
+								.delete(instance.id)
+								.then((response) => alert(response.message));
 						},
 					},
 				]}
 			/>
+
 			<ModalCreateUser title="Create a User">
 				<form
 					className="mt-4 space-y-4"
-					onSubmit={handleSubmit(handleCreateUser)}
+					onSubmit={handleSubmit(handleSubmitData)}
 				>
 					<InputText
 						register={register}
@@ -107,26 +177,47 @@ const UsersScreen = (): JSX.Element => {
 					/>
 					<InputText
 						register={register}
+						name="email"
+						title="Email"
+						customPlaceholder="Image"
+					/>
+					<InputText
+						register={register}
 						name="username"
 						title="Username"
 						customPlaceholder="Username"
 					/>
-					<Dropdown
-						buttonContent={'Role'}
-						showChevronDownIcon={false}
-						items={[
-							{
-								name: 'admin',
-								label: 'Admin',
-							},
-						]}
+					<InputText
+						register={register}
+						name="image"
+						title="Image"
+						customPlaceholder="Image"
 					/>
+
+					<Dropdown
+						buttonContent={'Roles'}
+						showChevronDownIcon={false}
+						items={rolesData.map((role) => {
+							return {
+								name: role.role,
+								label: role.role,
+								onClick: () => setSelectedRole(role.uuid),
+							};
+						})}
+					/>
+
 					<div className="flex gap-x-4 w-full justify-center mt-8">
 						<Button
 							label="Cancel"
 							decoration="line-primary"
 							size="extra-small"
-							onClick={handleCreateUser}
+							type="button"
+							onClick={() => {
+								hideCreateUser();
+								reset();
+								setEditUserID(undefined);
+								setSelectedRole(undefined);
+							}}
 						/>
 						<Button
 							label="Save"
@@ -140,28 +231,5 @@ const UsersScreen = (): JSX.Element => {
 		</Layout>
 	);
 };
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-// 	const session = await getSession(context);
-
-// 	const redirect: Redirect | undefined = await withAuthorizationServerSide({
-// 		session: session,
-// 		allowedUsers: crudUsers(),
-// 		allowedUsers: [UsersEnum.ADMIN],
-// 		redirectTo: AppRoutes.HOME,
-// 	});
-
-// 	return {
-// 		props: {},
-// 		redirect: redirect,
-// 	};
-// };
-
-// export default withAuthorization(
-// 	UsersScreen,
-// 	crudUsers(),
-// 	[UsersEnum.ADMIN],
-// 	AppRoutes.HOME
-// );
 
 export default UsersScreen;

@@ -21,11 +21,11 @@ class UserService {
 		return this.client.get(`/users/${id}`);
 	}
 
-	async create(data: UserI): Promise<HttpResponse<UserI>> {
+	async create(data: Partial<UserI>): Promise<HttpResponse<UserI>> {
 		return this.client.post('/users', data);
 	}
 
-	async update(id: number, data: Partial<UserI>): Promise<UserI> {
+	async update(id: number, data: Partial<UserI>): Promise<HttpResponse<UserI>> {
 		return this.client.put(`/users/${id}`, data);
 	}
 

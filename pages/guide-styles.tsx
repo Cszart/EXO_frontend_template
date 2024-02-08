@@ -6,13 +6,13 @@ import {
 	Spinner,
 } from 'components/common';
 import { Dropdown } from 'components/common/dropdown';
+import { EmptyState } from 'components/common/emptyState';
 import PaginatedTable from 'components/common/tables/paginatedTable';
 import SimpleTable from 'components/common/tables/simpleTable';
 import { InputText, InputEmail } from 'components/form';
 import InputPassword from 'components/form/input-password/input-password';
 import { Layout } from 'components/layout';
 import Icons from 'const/icons';
-// import DummyUsersData from 'data/tables/userDummyData';
 import { UserI } from 'interfaces';
 import { useForm } from 'react-hook-form';
 
@@ -117,9 +117,8 @@ const GuideStyles = (): JSX.Element => {
 					</div>
 					<Typography type="overline">overline</Typography>
 				</div>
-
+				{/* *** Buttons *** */}
 				<Separator text="Buttons" />
-
 				{/* Button decoration */}
 				<div className="flex flex-wrap justify-between gap-4 w-full">
 					<Button decoration="fill" size="medium">
@@ -132,9 +131,8 @@ const GuideStyles = (): JSX.Element => {
 						Button not-fill
 					</Button>
 				</div>
-
-				<Separator text="Disabled" className="max-w-[200px] self-center" />
 				{/* Button disabled */}
+				<Separator text="Disabled" className="max-w-[200px] self-center" />
 				<div className="flex flex-wrap justify-between gap-4 w-full">
 					<Button decoration="fill" size="medium" disabled>
 						Button fill disabled
@@ -146,9 +144,8 @@ const GuideStyles = (): JSX.Element => {
 						Button not-fill disabled
 					</Button>
 				</div>
-
-				<Separator text="Size" className="max-w-[200px] self-center" />
 				{/* Button size */}
+				<Separator text="Size" className="max-w-[200px] self-center" />
 				<div className="flex flex-wrap justify-between gap-4 w-full">
 					<Button decoration="fill" size="fit">
 						Button fit
@@ -169,7 +166,7 @@ const GuideStyles = (): JSX.Element => {
 						Button full
 					</Button>
 				</div>
-
+				{/* With icons */}
 				<Separator text="With icons" className="max-w-[200px] self-center" />
 				<div className="flex flex-wrap justify-between gap-4 w-full">
 					<Button
@@ -215,9 +212,8 @@ const GuideStyles = (): JSX.Element => {
 						label="Button iconRight"
 					></Button>
 				</div>
-
-				<Separator text="Dropdown" className="max-w-[200px] self-center" />
 				{/* Button dropdown */}
+				<Separator text="Dropdown" className="max-w-[200px] self-center" />
 				<div className="flex flex-wrap justify-between gap-4 w-full">
 					<Dropdown
 						buttonContent="This is a dropdown button"
@@ -242,8 +238,8 @@ const GuideStyles = (): JSX.Element => {
 					/>
 				</div>
 
+				{/* Avatars */}
 				<Separator text="Avatars" />
-				{/* Avatar */}
 				<div className="flex flex-wrap justify-betwen gap-10 w-full">
 					<Avatar photoUrl={Icons.avatar} className="w-20 h-20" />
 					<Avatar photoUrl={Icons.avatar} size="large" />
@@ -343,7 +339,6 @@ const GuideStyles = (): JSX.Element => {
 						]}
 					/>
 				</div>
-
 				<div className="flex flex-col gap-2 justify-center align-center w-full h-auto">
 					<Typography type="headline-4" text="Paginated Table" />
 					<Typography type="caption-3" text="Static array" />
@@ -397,6 +392,12 @@ const GuideStyles = (): JSX.Element => {
 							];
 						}}
 					/>
+				</div>
+
+				{/* Empty state */}
+				<Separator text="Tables" />
+				<div className="flex flex-col gap-2 justify-center align-center w-full h-auto">
+					<EmptyState />
 				</div>
 			</div>
 		</Layout>

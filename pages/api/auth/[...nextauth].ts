@@ -85,7 +85,7 @@ const options: NextAuthOptions = {
 				// e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
 
 				try {
-					const res = await fetch(`${process.env.NEXT_PUBLIC_API}/login`, {
+					const res = await fetch(`${process.env.NEXT_PUBLIC_API}/auth/login`, {
 						method: 'POST',
 						body: JSON.stringify(credentials),
 						headers: { 'Content-Type': 'application/json' },
@@ -96,8 +96,8 @@ const options: NextAuthOptions = {
 					const response_json = await res.json();
 
 					// If no error and we have user data, return it
-					if (res.status == 200 && response_json) {
-						const user = response_json.user;
+					if (response_json.status == 200 && response_json) {
+						const user = response_json.data;
 						return Promise.resolve(user);
 					}
 
@@ -140,8 +140,8 @@ const options: NextAuthOptions = {
 					const response_json = await response_login.json();
 
 					// If no error and we have user data, return it
-					if (response_login.status == 200 && response_json) {
-						const user = response_json.user;
+					if (response_json.status == 200 && response_json) {
+						const user = response_json.data;
 						return Promise.resolve(user);
 					}
 
@@ -214,5 +214,5 @@ const options: NextAuthOptions = {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (req: NextApiRequest, res: NextApiResponse) =>
+export default (req: NextApiRequest, res: NextApiResponse): any =>
 	NextAuth(req, res, options);

@@ -21,11 +21,14 @@ class PermissionsService {
 		return this.client.get(`/permissions/${id}`);
 	}
 
-	async create(data: PermissionI): Promise<HttpResponse<PermissionI>> {
+	async create(data: Partial<PermissionI>): Promise<HttpResponse<PermissionI>> {
 		return this.client.post('/permissions', data);
 	}
 
-	async update(id: number, data: Partial<PermissionI>): Promise<PermissionI> {
+	async update(
+		id: number,
+		data: Partial<PermissionI>
+	): Promise<HttpResponse<PermissionI>> {
 		return this.client.put(`/permissions/${id}`, data);
 	}
 
