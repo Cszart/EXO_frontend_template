@@ -1,7 +1,8 @@
 import React from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useAccount, useConnect } from 'wagmi';
+import { useAccount, useConnect, useSignMessage } from 'wagmi';
+import { verifyMessage } from 'ethers';
 
 import { FieldValues, useForm } from 'react-hook-form';
 
@@ -13,17 +14,19 @@ import { LayoutLogin } from 'components/layout';
 import Icons from 'const/icons';
 import NextAuthProvidersEnum from 'const/auth';
 import AppRoutes from 'const/routes';
+
 import Logger from 'utils/logger';
 
 interface SignInProps {
 	providers: NextAuthProvidersEnum[];
 }
 
+const messageToSign = 'To proceed with login process please sign this message!';
+
 export const SignInScreen: React.FC<SignInProps> = () => {
 	// Utils
-	const [isLoading, setIsLoading] = React.useState<boolean>(false);
-	const [connectAttempt, setConnectAttempt] = React.useState<boolean>(false);
 	const logger = new Logger({ identifier: 'SignIn' });
+	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
 	const {
 		register,
@@ -33,7 +36,6 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 
 	// Wallet connection
 	const { address, isConnected, connector } = useAccount();
-
 	const {
 		connect,
 		connectors,
@@ -41,6 +43,14 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 		isLoading: isLoadingWallet,
 		pendingConnector,
 	} = useConnect();
+	const {
+		data: signatureData,
+		isLoading: isLoadingSign,
+		error: errorSign,
+		signMessage,
+	} = useSignMessage({
+		message: messageToSign,
+	});
 
 	// Inputs rules
 	const rules = {
@@ -80,38 +90,60 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 		}
 	};
 
-	// Check for connectors (delete)
-	React.useEffect(() => {
-		logger.info('Connectors: ', { connectors });
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [connectors]);
-
 	/**
-	 * Check when the wallet is connected and proceed with sign in
-	 * procedure for example: Checking the user attached to this address and fetch
-	 * the data
+	 * Check when the wallet is connected and proceed with to sign
 	 */
 	React.useEffect(() => {
-		const isConnectedFunction = async (): Promise<void> => {
-			if (connectAttempt && isConnected && address) {
-				// Fetch user data based on address
+		const triggerSignWithWallet = async (): Promise<void> => {
+			if (isConnected && address && signMessage) {
 				logger.info('User address: ', { address, connector });
+				signMessage();
+			}
+		};
+
+		triggerSignWithWallet();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [address, isConnected]);
+
+	/**
+	 * Just after the user has signed we will verify the signature and then
+	 * fetch data from backend
+	 *
+	 * Note: This implementation can change depending on the project
+	 */
+	React.useEffect(() => {
+		const signInWithWallet = async (): Promise<void> => {
+			if (signatureData) {
+				// Sign and verify address
+				const addressThatSigned = verifyMessage(messageToSign, signatureData);
+
+				// Compare connected address with the one that signed
+				if (address !== addressThatSigned) {
+					alert(
+						'The address connected to this app is different from the one that signed'
+					);
+					return;
+				}
+
+				// Call the API to fetch user data attached to this address
+				// TODO: Implement own project logic
 				try {
 					await signIn(NextAuthProvidersEnum.WALLET, {
 						redirect: true,
 						address,
 					});
 				} catch (error) {
-					logger.error('There has been an error trying to log in with wallet');
-				} finally {
-					setConnectAttempt(false);
+					logger.error(
+						'There has been an error trying to log in with wallet ',
+						error
+					);
 				}
 			}
 		};
 
-		isConnectedFunction();
+		signInWithWallet();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [address, connectAttempt, isConnected]);
+	}, [signatureData]);
 
 	return (
 		<LayoutLogin>
@@ -188,10 +220,13 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 						size="full"
 						onClick={() => {
 							connect({ connector });
-							setConnectAttempt(true);
 						}}
-						loading={isLoadingWallet && connector.id === pendingConnector?.id}
-						icon={connector.options.appLogoUrl}
+						loading={
+							(isLoadingWallet || isLoadingSign) &&
+							connector.id === pendingConnector?.id
+						}
+						disabled={isLoading || isLoadingWallet || isLoadingSign}
+						icon={connector.options.ap1pLogoUrl}
 						iconLeft
 						label={connector.name}
 					/>
@@ -199,6 +234,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 
 				{/* Error messages */}
 				{error && <div>{error.message}</div>}
+				{errorSign && <div>{errorSign.message}</div>}
 
 				{/* Register */}
 				<Typography type="link-1">
