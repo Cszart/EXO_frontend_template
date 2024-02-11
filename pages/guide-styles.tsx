@@ -9,7 +9,7 @@ import { Dropdown } from 'components/common/dropdown';
 import { EmptyState } from 'components/common/emptyState';
 import PaginatedTable from 'components/common/tables/paginatedTable';
 import SimpleTable from 'components/common/tables/simpleTable';
-import { InputText, InputEmail } from 'components/form';
+import { InputText, InputEmail, InputList } from 'components/form';
 import InputPassword from 'components/form/input-password/input-password';
 import { Layout } from 'components/layout';
 import Icons from 'const/icons';
@@ -18,7 +18,7 @@ import { useForm } from 'react-hook-form';
 
 const DummyUsersData = [
 	{
-		id: '1',
+		id: 1,
 		email: 'john@example.com',
 		username: 'john_doe',
 		name: 'John Doe',
@@ -41,7 +41,7 @@ const DummyUsersData = [
 		accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3Mi...Ix-E',
 	},
 	{
-		id: '2',
+		id: 2,
 		email: 'jane@example.com',
 		username: 'jane_smith',
 		name: 'Jane Smith',
@@ -56,7 +56,7 @@ const DummyUsersData = [
 		accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3Mi...Ix-E',
 	},
 	{
-		id: '3',
+		id: 3,
 		email: 'mike@example.com',
 		username: 'mike_jones',
 		name: 'Mike Jones',
@@ -66,7 +66,7 @@ const DummyUsersData = [
 		accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3Mi...Ix-E',
 	},
 	{
-		id: '4',
+		id: 4,
 		email: 'sara@example.com',
 		username: 'sara_adams',
 		name: 'Sara Adams',
@@ -260,6 +260,23 @@ const GuideStyles = (): JSX.Element => {
 					<InputEmail name="Email" register={register} title="Email" />
 
 					<InputPassword name="Password" register={register} title="Password" />
+
+					<InputList
+						name="role"
+						title="Roles"
+						register={register}
+						handleChange={(value: string) => console.log(value)}
+						options={[
+							{
+								name: 'admin',
+								label: 'Admin',
+							},
+							{
+								name: 'user',
+								label: 'User',
+							},
+						]}
+					/>
 				</div>
 
 				{/* Spinner and misc */}
@@ -395,7 +412,7 @@ const GuideStyles = (): JSX.Element => {
 				</div>
 
 				{/* Empty state */}
-				<Separator text="Tables" />
+				<Separator text="Empty Table" />
 				<div className="flex flex-col gap-2 justify-center align-center w-full h-auto">
 					<EmptyState />
 				</div>

@@ -24,12 +24,12 @@ export const Input: React.FC<
 }) => {
 	const registerAux = register(name, rules);
 	return (
-		<div className={clsx('relative flex flex-col py-2', className)}>
+		<div className={clsx('relative flex flex-col', className)}>
 			<div className="relative">
 				<label
 					htmlFor="name"
 					className={clsx(
-						'absolute inline-block text-xs top-[-16px] left-0',
+						'text-xs',
 						error ? 'text-status-error-solid' : 'text-dark-80'
 					)}
 				>

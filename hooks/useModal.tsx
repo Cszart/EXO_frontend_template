@@ -66,7 +66,7 @@ const useModal = (): {
 						>
 							<Dialog.Panel
 								className={clsx(
-									'transform overflow-hidden shadow-xl transition-all',
+									'transform shadow-xl transition-all',
 									'rounded-2xl bg-white w-full max-w-md p-6 text-left align-middle'
 								)}
 							>

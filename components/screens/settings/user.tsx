@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import { Layout } from 'components/layout';
-import { RoleI, UserI } from 'interfaces';
+import { Option, UserI } from 'interfaces';
 import SimpleTable from 'components/common/tables/simpleTable';
 import { rolesService, userService } from 'api_services';
 import useModal from 'hooks/useModal';
 import { useForm } from 'react-hook-form';
-import { InputText } from 'components/form';
-import { Button, Dropdown } from 'components/common';
+import { InputList, InputText } from 'components/form';
+import { Button } from 'components/common';
 import { crudPermissions } from 'utils';
 
 const UsersScreen = (): JSX.Element => {
@@ -23,20 +23,19 @@ const UsersScreen = (): JSX.Element => {
 
 	// Data
 	const [usersData, setUsersData] = useState<UserI[]>();
-	const [rolesData, setRolesData] = useState<RoleI[]>([]);
-	const [editUserID, setEditUserID] = useState<number | undefined>();
-	const [selectedRole, setSelectedRole] = useState<string | undefined>();
+	const [rolesData, setRolesData] = useState<Option[]>([]);
+	const [editUser, setEditUser] = useState<UserI | undefined>();
 
 	// - Functions
 	// Create user handler - TODO: implement own logic
 	const handleSubmitData = async (formData: any): Promise<void> => {
-		if (editUserID) {
-			const updateResponse = await userService.update(editUserID, {
+		if (editUser) {
+			const updateResponse = await userService.update(editUser.id, {
 				name: formData.name,
 				email: formData.email,
 				username: formData.username,
 				image: formData.image,
-				roles: selectedRole ? [selectedRole] : undefined,
+				roles: [formData.role],
 			});
 
 			alert(updateResponse.message);
@@ -46,7 +45,7 @@ const UsersScreen = (): JSX.Element => {
 				email: formData.email,
 				username: formData.username,
 				image: formData.image,
-				roles: selectedRole ? [selectedRole] : undefined,
+				roles: [formData.role],
 				permissions: crudPermissions(),
 			});
 
@@ -55,8 +54,7 @@ const UsersScreen = (): JSX.Element => {
 
 		hideCreateUser();
 		reset();
-		setEditUserID(undefined);
-		setSelectedRole(undefined);
+		setEditUser(undefined);
 	};
 
 	// Function to handle editing a user
@@ -66,7 +64,7 @@ const UsersScreen = (): JSX.Element => {
 		setValue('email', user.email);
 		setValue('username', user.username);
 		setValue('image', user.image);
-		setEditUserID(user.id);
+		setEditUser(user);
 
 		// Show the modal for editing the user
 		showCreateUser();
@@ -93,7 +91,21 @@ const UsersScreen = (): JSX.Element => {
 			const rolesRespose = await rolesService.getAll();
 
 			if (rolesRespose.status == 200) {
-				setRolesData(rolesRespose.data);
+				const optionsAux: Option[] = [
+					{
+						name: '',
+						label: 'Select a role',
+						placeholder: true,
+					},
+				];
+
+				rolesRespose.data.map((role) => {
+					optionsAux.push({
+						label: role.role,
+						name: role.role,
+					});
+				});
+				setRolesData(optionsAux);
 			} else {
 				setRolesData([]);
 			}
@@ -179,7 +191,7 @@ const UsersScreen = (): JSX.Element => {
 						register={register}
 						name="email"
 						title="Email"
-						customPlaceholder="Image"
+						customPlaceholder="Email"
 					/>
 					<InputText
 						register={register}
@@ -187,23 +199,13 @@ const UsersScreen = (): JSX.Element => {
 						title="Username"
 						customPlaceholder="Username"
 					/>
-					<InputText
+					<InputList
 						register={register}
-						name="image"
-						title="Image"
-						customPlaceholder="Image"
-					/>
-
-					<Dropdown
-						buttonContent={'Roles'}
-						showChevronDownIcon={false}
-						items={rolesData.map((role) => {
-							return {
-								name: role.role,
-								label: role.role,
-								onClick: () => setSelectedRole(role.uuid),
-							};
-						})}
+						name="role"
+						title="Role"
+						options={rolesData}
+						myDefaultValue={editUser?.roles[0]}
+						setValueInput={setValue}
 					/>
 
 					<div className="flex gap-x-4 w-full justify-center mt-8">
@@ -215,8 +217,7 @@ const UsersScreen = (): JSX.Element => {
 							onClick={() => {
 								hideCreateUser();
 								reset();
-								setEditUserID(undefined);
-								setSelectedRole(undefined);
+								setEditUser(undefined);
 							}}
 						/>
 						<Button

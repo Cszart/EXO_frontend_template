@@ -14,7 +14,7 @@ class UserService {
 	constructor(private client: AxiosInstance) {}
 
 	async getAll(): Promise<HttpResponse<UserI[]>> {
-		return this.client.get('/users');
+		return this.client.get('/user/all');
 	}
 
 	async getById(id: number): Promise<HttpResponse<UserI>> {

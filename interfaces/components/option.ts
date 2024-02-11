@@ -12,4 +12,5 @@ export interface Option {
 	iconProps?: IconProps;
 	onClick?: () => void;
 	customRender?: ReactNode;
+	placeholder?: boolean;
 }
