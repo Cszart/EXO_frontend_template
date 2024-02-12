@@ -4,7 +4,7 @@ import { saveAs } from 'file-saver';
 
 import { Layout } from 'components/layout';
 import { Button, Tabs, Typography } from 'components/common';
-import { emailService } from 'api_services/email';
+// import { emailService } from 'api_services/email';
 import { useRouter } from 'next/router';
 import { EmailTemplateI } from 'interfaces';
 import Icons from 'const/icons';
@@ -64,7 +64,7 @@ const EmailContentEditorScreen = (): JSX.Element => {
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
 				{/* First column - Editor */}
 				<div className="flex flex-col gap-2 w-full">
-					<Typography type="link-1" text="Editor" className="mb-2" />
+					<Typography type="link-1" text="Editor" className="mb-2 text-left" />
 
 					<SimpleTextEditor
 						onChange={(html: string) => {
@@ -106,13 +106,13 @@ const EmailContentEditorScreen = (): JSX.Element => {
 			</div>
 
 			{/* Save button */}
-			<div className="flex w-full justify-end mt-10">
+			<div className="flex w-full justify-end lg:mt-10">
 				<Button
 					label="Save changes"
 					decoration="line-primary"
 					size="extra-small"
 					onClick={() => {
-						previewContent && emailService.saveTemplate(previewContent);
+						// previewContent && emailService.(previewContent);
 						alert('Changes Saved!');
 					}}
 				/>

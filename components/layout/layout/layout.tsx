@@ -124,7 +124,7 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 									type="custom-h1"
 									text={title}
 									className={clsx(
-										'text-xl font-bold text-gray-800',
+										'text-md lg:text-xl font-bold text-gray-800',
 										classNameTitle
 									)}
 								/>

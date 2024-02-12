@@ -17,7 +17,7 @@ const EmailTemplatesListScreen = (): JSX.Element => {
 	// NOTE: implementation might change
 	React.useEffect(() => {
 		async function fetchTemplates(): Promise<void> {
-			const response = await emailService.getTemplates();
+			const response = await emailService.getAllTemplates();
 			setTemplatesData(response.data);
 		}
 
