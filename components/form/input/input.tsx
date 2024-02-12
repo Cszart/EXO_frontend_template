@@ -65,14 +65,14 @@ export const Input: React.FC<
 					{...props}
 				/>
 				{iconLeft && (
-					<div onClick={leftClick} className="absolute left-4 top-1/4 w-6 h-6">
+					<div onClick={leftClick} className="absolute left-4 top-1/2 w-6 h-6">
 						<Icon src={iconLeft} className="text-dark-80 cursor-pointer" />
 					</div>
 				)}
 				{iconRight && (
 					<div
 						onClick={rightClick}
-						className="absolute right-4 top-1/4 w-6 h-6"
+						className="absolute right-4 top-1/2 w-6 h-6"
 					>
 						<Icon src={iconRight} className="cursor-pointer" />
 					</div>

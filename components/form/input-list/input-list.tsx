@@ -31,7 +31,7 @@ export const InputList: React.FC<
 
 	React.useEffect(() => {
 		handleChange && handleChange(selected.name);
-		setValueInput(props.name, selected.name);
+		setValueInput && setValueInput(props.name, selected.name);
 	}, [selected]);
 
 	return (
