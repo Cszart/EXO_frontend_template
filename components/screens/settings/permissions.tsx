@@ -7,10 +7,17 @@ import useModal from 'hooks/useModal';
 import { useForm } from 'react-hook-form';
 import { InputText } from 'components/form';
 import { Button } from 'components/common';
+import { DeleteModalContent } from 'components/modals';
 
 const PermissionsScreen = (): JSX.Element => {
 	// Utils
-	const { register, reset, handleSubmit, setValue } = useForm({
+	const {
+		register,
+		reset,
+		handleSubmit,
+		setValue,
+		formState: { errors, isDirty, isValid },
+	} = useForm({
 		mode: 'onChange',
 	});
 	const {
@@ -18,12 +25,24 @@ const PermissionsScreen = (): JSX.Element => {
 		show: showCreatePermission,
 		hide: hideCreatePermission,
 	} = useModal();
+	const {
+		Modal: ModalDeletePermission,
+		show: showDeletePermission,
+		hide: hideDeletePermission,
+	} = useModal();
 
 	// Data
 	const [permissionsData, setPermissionsData] = useState<PermissionI[]>();
-	const [editPermissionID, setEditPermissionID] = useState<
+	const [idSelectedPermission, setIdSelectedPermission] = useState<
 		number | undefined
 	>();
+
+	// Rules
+	const rules = {
+		category: {
+			required: { value: true, message: 'This is requeried' },
+		},
+	};
 
 	// - Functions
 	// Create permission handler - TODO: implement own logic
@@ -31,12 +50,15 @@ const PermissionsScreen = (): JSX.Element => {
 		const { category, subCategory, permission } = formData;
 		const permissionUUID = `${category}:${subCategory}:${permission}`; // Should be handled by backend really, but since its a demostration
 
-		if (editPermissionID) {
-			const updateResponse = await permissionService.update(editPermissionID, {
-				category,
-				subCategory,
-				permission,
-			});
+		if (idSelectedPermission) {
+			const updateResponse = await permissionService.update(
+				idSelectedPermission,
+				{
+					category,
+					subCategory,
+					permission,
+				}
+			);
 
 			alert(updateResponse.message);
 		} else {
@@ -52,7 +74,7 @@ const PermissionsScreen = (): JSX.Element => {
 
 		hideCreatePermission();
 		reset();
-		setEditPermissionID(undefined);
+		setIdSelectedPermission(undefined);
 	};
 
 	// Function to handle editing a permission
@@ -61,7 +83,7 @@ const PermissionsScreen = (): JSX.Element => {
 		setValue('category', permission.category);
 		setValue('subCategory', permission.subCategory);
 		setValue('permission', permission.permission);
-		setEditPermissionID(permission.id);
+		setIdSelectedPermission(permission.id);
 
 		// Show the modal for editing the permission
 		showCreatePermission();
@@ -120,16 +142,16 @@ const PermissionsScreen = (): JSX.Element => {
 					},
 					{
 						label: 'Delete',
-						onClick: (instance) => {
-							permissionService
-								.delete(instance.id)
-								.then((response) => alert(response.message));
+						onClick: () => {
+							showDeletePermission();
 						},
 					},
 				]}
 			/>
 
-			<ModalCreatePermission title="Create a Permission">
+			<ModalCreatePermission
+				title={`${idSelectedPermission ? 'Edit' : ' Create a'} Permission`}
+			>
 				<form
 					className="mt-4 space-y-4"
 					onSubmit={handleSubmit(handleSubmitData)}
@@ -139,6 +161,8 @@ const PermissionsScreen = (): JSX.Element => {
 						name="category"
 						title="Category"
 						customPlaceholder="Principal area where the permission belongs (EX: users) "
+						rules={rules.category}
+						error={errors.category}
 					/>
 					<InputText
 						register={register}
@@ -161,7 +185,7 @@ const PermissionsScreen = (): JSX.Element => {
 							onClick={() => {
 								hideCreatePermission();
 								reset();
-								setEditPermissionID(undefined);
+								setIdSelectedPermission(undefined);
 							}}
 						/>
 						<Button
@@ -169,10 +193,32 @@ const PermissionsScreen = (): JSX.Element => {
 							label="Save"
 							decoration="fill"
 							size="extra-small"
+							disabled={!isDirty || !isValid}
 						/>
 					</div>
 				</form>
 			</ModalCreatePermission>
+
+			<ModalDeletePermission title="Delete Permission">
+				<DeleteModalContent
+					type="permission"
+					onClickCancel={() => {
+						hideDeletePermission();
+						setIdSelectedPermission(undefined);
+					}}
+					onClickSave={() => {
+						if (idSelectedPermission) {
+							permissionService
+								.delete(idSelectedPermission)
+								.then((response) => {
+									alert(response.message);
+									hideDeletePermission();
+									setIdSelectedPermission(undefined);
+								});
+						}
+					}}
+				/>
+			</ModalDeletePermission>
 		</Layout>
 	);
 };

@@ -25,6 +25,7 @@ const useModal = (): {
 	show: () => void;
 	hide: () => void;
 } => {
+	const cancelButtonRef = React.useRef<HTMLDivElement>(null);
 	const [isOpen, setIsOpen] = useState(false);
 
 	const show = (): void => {
@@ -37,7 +38,13 @@ const useModal = (): {
 
 	const Modal = (props: ModalProps): JSX.Element => (
 		<Transition appear show={isOpen} as={Fragment}>
-			<Dialog as="div" className="relative z-10" onClose={hide}>
+			<Dialog
+				as="div"
+				className="relative z-10"
+				onClose={hide}
+				static
+				initialFocus={cancelButtonRef}
+			>
 				<Transition.Child
 					as={Fragment}
 					enter="ease-out duration-300"

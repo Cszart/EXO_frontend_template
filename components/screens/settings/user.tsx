@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { InputList, InputText } from 'components/form';
 import { Button } from 'components/common';
 import { crudPermissions } from 'utils';
+import { DeleteModalContent } from 'components/modals';
 
 const UsersScreen = (): JSX.Element => {
 	// Utils
@@ -20,17 +21,22 @@ const UsersScreen = (): JSX.Element => {
 		show: showCreateUser,
 		hide: hideCreateUser,
 	} = useModal();
+	const {
+		Modal: ModalDeleteUser,
+		show: showDeleteUser,
+		hide: hideDeleteUser,
+	} = useModal();
 
 	// Data
 	const [usersData, setUsersData] = useState<UserI[]>();
 	const [rolesData, setRolesData] = useState<Option[]>([]);
-	const [editUser, setEditUser] = useState<UserI | undefined>();
+	const [selectedUser, setSelectedUser] = useState<UserI | undefined>();
 
 	// - Functions
 	// Create user handler - TODO: implement own logic
 	const handleSubmitData = async (formData: any): Promise<void> => {
-		if (editUser) {
-			const updateResponse = await userService.update(editUser.id, {
+		if (selectedUser) {
+			const updateResponse = await userService.update(selectedUser.id, {
 				name: formData.name,
 				email: formData.email,
 				username: formData.username,
@@ -54,17 +60,17 @@ const UsersScreen = (): JSX.Element => {
 
 		hideCreateUser();
 		reset();
-		setEditUser(undefined);
+		setSelectedUser(undefined);
 	};
 
 	// Function to handle editing a user
-	const handleEditUser = (user: UserI): void => {
+	const handleselectedUser = (user: UserI): void => {
 		// Set the initial values for the form fields
 		setValue('name', user.name);
 		setValue('email', user.email);
 		setValue('username', user.username);
 		setValue('image', user.image);
-		setEditUser(user);
+		setSelectedUser(user);
 
 		// Show the modal for editing the user
 		showCreateUser();
@@ -162,21 +168,19 @@ const UsersScreen = (): JSX.Element => {
 					{
 						label: 'Edit',
 						onClick: (instance) => {
-							handleEditUser(instance);
+							handleselectedUser(instance);
 						},
 					},
 					{
 						label: 'Delete',
-						onClick: (instance) => {
-							userService
-								.delete(instance.id)
-								.then((response) => alert(response.message));
+						onClick: () => {
+							showDeleteUser();
 						},
 					},
 				]}
 			/>
 
-			<ModalCreateUser title="Create a User">
+			<ModalCreateUser title={`${selectedUser ? 'Edit' : 'Create a'} User`}>
 				<form
 					className="mt-4 space-y-4"
 					onSubmit={handleSubmit(handleSubmitData)}
@@ -204,7 +208,7 @@ const UsersScreen = (): JSX.Element => {
 						name="role"
 						title="Role"
 						options={rolesData}
-						myDefaultValue={editUser?.roles[0]}
+						myDefaultValue={selectedUser?.roles[0]}
 						setValueInput={setValue}
 					/>
 
@@ -217,7 +221,7 @@ const UsersScreen = (): JSX.Element => {
 							onClick={() => {
 								hideCreateUser();
 								reset();
-								setEditUser(undefined);
+								setSelectedUser(undefined);
 							}}
 						/>
 						<Button
@@ -229,6 +233,25 @@ const UsersScreen = (): JSX.Element => {
 					</div>
 				</form>
 			</ModalCreateUser>
+
+			<ModalDeleteUser title="Delete User">
+				<DeleteModalContent
+					type="user"
+					onClickCancel={() => {
+						hideDeleteUser();
+						setSelectedUser(undefined);
+					}}
+					onClickSave={() => {
+						if (selectedUser) {
+							userService.delete(selectedUser.id).then((response) => {
+								alert(response.message);
+								hideDeleteUser();
+								setSelectedUser(undefined);
+							});
+						}
+					}}
+				/>
+			</ModalDeleteUser>
 		</Layout>
 	);
 };

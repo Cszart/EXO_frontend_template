@@ -7,29 +7,44 @@ import useModal from 'hooks/useModal';
 import { InputText } from 'components/form';
 import { useForm } from 'react-hook-form';
 import { Button } from 'components/common';
+import { DeleteModalContent } from 'components/modals';
 
 const RolesScreen = (): JSX.Element => {
 	//Utils
-	const { register, reset, handleSubmit, setValue } = useForm({
+	const {
+		register,
+		reset,
+		handleSubmit,
+		setValue,
+		formState: { errors, isDirty, isValid },
+	} = useForm({
 		mode: 'onChange',
 	});
+	const { Modal: ModalRole, show: showRole, hide: hideRole } = useModal();
 	const {
-		Modal: ModalCreateRole,
-		show: showCreateRole,
-		hide: hideCreateRole,
+		Modal: ModalDeleteRole,
+		show: showDeleteRole,
+		hide: hideDeleteRole,
 	} = useModal();
 
 	// Data
 	const [rolesData, setRolesData] = useState<RoleI[]>();
-	const [editRoleID, setEditRoleID] = useState<number | undefined>();
+	const [idSelectedRole, setIdSelectedRole] = useState<number | undefined>();
+
+	// Rules
+	const rules = {
+		role: {
+			required: { value: true, message: 'This is requeried' },
+		},
+	};
 
 	// - Functions
 	// Create role handler - TODO: implement own logic
 	const handleSubmitData = async (formData: any): Promise<void> => {
 		const { role } = formData;
 
-		if (editRoleID) {
-			const updateResponse = await rolesService.update(editRoleID, {
+		if (idSelectedRole) {
+			const updateResponse = await rolesService.update(idSelectedRole, {
 				role,
 			});
 
@@ -43,18 +58,18 @@ const RolesScreen = (): JSX.Element => {
 			alert(createResponse.message);
 		}
 
-		hideCreateRole();
+		hideRole();
 		reset();
 	};
 
 	// Function to handle editing a role
-	const handleEditrole = (role: RoleI): void => {
+	const handleEditRole = (role: RoleI): void => {
 		// Set the initial values for the form fields
 		setValue('role', role.role);
-		setEditRoleID(role.id);
+		setIdSelectedRole(role.id);
 
 		// Show the modal for editing the role
-		showCreateRole();
+		showRole();
 	};
 
 	// Fetch roles
@@ -78,7 +93,7 @@ const RolesScreen = (): JSX.Element => {
 			withSidebar
 			title="Roles Management"
 			buttonTitle="Create a Role"
-			onClickButton={showCreateRole}
+			onClickButton={showRole}
 		>
 			<SimpleTable<RoleI>
 				columns={[
@@ -104,26 +119,27 @@ const RolesScreen = (): JSX.Element => {
 					{
 						label: 'Edit',
 						onClick: (instance) => {
-							handleEditrole(instance);
+							handleEditRole(instance);
 						},
 					},
 					{
 						label: 'Delete',
 						onClick: (instance) => {
-							rolesService
-								.delete(instance.id)
-								.then((response) => alert(response.message));
+							setIdSelectedRole(instance.id);
+							showDeleteRole();
 						},
 					},
 				]}
 			/>
-			<ModalCreateRole title="Create a Role">
+			<ModalRole title={`${idSelectedRole ? 'Edit' : 'Create a'} Role`}>
 				<form className="mt-4" onSubmit={handleSubmit(handleSubmitData)}>
 					<InputText
 						register={register}
 						name="role"
 						title="Role"
 						customPlaceholder="Role"
+						rules={rules.role}
+						error={errors.role}
 					/>
 					<div className="flex gap-x-4 w-full justify-center mt-8">
 						<Button
@@ -132,9 +148,9 @@ const RolesScreen = (): JSX.Element => {
 							size="extra-small"
 							type="button"
 							onClick={() => {
-								hideCreateRole();
+								hideRole();
 								reset();
-								setEditRoleID(undefined);
+								setIdSelectedRole(undefined);
 							}}
 						/>
 						<Button
@@ -142,10 +158,29 @@ const RolesScreen = (): JSX.Element => {
 							label="Save"
 							decoration="fill"
 							size="extra-small"
+							disabled={!isDirty || !isValid}
 						/>
 					</div>
 				</form>
-			</ModalCreateRole>
+			</ModalRole>
+			<ModalDeleteRole title="Delete Role">
+				<DeleteModalContent
+					type="role"
+					onClickCancel={() => {
+						hideDeleteRole();
+						setIdSelectedRole(undefined);
+					}}
+					onClickSave={() => {
+						if (idSelectedRole) {
+							rolesService.delete(idSelectedRole).then((response) => {
+								alert(response.message);
+								hideDeleteRole();
+								setIdSelectedRole(undefined);
+							});
+						}
+					}}
+				/>
+			</ModalDeleteRole>
 		</Layout>
 	);
 };
