@@ -21,7 +21,7 @@ class EmailService {
 	}
 
 	async createTemplate(
-		emailTemplateData: EmailTemplateI
+		emailTemplateData: Partial<EmailTemplateI>
 	): Promise<HttpResponse<EmailTemplateI>> {
 		return this.client.post('/email-templates', emailTemplateData);
 	}
