@@ -107,45 +107,51 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 				)}
 				{withSidebar && customSidebar && <>{customSidebar}</>}
 
-				{/* Content - Children */}
-				<main
+				<div
 					className={clsx({
-						'relative w-full px-9 md:px-16 py-10 mb-10 overflow-y-scroll scroll-custom':
+						'relative w-full mb-10 overflow-y-scroll scroll-custom':
 							withSidebar,
-						'-z-10': showSidebar,
 					})}
 				>
-					<div className="flex gap-x-2 justify-between items-center mb-10">
-						{title && (
-							<Typography
-								type="custom-h1"
-								text={title}
-								className={clsx(
-									'text-md lg:text-xl font-bold text-gray-800',
-									classNameTitle
-								)}
-							/>
-						)}
-						{buttonTitle && (
-							<Button
-								label={buttonTitle}
-								decoration="fill"
-								size="fit"
-								className={classNameButton}
-								onClick={onClickButton}
-								href={hrefButton}
-							/>
-						)}
-					</div>
+					{/* Content - Children */}
+					<main
+						className={clsx({
+							'relative w-full px-9 md:px-16 py-10 mb-10': withSidebar,
+							'-z-10': showSidebar,
+						})}
+					>
+						<div className="flex gap-x-2 justify-between items-center mb-10">
+							{title && (
+								<Typography
+									type="custom-h1"
+									text={title}
+									className={clsx(
+										'text-md lg:text-xl font-bold text-gray-800',
+										classNameTitle
+									)}
+								/>
+							)}
+							{buttonTitle && (
+								<Button
+									label={buttonTitle}
+									decoration="fill"
+									size="fit"
+									className={classNameButton}
+									onClick={onClickButton}
+									href={hrefButton}
+								/>
+							)}
+						</div>
 
-					{children}
+						{children}
+					</main>
 
 					{/* Footer */}
 					{withFooter && !customFooter && (
 						<Footer companyName="Shokworks" rightsYear="2023" />
 					)}
 					{withFooter && customFooter && <>{customFooter}</>}
-				</main>
+				</div>
 			</div>
 		</div>
 	);
