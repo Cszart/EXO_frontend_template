@@ -348,6 +348,7 @@ const GuideStyles = (): JSX.Element => {
 						rowActions={() => [
 							{
 								label: 'Edit',
+								name: 'edit',
 								icon: Icons.edit,
 								onClick: (instance) => {
 									alert('You are editing item ' + instance.id);
@@ -393,16 +394,19 @@ const GuideStyles = (): JSX.Element => {
 							return [
 								{
 									label: 'Action 1',
+									name: 'action1',
 									onClick: () =>
 										alert(`This Action 1 for user ${instance.name}`),
 								},
 								{
 									label: 'Action 2',
+									name: 'action2',
 									onClick: () =>
 										alert(`This Action 2 for user ${instance.email}`),
 								},
 								{
 									label: 'Action 3',
+									name: 'action3',
 									onClick: () =>
 										alert(`This Action 3 for user ${instance.username}`),
 								},

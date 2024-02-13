@@ -8,6 +8,8 @@ import { InputText } from 'components/form';
 import { useForm } from 'react-hook-form';
 import { Button } from 'components/common';
 import { DeleteModalContent } from 'components/modals';
+import RolesEnum from 'const/role';
+import PermissionsEnum from 'const/permissions';
 
 const RolesScreen = (): JSX.Element => {
 	//Utils
@@ -118,16 +120,22 @@ const RolesScreen = (): JSX.Element => {
 				rowActions={() => [
 					{
 						label: 'Edit',
+						name: 'edit',
 						onClick: (instance) => {
 							handleEditRole(instance);
 						},
+						roles: [RolesEnum.ADMIN],
+						permissions: [PermissionsEnum.ROLE_MANAGEMENT_EDIT],
 					},
 					{
 						label: 'Delete',
+						name: 'delete',
 						onClick: (instance) => {
 							setIdSelectedRole(instance.id);
 							showDeleteRole();
 						},
+						roles: [RolesEnum.ADMIN],
+						permissions: [PermissionsEnum.ROLE_MANAGEMENT_DELETE],
 					},
 				]}
 			/>

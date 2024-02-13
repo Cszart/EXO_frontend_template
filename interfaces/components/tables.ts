@@ -2,6 +2,10 @@
  * General props for tables
  */
 
+import PermissionsEnum from 'const/permissions';
+import { Option } from './option';
+import RolesEnum from 'const/role';
+
 // Props that represent a column
 export interface ColumnProps<T> {
 	header: string;
@@ -11,10 +15,10 @@ export interface ColumnProps<T> {
 }
 
 // Props that represent a row
-export interface RowActionProps<T> {
-	label: string;
-	icon?: string;
+export interface RowOptions<T> extends Option {
 	onClick: (instance: T) => void;
+	permissions?: PermissionsEnum[];
+	roles?: RolesEnum[];
 }
 
 // General table props
@@ -33,7 +37,7 @@ export interface SimpleTableProps<T> {
 	/**
 	 * Actions specified here will be added to the Actions menu
 	 */
-	rowActions?: (instance: T) => RowActionProps<T>[];
+	rowActions?: (instance: T) => RowOptions<T>[];
 
 	/**
 	 * If `true`, the actions section in each column will be not rendered

@@ -8,6 +8,8 @@ import { useForm } from 'react-hook-form';
 import { InputText } from 'components/form';
 import { Button } from 'components/common';
 import { DeleteModalContent } from 'components/modals';
+import RolesEnum from 'const/role';
+import PermissionsEnum from 'const/permissions';
 
 const PermissionsScreen = (): JSX.Element => {
 	// Utils
@@ -136,15 +138,21 @@ const PermissionsScreen = (): JSX.Element => {
 				rowActions={() => [
 					{
 						label: 'Edit',
+						name: 'edit',
 						onClick: (instance) => {
 							handleEditPermission(instance);
 						},
+						roles: [RolesEnum.ADMIN],
+						permissions: [PermissionsEnum.PERMISSION_MANAGEMENT_EDIT],
 					},
 					{
 						label: 'Delete',
+						name: 'delete',
 						onClick: () => {
 							showDeletePermission();
 						},
+						roles: [RolesEnum.ADMIN],
+						permissions: [PermissionsEnum.PERMISSION_MANAGEMENT_DELETE],
 					},
 				]}
 			/>

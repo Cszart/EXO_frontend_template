@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown } from '../dropdown';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
-import { Option } from 'interfaces';
 import { EmptyState } from '../emptyState';
 import { Spinner } from '../spinner';
+import { filterRowOptionsByRolesOrPermissions } from 'utils';
 
 const SimpleTable = <T,>({
 	hideRowActions = false,
@@ -25,20 +25,13 @@ const SimpleTable = <T,>({
 						if (props.rowActions) {
 							// Get the row actions
 							const actions = props.rowActions(instance);
-							// Format them so they can be rendered by dropdown menu component
-							const formattedActions: Option[] = actions.map((item) => {
-								return {
-									name: item.label,
-									label: item.label,
-									icon: item.icon,
-									onClick: () => item.onClick(instance),
-								};
-							});
+							const filteredActions =
+								filterRowOptionsByRolesOrPermissions(actions);
 							return (
 								<Dropdown
 									buttonContent={<EllipsisVerticalIcon className="w-6 h-6" />}
 									showChevronDownIcon={false}
-									items={formattedActions}
+									items={filteredActions}
 								/>
 							);
 						} else {

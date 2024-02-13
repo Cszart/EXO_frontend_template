@@ -10,6 +10,8 @@ import { InputList, InputText } from 'components/form';
 import { Button } from 'components/common';
 import { crudPermissions } from 'utils';
 import { DeleteModalContent } from 'components/modals';
+import RolesEnum from 'const/role';
+import PermissionsEnum from 'const/permissions';
 
 const UsersScreen = (): JSX.Element => {
 	// Utils
@@ -167,15 +169,21 @@ const UsersScreen = (): JSX.Element => {
 				rowActions={() => [
 					{
 						label: 'Edit',
+						name: 'edit',
 						onClick: (instance) => {
 							handleselectedUser(instance);
 						},
+						roles: [RolesEnum.ADMIN],
+						permissions: [PermissionsEnum.USER_MANAGEMENT_EDIT],
 					},
 					{
 						label: 'Delete',
+						name: 'delete',
 						onClick: () => {
 							showDeleteUser();
 						},
+						roles: [RolesEnum.ADMIN],
+						permissions: [PermissionsEnum.USER_MANAGEMENT_DELETE],
 					},
 				]}
 			/>

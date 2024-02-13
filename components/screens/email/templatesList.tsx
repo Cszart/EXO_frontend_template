@@ -1,6 +1,7 @@
 import { emailService } from 'api_services';
 import SimpleTable from 'components/common/tables/simpleTable';
 import { Layout } from 'components/layout';
+import RolesEnum from 'const/role';
 import AppRoutes from 'const/routes';
 import { EmailTemplateI } from 'interfaces';
 import { useRouter } from 'next/router';
@@ -49,6 +50,7 @@ const EmailTemplatesListScreen = (): JSX.Element => {
 				rowActions={() => [
 					{
 						label: 'Edit',
+						name: 'edit',
 						onClick: (instance) => {
 							localStorage.setItem('templateToEdit', JSON.stringify(instance));
 							router.push({
@@ -58,6 +60,7 @@ const EmailTemplatesListScreen = (): JSX.Element => {
 								},
 							});
 						},
+						roles: [RolesEnum.ADMIN, RolesEnum.MODERATOR],
 					},
 				]}
 			/>
