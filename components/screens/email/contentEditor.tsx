@@ -4,7 +4,6 @@ import { saveAs } from 'file-saver';
 
 import { Layout } from 'components/layout';
 import { Button, Tabs, Typography } from 'components/common';
-// import { emailService } from 'api_services/email';
 import { useRouter } from 'next/router';
 import { EmailTemplateI } from 'interfaces';
 import Icons from 'const/icons';
@@ -112,7 +111,6 @@ const EmailContentEditorScreen = (): JSX.Element => {
 					decoration="line-primary"
 					size="extra-small"
 					onClick={() => {
-						// previewContent && emailService.(previewContent);
 						alert('Changes Saved!');
 					}}
 				/>
