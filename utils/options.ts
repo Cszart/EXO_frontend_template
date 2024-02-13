@@ -11,7 +11,7 @@ import { itemIsNullOrUndefined } from './common';
  * @param baseOptions Initial options to be filtered
  * @returns Filtered options
  */
-export function filterOptionsByRolesOrPermissions(
+export function filterNavigationOptionsByRolesOrPermissions(
 	baseOptions: NavigationOptions[]
 ): NavigationOptions[] {
 	return baseOptions.filter((option: NavigationOptions) => {
@@ -32,7 +32,7 @@ export function filterOptionsByRolesOrPermissions(
 		if (hasAnyRole || hasAnyPermission) {
 			// Check and filter subOptions
 			if (option.subOptions && option.subOptions.length > 0) {
-				option.subOptions = filterOptionsByRolesOrPermissions(
+				option.subOptions = filterNavigationOptionsByRolesOrPermissions(
 					option.subOptions
 				);
 			}

@@ -8,7 +8,7 @@ import authUtils from 'utils/auth';
 import { headerNavbarOptions } from 'const';
 import cmsSidebarNavigation from 'const/sideBarNavigation';
 import { NavigationOptions } from 'interfaces';
-import { filterOptionsByRolesOrPermissions } from 'utils/options';
+import { filterNavigationOptionsByRolesOrPermissions } from 'utils/options';
 import { Button, Typography } from 'components/common';
 
 export interface Layout_Props {
@@ -79,7 +79,7 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 	// Filter the sidebar options based on the user role
 	useEffect(() => {
 		const filteredOptions =
-			filterOptionsByRolesOrPermissions(cmsSidebarNavigation);
+			filterNavigationOptionsByRolesOrPermissions(cmsSidebarNavigation);
 		setSideBarOptions(filteredOptions);
 	}, [session]);
 
