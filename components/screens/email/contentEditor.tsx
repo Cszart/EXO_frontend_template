@@ -9,6 +9,9 @@ import { EmailTemplateI } from 'interfaces';
 import Icons from 'const/icons';
 import SimpleTextEditor from 'components/text-editor/textEditor';
 import { emailService } from 'api_services';
+import useModal from 'hooks/useModal';
+import { InputText } from 'components/form';
+import { useForm } from 'react-hook-form';
 
 const saveHtmlToFile = (htmlContent: string, fileName: string): void => {
 	const blob = new Blob([htmlContent], { type: 'text/html' });
@@ -19,6 +22,15 @@ const EmailContentEditorScreen = (): JSX.Element => {
 	// Utils
 	const router = useRouter();
 	const { editMode } = router.query;
+	const {
+		register,
+		reset,
+		handleSubmit,
+		setValue,
+		formState: { errors, isDirty, isValid },
+	} = useForm({
+		mode: 'onChange',
+	});
 
 	const [currentOption, setCurrentOption] = React.useState<
 		'email_content' | 'preview_content'
@@ -30,8 +42,37 @@ const EmailContentEditorScreen = (): JSX.Element => {
 		undefined
 	);
 
+	const {
+		Modal: ModalSaveTemplate,
+		show: showSaveTemplate,
+		hide: hideSaveTemplate,
+	} = useModal();
+
+	// Rules
+	const rules = {
+		name: {
+			required: { value: true, message: 'This is requeried' },
+		},
+	};
+
+	// Function to handle create or update template name
+	const handleShowModal = () => {
+		// Retrieve the JSON object from local storage
+		const stringTemplateToEdit = localStorage.getItem('templateToEdit');
+
+		if (stringTemplateToEdit) {
+			const templateToEditContent: EmailTemplateI =
+				JSON.parse(stringTemplateToEdit);
+			setValue('name', templateToEditContent.name, {
+				shouldDirty: true,
+				shouldValidate: true,
+			});
+			showSaveTemplate();
+		}
+	};
+
 	// Function to handle update and save templates
-	const handleSaveTemplate = async (): Promise<void> => {
+	const handleSaveTemplate = async (data: any): Promise<void> => {
 		try {
 			// Update template logic
 			if (editMode === 'true') {
@@ -48,7 +89,7 @@ const EmailContentEditorScreen = (): JSX.Element => {
 					const updateResponse = await emailService.updateTemplate(
 						templateToEditContent.id,
 						{
-							name: templateToEditContent.name, // TODO: handle change name
+							name: data.name, // Template name
 							content: previewContent,
 						}
 					);
@@ -61,9 +102,10 @@ const EmailContentEditorScreen = (): JSX.Element => {
 				// Create template logic
 			} else {
 				if (previewContent) {
+					console.log(previewContent);
 					// Call backend with new information and template id
 					const createResponse = await emailService.createTemplate({
-						// TODO: handle change name
+						name: data.name, // Template name
 						content: previewContent,
 					});
 
@@ -72,6 +114,8 @@ const EmailContentEditorScreen = (): JSX.Element => {
 					}
 				}
 			}
+			hideSaveTemplate();
+			reset();
 		} catch (error) {
 			console.error('Error updating template:', error);
 			alert('Error updating template. Please try again.');
@@ -157,14 +201,46 @@ const EmailContentEditorScreen = (): JSX.Element => {
 			</div>
 
 			{/* Save button */}
-			<div className="flex w-full justify-end lg:mt-10">
+			<div className="flex w-full justify-end md:mt-10">
 				<Button
 					label="Save changes"
 					decoration="line-primary"
 					size="extra-small"
-					onClick={handleSaveTemplate}
+					onClick={handleShowModal}
 				/>
 			</div>
+
+			<ModalSaveTemplate title="Template name">
+				<form className="mt-4" onSubmit={handleSubmit(handleSaveTemplate)}>
+					<InputText
+						register={register}
+						name="name"
+						title="Name"
+						customPlaceholder="Name"
+						rules={rules.name}
+						error={errors.name}
+					/>
+					<div className="flex gap-x-4 w-full justify-center mt-8">
+						<Button
+							label="Cancel"
+							decoration="line-primary"
+							size="extra-small"
+							type="button"
+							onClick={() => {
+								hideSaveTemplate();
+								reset();
+							}}
+						/>
+						<Button
+							type="submit"
+							label="Save"
+							decoration="fill"
+							size="extra-small"
+							disabled={!isDirty || !isValid}
+						/>
+					</div>
+				</form>
+			</ModalSaveTemplate>
 		</Layout>
 	);
 };

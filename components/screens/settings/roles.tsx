@@ -139,6 +139,7 @@ const RolesScreen = (): JSX.Element => {
 					},
 				]}
 			/>
+			{/* Create and update role */}
 			<ModalRole title={`${idSelectedRole ? 'Edit' : 'Create a'} Role`}>
 				<form className="mt-4" onSubmit={handleSubmit(handleSubmitData)}>
 					<InputText
