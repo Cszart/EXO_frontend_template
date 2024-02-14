@@ -129,6 +129,7 @@ const UsersScreen = (): JSX.Element => {
 			title="Users Management"
 			buttonTitle="Create a User"
 			onClickButton={showCreateUser}
+			allowedPermissions={['user:management:edit']}
 		>
 			<SimpleTable<UserI>
 				columns={[
@@ -139,6 +140,10 @@ const UsersScreen = (): JSX.Element => {
 					{
 						header: 'Username',
 						content: (instance) => <p>{instance.username}</p>,
+					},
+					{
+						header: 'Email',
+						content: (instance) => <p>{instance.email}</p>,
 					},
 					{
 						header: 'Roles',

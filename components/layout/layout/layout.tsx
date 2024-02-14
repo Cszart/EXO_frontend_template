@@ -10,6 +10,7 @@ import cmsSidebarNavigation from 'const/sideBarNavigation';
 import { NavigationOptions } from 'interfaces';
 import { filterNavigationOptionsByRolesOrPermissions } from 'utils/options';
 import { Button, Typography } from 'components/common';
+import WithAuthorizationComponent from 'components/auth/withAuthorizationComponent';
 
 export interface Layout_Props {
 	title?: string;
@@ -31,6 +32,9 @@ export interface Layout_Props {
 
 	classNameChildren?: string;
 	classNameLayout?: string;
+
+	allowedPermissions?: string[];
+	allowedRoles?: string[];
 }
 
 /**
@@ -61,6 +65,9 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 	children,
 	classNameChildren,
 	classNameLayout,
+
+	allowedPermissions,
+	allowedRoles,
 }) => {
 	const session = useSession();
 	const logoUrl =
@@ -132,14 +139,19 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 								/>
 							)}
 							{buttonTitle && (
-								<Button
-									label={buttonTitle}
-									decoration="fill"
-									size="fit"
-									className={classNameButton}
-									onClick={onClickButton}
-									href={hrefButton}
-								/>
+								<WithAuthorizationComponent
+									allowedPermissions={allowedPermissions}
+									allowedRoles={allowedRoles}
+								>
+									<Button
+										label={buttonTitle}
+										decoration="fill"
+										size="fit"
+										className={classNameButton}
+										onClick={onClickButton}
+										href={hrefButton}
+									/>
+								</WithAuthorizationComponent>
 							)}
 						</div>
 
