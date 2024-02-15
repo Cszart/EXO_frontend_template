@@ -29,6 +29,6 @@ const PermissionsPage = (): JSX.Element => {
 export default withAuthorization(
 	PermissionsPage,
 	crudPermissions(),
-	[RolesEnum.ADMIN],
+	[RolesEnum.ADMIN, RolesEnum.MODERATOR],
 	AppRoutes.HOME
 );

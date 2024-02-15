@@ -60,7 +60,7 @@ const EmailTemplatesListScreen = (): JSX.Element => {
 								},
 							});
 						},
-						roles: [RolesEnum.ADMIN, RolesEnum.MODERATOR],
+						roles: [RolesEnum.ADMIN],
 					},
 				]}
 			/>

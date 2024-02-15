@@ -7,7 +7,6 @@ import AppRoutes from 'const/routes';
 import { GetServerSideProps, Redirect } from 'next';
 import { getSession } from 'next-auth/react';
 import Image from 'next/image';
-import { crudPermissions } from 'utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const HomePage = (): any => {
@@ -34,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	const session = await getSession(context);
 	const redirect: Redirect | undefined = await withAuthorizationServerSide({
 		session: session,
-		allowedPermissions: crudPermissions(),
+		allowedPermissions: undefined,
 		allowedRoles: [RolesEnum.ADMIN, RolesEnum.MODERATOR, RolesEnum.USER],
 		redirectTo: AppRoutes.AUTH_SIGN_IN,
 	});

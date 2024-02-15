@@ -10,6 +10,7 @@ enum AppRoutes {
 
 	// Auth routes
 	AUTH_FORGOT_PASSWORD = '/auth/forgot-password',
+	AUTH_NEW_PASSWORD = '/auth/new-password',
 	AUTH_SIGN_IN = '/auth/signin',
 	AUTH_SIGN_UP = '/auth/signup',
 

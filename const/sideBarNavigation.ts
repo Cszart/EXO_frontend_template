@@ -23,7 +23,7 @@ const cmsSidebarNavigation: NavigationOptions[] = [
 	{
 		name: 'settings',
 		label: 'Settings',
-		roles: [RolesEnum.ADMIN],
+		roles: [RolesEnum.ADMIN, RolesEnum.MODERATOR],
 		icon: Icons.gear,
 		iconProps: {
 			src: Icons.home,
@@ -50,7 +50,7 @@ const cmsSidebarNavigation: NavigationOptions[] = [
 	{
 		name: 'email',
 		label: 'Email',
-		// roles: [RolesEnum.MODERATOR, RolesEnum.ADMIN],
+		roles: [RolesEnum.ADMIN, RolesEnum.MODERATOR],
 		icon: Icons.envelope,
 		iconProps: {
 			src: Icons.home,
@@ -61,11 +61,13 @@ const cmsSidebarNavigation: NavigationOptions[] = [
 				name: 'emailEditor',
 				label: 'Editor',
 				href: AppRoutes.EMAIL_CONTENT_EDITOR,
+				roles: [RolesEnum.ADMIN],
 			},
 			{
 				name: 'emailTemplates',
 				label: 'Templates',
 				href: AppRoutes.EMAIL_TEMPLATES_LIST,
+				roles: [RolesEnum.ADMIN, RolesEnum.MODERATOR],
 			},
 		],
 	},
@@ -78,13 +80,12 @@ const cmsSidebarNavigation: NavigationOptions[] = [
 			src: Icons.home,
 			fillWhitePath: true,
 		},
-		roles: [RolesEnum.USER, RolesEnum.MODERATOR, RolesEnum.ADMIN],
 	},
 
 	// THESE ARE FOR TESTING ROLES AND PERMISSIONS
 	{
 		name: 'misc1',
-		label: 'Admin inherit option',
+		label: 'Only [Admin]',
 		roles: [RolesEnum.ADMIN],
 		subOptions: [
 			{
@@ -96,7 +97,7 @@ const cmsSidebarNavigation: NavigationOptions[] = [
 	},
 	{
 		name: 'misc2',
-		label: 'Moderator inherit option',
+		label: 'Only [Moderator] and [Admin]',
 		roles: [RolesEnum.MODERATOR, RolesEnum.ADMIN],
 		subOptions: [
 			{
@@ -108,7 +109,7 @@ const cmsSidebarNavigation: NavigationOptions[] = [
 	},
 	{
 		name: 'misc3',
-		label: 'User inherit option',
+		label: 'Only [User][Moderator][Admin]',
 		roles: [RolesEnum.USER, RolesEnum.MODERATOR, RolesEnum.ADMIN],
 		subOptions: [
 			{
@@ -120,24 +121,24 @@ const cmsSidebarNavigation: NavigationOptions[] = [
 	},
 	{
 		name: 'misc4',
-		label: 'User not inherit option',
+		label: 'Menu with filtered options',
 		roles: [RolesEnum.USER, RolesEnum.MODERATOR, RolesEnum.ADMIN],
 		subOptions: [
 			{
 				name: 'submisc4User',
-				label: 'User sub option',
+				label: 'User-Mod-Admn',
 				href: '#',
 				roles: [RolesEnum.USER, RolesEnum.MODERATOR, RolesEnum.ADMIN],
 			},
 			{
 				name: 'submisc4Moderator',
-				label: 'Moderator sub option',
+				label: 'Mod-Admn',
 				href: '#',
 				roles: [RolesEnum.MODERATOR, RolesEnum.ADMIN],
 			},
 			{
 				name: 'submisc4Admin',
-				label: 'Admin sub option',
+				label: '-Admn-',
 				href: '#',
 				roles: [RolesEnum.ADMIN],
 			},

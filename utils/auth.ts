@@ -19,6 +19,7 @@ const PATH_TO_NOT_AUTHORIZED = AppRoutes.NOT_AUTHORIZED;
 // Paths that will be public, not log in necessary
 const PUBLIC_PATHS = [
 	AppRoutes.AUTH_FORGOT_PASSWORD,
+	AppRoutes.AUTH_NEW_PASSWORD,
 	AppRoutes.AUTH_SIGN_IN,
 	AppRoutes.AUTH_SIGN_UP,
 	AppRoutes.NOT_AUTHORIZED,
@@ -100,14 +101,14 @@ class AuthUtils {
 	}
 
 	// Get the user Roles
-	public getUserRoles(): RolesEnum[] {
+	public getUserRoles(): RolesEnum[] | string[] {
 		const user = this.getUser();
 		if (user) return user.roles;
 		return [];
 	}
 
 	// Get the user permissions
-	public getUserPermissions(): PermissionsEnum[] {
+	public getUserPermissions(): PermissionsEnum[] | string[] {
 		const user = this.getUser();
 		if (user) return user.permissions;
 		return [];
