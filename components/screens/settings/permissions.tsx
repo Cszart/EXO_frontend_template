@@ -114,6 +114,7 @@ const PermissionsScreen = (): JSX.Element => {
 			title="Permissions Management"
 			buttonTitle="Create a Permission"
 			onClickButton={showCreatePermission}
+			allowedPermissions={['permission:management:create']}
 		>
 			<SimpleTable<PermissionI>
 				columns={[
