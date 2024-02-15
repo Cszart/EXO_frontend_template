@@ -130,6 +130,7 @@ const UsersScreen = (): JSX.Element => {
 			buttonTitle="Create a User"
 			onClickButton={showCreateUser}
 			allowedPermissions={['user:management:create']}
+			allowedRoles={[RolesEnum.ADMIN]}
 		>
 			<SimpleTable<UserI>
 				columns={[

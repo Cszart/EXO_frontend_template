@@ -97,6 +97,7 @@ const RolesScreen = (): JSX.Element => {
 			buttonTitle="Create a Role"
 			onClickButton={showRole}
 			allowedPermissions={['role:management:create']}
+			allowedRoles={[RolesEnum.ADMIN]}
 		>
 			<SimpleTable<RoleI>
 				columns={[
