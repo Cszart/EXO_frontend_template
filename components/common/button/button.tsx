@@ -6,6 +6,7 @@ import { Icon } from '../icon';
 import { Spinner } from '../spinner';
 
 export interface ButtonProps {
+	dataCY?: string; // Cypress ID attribute
 	type?: 'submit' | 'reset' | 'button';
 	className?: string;
 	disabled?: boolean;
@@ -26,6 +27,7 @@ export interface ButtonProps {
 const ButtonContent: React.FC<
 	ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
 > = ({
+	dataCY,
 	type = 'button',
 	className,
 	disabled = false,
@@ -41,6 +43,7 @@ const ButtonContent: React.FC<
 }) => {
 	return (
 		<button
+			data-cy={dataCY}
 			type={type}
 			disabled={disabled}
 			onClick={onClick}

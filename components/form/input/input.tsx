@@ -7,6 +7,8 @@ import { Icon } from 'components/common';
 export const Input: React.FC<
 	InputProps & React.InputHTMLAttributes<HTMLInputElement>
 > = ({
+	id,
+	dataCY,
 	name,
 	title,
 	register,
@@ -36,7 +38,8 @@ export const Input: React.FC<
 					{title}
 				</label>
 				<input
-					id={name}
+					id={id}
+					data-cy={dataCY}
 					name={name}
 					placeholder={customPlaceholder}
 					autoComplete={props.autoComplete || 'off'}

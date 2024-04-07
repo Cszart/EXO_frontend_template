@@ -8,6 +8,7 @@ import { ErrorOption, RegisterOptions } from 'react-hook-form';
 export interface InputProps {
 	name: string;
 	id?: string;
+	dataCY?: string; // Cypress ID attribute
 	onChangeCustom?: (e: SyntheticEvent) => void;
 	isLogin?: boolean;
 	title?: string;

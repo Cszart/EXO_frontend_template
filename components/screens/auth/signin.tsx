@@ -160,6 +160,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 
 				{/* Input - email */}
 				<InputEmail
+					dataCY="email"
 					name="email"
 					title="Email"
 					placeholder="Email"
@@ -170,6 +171,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 
 				{/* Input - password */}
 				<InputPassword
+					dataCY="password"
 					name="password"
 					title="Password"
 					placeholder="Password"
@@ -187,7 +189,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 				</Link>
 
 				{/* Credentials */}
-				<Button type="submit" size="full" decoration="fill">
+				<Button dataCY="signin" type="submit" size="full" decoration="fill">
 					Sign in
 				</Button>
 
