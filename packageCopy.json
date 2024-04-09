@@ -1,7 +1,7 @@
 {
 	"name": "exo_frontend_template",
 	"version": "1",
-	"bin": "./bin/cli.js",
+	"private": true,
 	"scripts": {
 		"dev": "next dev -p 3000",
 		"build": "next build",
@@ -16,10 +16,7 @@
 		}
 	},
 	"lint-staged": {
-		"*.{js,jsx,ts,tsx}": [
-			"npm run lint:fix",
-			"git add"
-		]
+		"*.{js,jsx,ts,tsx}": ["npm run lint:fix", "git add"]
 	},
 	"dependencies": {
 		"@excalidraw/excalidraw": "^0.14.2",
