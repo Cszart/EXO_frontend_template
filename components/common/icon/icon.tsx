@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import * as React from 'react';
 import SVG from 'react-inlinesvg';
 import styles from './icon.module.scss';
+import { CypressI } from 'interfaces/cypress';
 
 export interface IconProps {
 	src: string;
@@ -49,7 +50,8 @@ export interface IconProps {
 	onClick?: (e?: any) => void;
 }
 
-export const Icon: React.FC<IconProps> = ({
+export const Icon: React.FC<IconProps & CypressI> = ({
+	dataCY,
 	src,
 	className,
 	pointer = false,
@@ -97,6 +99,7 @@ export const Icon: React.FC<IconProps> = ({
 		// eslint-disable-next-line
 		// @ts-ignore
 		<SVG
+			data-cy={dataCY}
 			onClick={onClick}
 			src={src}
 			className={clsx(

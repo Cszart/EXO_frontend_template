@@ -8,6 +8,7 @@ const SignIn = (): JSX.Element => {
 	return <SignInScreen providers={[NextAuthProvidersEnum.CREDENTIALS]} />;
 };
 
+// If user already has a session
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const session = await getSession(context);
 

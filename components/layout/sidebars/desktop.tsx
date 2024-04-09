@@ -9,6 +9,7 @@ import { Icon, Typography } from 'components/common';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { itemIsNotNullAndNotUndefined } from 'utils';
 import { useRouter } from 'next/router';
+import { CypressI } from 'interfaces/cypress';
 
 interface SidebarDesktopProps {
 	itemOptions: NavigationOptions[];
@@ -31,7 +32,8 @@ interface SidebarDesktopProps {
  * @param showSidebar to show sidebar when it's mobile screen
  * @returns
  */
-export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
+export const SidebarDesktop: React.FC<SidebarDesktopProps & CypressI> = ({
+	dataCY,
 	itemOptions,
 	logoUrl,
 
@@ -59,7 +61,10 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 			// Item to be rendered is link
 			case item.href != undefined && item.href != null:
 				return (
-					<Link href={item.href ?? '#'}>
+					<Link
+						data-cy={`${dataCY}-option-${item.name}`}
+						href={item.href ?? '#'}
+					>
 						<Typography
 							type="subtitle-2"
 							className={clsx(
@@ -78,6 +83,7 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 			case itemIsNotNullAndNotUndefined(item.onClick):
 				return (
 					<Typography
+						data-cy={`${dataCY}-option-${item.name}`}
 						type="subtitle-2"
 						onClick={item.onClick}
 						className={clsx(classNameItem)}
@@ -110,6 +116,7 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 			)}
 		>
 			<nav
+				data-cy={dataCY}
 				className={clsx(
 					'h-full overflow-y-auto',
 					'flex flex-col flex-1',
@@ -148,6 +155,7 @@ export const SidebarDesktop: React.FC<SidebarDesktopProps> = ({
 									defaultOpen={getDefaultOpen(item)}
 								>
 									<Disclosure.Button
+										data-cy={`${dataCY}-option-${item.name}`}
 										className={clsx(
 											'flex justify-between items-center w-full',
 											classNameItemButton

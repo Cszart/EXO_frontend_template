@@ -2,9 +2,11 @@ import * as React from 'react';
 import { Input } from '../input/input';
 import { InputProps } from 'interfaces';
 import Icons from 'const/icons';
+import { CypressI } from 'interfaces/cypress';
 
 const InputPassword: React.FC<
 	InputProps &
+		CypressI &
 		React.InputHTMLAttributes<HTMLInputElement> & {
 			validate?: boolean;
 		}

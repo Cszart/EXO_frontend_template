@@ -2,9 +2,10 @@
 import * as React from 'react';
 import { Input } from '../input/input';
 import { InputProps } from 'interfaces';
+import { CypressI } from 'interfaces/cypress';
 
 export const InputEmail: React.FC<
-	InputProps & React.InputHTMLAttributes<HTMLInputElement>
+	InputProps & CypressI & React.InputHTMLAttributes<HTMLInputElement>
 > = ({ rules, ...props }) => {
 	return (
 		<>

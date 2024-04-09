@@ -10,6 +10,7 @@ import {
 	itemIsNullOrUndefined,
 } from 'utils/common';
 import { Icon } from '../icon';
+import { CypressI } from 'interfaces/cypress';
 
 export interface DropdownProps {
 	buttonContent: string | JSX.Element;
@@ -24,17 +25,20 @@ export interface DropdownProps {
 	classNameItem?: string;
 }
 
-export const Dropdown = ({
+export const Dropdown: React.FC<DropdownProps & CypressI> = ({
 	showChevronDownIcon = true,
+
+	// Styles
 	classNameButton = 'w-auto rounded-md p-1',
 	classNameMenuItems = 'w-max bg-white rounded-lg',
 	classNameMenuItem = 'flex items-center gap-x-2 p-2 hover:bg-dark-10 rounded-lg',
 	classNameItem = 'text-gray-800 text-left text-sm rounded-lg w-full',
 	...props
-}: DropdownProps): JSX.Element => {
+}): JSX.Element => {
 	return (
-		<Menu as="div" className="relative w-fit">
+		<Menu data-cy={props.dataCY} as="div" className="relative w-fit">
 			<Menu.Button
+				data-cy={`${props.dataCY}-button`}
 				className={clsx(
 					'flex justify-center items-center',
 					'focus:outline-none relative z-0',
@@ -77,6 +81,7 @@ export const Dropdown = ({
 							return (
 								<Menu.Item
 									as="div"
+									data-cy={`${props.dataCY}-option-${item.label}`}
 									key={`dropDown-option-${item.label}-${index}`}
 									className={classNameMenuItem}
 								>

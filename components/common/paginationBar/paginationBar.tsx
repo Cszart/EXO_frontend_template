@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { CypressI } from 'interfaces/cypress';
 import React from 'react';
 
 interface PaginationBarProps {
@@ -15,7 +16,9 @@ interface PaginationBarProps {
 	classNameButtons?: string;
 }
 
-const PaginationBar: React.FC<PaginationBarProps> = ({
+const PaginationBar: React.FC<PaginationBarProps & CypressI> = ({
+	dataCY,
+
 	totalPages,
 	currentPage,
 	onPageChange,
@@ -86,6 +89,7 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
 
 	return (
 		<nav
+			data-cy={dataCY}
 			className={clsx(
 				'flex items-center justify-center divide-x divide-gray-300',
 				classNameContainer
@@ -94,6 +98,7 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
 			{/* Buttons */}
 			{showFirstButton && (
 				<button
+					data-cy={`${dataCY}-first`}
 					className={clsx(
 						'flex items-center justify-center p-2',
 						'leading-tight border-l rounded-l-lg',
@@ -107,6 +112,7 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
 			)}
 
 			<button
+				data-cy={`${dataCY}-prev`}
 				className={clsx(
 					'flex items-center justify-center p-2',
 					'leading-tight',
@@ -123,6 +129,7 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
 
 			{/* Buttons */}
 			<button
+				data-cy={`${dataCY}-next`}
 				className={clsx(
 					'flex items-center justify-center p-2',
 					'leading-tight',
@@ -135,6 +142,7 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
 			</button>
 			{showLastButton && (
 				<button
+					data-cy={`${dataCY}-last`}
 					className={clsx(
 						'flex items-center justify-center p-2',
 						'leading-tight !border-r rounded-r-lg',

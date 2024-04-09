@@ -1,3 +1,4 @@
+import { CypressI } from 'interfaces/cypress';
 import React from 'react';
 
 export interface Footer_Props {
@@ -16,9 +17,14 @@ export interface Footer_Props {
  * @param links list to show in the footer
  * @returns JSX element representing the footer container
  */
-const Footer: React.FC<Footer_Props> = ({ links, companyName, rightsYear }) => {
+const Footer: React.FC<Footer_Props & CypressI> = ({
+	dataCY,
+	links,
+	companyName,
+	rightsYear,
+}) => {
 	return (
-		<footer className="flex w-full bg-gray-200 border py-4">
+		<footer data-cy={dataCY} className="flex w-full bg-gray-200 border py-4">
 			<div className="flex flex-col w-auto mx-auto text-center">
 				{/* Links list */}
 				<ul className="flex justify-center space-x-4">

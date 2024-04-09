@@ -11,6 +11,7 @@ import { NavigationOptions } from 'interfaces';
 import { filterNavigationOptionsByRolesOrPermissions } from 'utils/options';
 import { Button, Typography } from 'components/common';
 import WithAuthorizationComponent from 'components/auth/withAuthorizationComponent';
+import { CypressI } from 'interfaces/cypress';
 
 export interface Layout_Props {
 	title?: string;
@@ -44,7 +45,8 @@ export interface Layout_Props {
  * @param props they will handle the behaviour of the layout and the styles
  * @returns JSX element for the layout container
  */
-export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
+export const Layout: React.FC<PropsWithChildren<Layout_Props & CypressI>> = ({
+	dataCY,
 	title,
 	classNameTitle,
 
@@ -91,10 +93,14 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 	}, [session]);
 
 	return (
-		<div className={clsx('w-full h-screen overflow-hidden', classNameLayout)}>
+		<div
+			data-cy={`${dataCY}-layout`}
+			className={clsx('w-full h-screen overflow-hidden', classNameLayout)}
+		>
 			{/* Header */}
 			{withHeader && !customHeader && (
 				<HeaderNavbar
+					dataCY={`${dataCY}-header`}
 					navBarOptions={headerNavbarOptions}
 					logoUrl={logoUrl}
 					showSidebar={showSidebar}
@@ -108,12 +114,14 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 				{/* Sidebar */}
 				{withSidebar && !customSidebar && (
 					<SidebarDesktop
+						dataCY={`${dataCY}-sidebar`}
 						itemOptions={sideBarOptions}
 						showSidebar={showSidebar}
 					/>
 				)}
 				{withSidebar && customSidebar && <>{customSidebar}</>}
 
+				{/* Right container for actual page content */}
 				<div
 					className={clsx({
 						'relative w-full mb-10 overflow-y-scroll scroll-custom':
@@ -160,7 +168,11 @@ export const Layout: React.FC<PropsWithChildren<Layout_Props>> = ({
 
 					{/* Footer */}
 					{withFooter && !customFooter && (
-						<Footer companyName="Shokworks" rightsYear="2023" />
+						<Footer
+							dataCY={`${dataCY}-footer`}
+							companyName="Shokworks"
+							rightsYear="2023"
+						/>
 					)}
 					{withFooter && customFooter && <>{customFooter}</>}
 				</div>

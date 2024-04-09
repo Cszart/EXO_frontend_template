@@ -6,11 +6,12 @@ import clsx from 'clsx';
 import { EmptyState } from '../emptyState';
 import { Spinner } from '../spinner';
 import { filterRowOptionsByRolesOrPermissions } from 'utils';
+import { CypressI } from 'interfaces/cypress';
 
 const SimpleTable = <T,>({
 	hideRowActions = false,
 	...props
-}: SimpleTableProps<T>): JSX.Element => {
+}: SimpleTableProps<T> & CypressI): JSX.Element => {
 	// Redefine columns to show depending if actions should be displayed or not
 	const [columnsData, setColumnsData] = useState<ColumnProps<T>[]>([]);
 
@@ -51,7 +52,10 @@ const SimpleTable = <T,>({
 				props.rows.length > 0 ? (
 					<div className="relative overflow-x-auto scroll-custom shadow-md sm:rounded-lg border border-dark-10">
 						{/* Table Container */}
-						<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+						<table
+							data-cy={props.dataCY}
+							className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+						>
 							{/* Header columns */}
 							<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 								<tr>
@@ -99,11 +103,14 @@ const SimpleTable = <T,>({
 						</table>
 					</div>
 				) : (
-					<EmptyState />
+					<EmptyState dataCY={`table-emptyState-${props.dataCY}`} />
 				)
 			) : (
 				<div className="w-full mt-40 flex justify-center items-center">
-					<Spinner type="loadingPage" />
+					<Spinner
+						dataCY={`table-spinner-${props.dataCY}`}
+						type="loadingPage"
+					/>
 				</div>
 			)}
 		</>

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { Typography } from 'components/common';
+import { CypressI } from 'interfaces/cypress';
 
 interface Navigation {
 	name: string;
@@ -15,7 +16,8 @@ interface TabsProps {
 	setCurrentOption: (value: string) => void;
 }
 
-export const Tabs: React.FC<TabsProps> = ({
+export const Tabs: React.FC<TabsProps & CypressI> = ({
+	dataCY,
 	optionsTabs,
 	currentOption,
 	setCurrentOption,
@@ -24,10 +26,11 @@ export const Tabs: React.FC<TabsProps> = ({
 
 	return (
 		<div className="overflow-x-auto overflow-y-hidden">
-			<nav className="flex" aria-label="Tabs">
+			<nav data-cy={dataCY} className="flex" aria-label="Tabs">
 				<div className="flex gap-x-4 items-center w-full">
 					{optionsTabs.map((item) => (
 						<button
+							data-cy={`tab-option-${dataCY}`}
 							type="button"
 							key={item.name}
 							onClick={() => {

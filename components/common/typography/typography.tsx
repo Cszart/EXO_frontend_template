@@ -1,9 +1,9 @@
 import * as React from 'react';
 import clsx from 'clsx';
+import { CypressI } from 'interfaces/cypress';
 
 export interface TypographyProps {
 	id?: string;
-	dataCY?: string; // Cypress ID attribute
 	// Custom tags
 	type:
 		| 'custom-p'
@@ -36,7 +36,7 @@ export interface TypographyProps {
 	onClick?: (data?: any) => void;
 }
 
-export const Typography: React.FC<TypographyProps> = ({
+export const Typography: React.FC<TypographyProps & CypressI> = ({
 	id,
 	dataCY,
 	type,

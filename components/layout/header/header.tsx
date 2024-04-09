@@ -9,6 +9,7 @@ import { buildHeaderUserProfileOptions } from 'utils';
 import { headerUserProfileOptions } from 'const';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import { useSession } from 'next-auth/react';
+import { CypressI } from 'interfaces/cypress';
 
 interface HeaderNavbarProps {
 	navBarOptions?: NavigationOptions[];
@@ -28,7 +29,8 @@ interface HeaderNavbarProps {
  * @param showSidebar to show sidebar when it's mobile version
  * @returns JSX element representing the header
  */
-const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
+const HeaderNavbar: React.FC<HeaderNavbarProps & CypressI> = ({
+	dataCY,
 	navBarOptions,
 	logoUrl,
 	className,
@@ -52,6 +54,7 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 
 	return (
 		<nav
+			data-cy={dataCY}
 			className={clsx(
 				'flex items-center justify-between w-full shadow-sm px-6 py-3 bg-primary',
 				className
@@ -86,6 +89,7 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 						} else if (option.subOptions) {
 							return (
 								<Dropdown
+									dataCY={`${dataCY}-dropdown-${option.name}`}
 									key={`header-navbar-option-${option.name}`}
 									buttonContent={option.label}
 									showChevronDownIcon={true}
@@ -99,6 +103,7 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 							return (
 								<Link
 									href={option.href}
+									data-cy={`${dataCY}-link-${option.name}`}
 									key={`header-navbar-option-${option.name}`}
 								>
 									<Typography
@@ -115,6 +120,7 @@ const HeaderNavbar: React.FC<HeaderNavbarProps> = ({
 						} else {
 							return (
 								<Typography
+									dataCY={`${dataCY}-text-${option.name}`}
 									key={`header-navbar-option-${option.name}`}
 									type="subtitle-2"
 									onClick={option.onClick}

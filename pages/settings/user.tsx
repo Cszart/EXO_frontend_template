@@ -1,34 +1,38 @@
-import withAuthorization from 'components/auth/withAuthorization';
+import withAuthorizationServerSide from 'components/auth/withAuthorizationServerSide';
 import UsersScreen from 'components/screens/settings/user';
 import RolesEnum from 'const/role';
 import AppRoutes from 'const/routes';
-import { userPermissions } from 'utils';
+import { GetServerSideProps, Redirect } from 'next';
+import { getSession } from 'next-auth/react';
+import { crudPermissions } from 'utils';
 
 const UsersPage = (): JSX.Element => {
 	return <UsersScreen />;
 };
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-// 	const session = await getSession(context);
+// ---- POSSIBLE EXPORTS ---- //
 
-// 	const redirect: Redirect | undefined = await withAuthorizationServerSide({
-// 		session: session,
-// 		allowedPermissions: crudPermissions(),
-// 		allowedRoles: [RolesEnum.ADMIN],
-// 		redirectTo: AppRoutes.HOME,
-// 	});
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const session = await getSession(context);
 
-// 	return {
-// 		props: {},
-// 		redirect: redirect,
-// 	};
-// };
+	const redirect: Redirect | undefined = await withAuthorizationServerSide({
+		session: session,
+		allowedPermissions: crudPermissions(),
+		allowedRoles: [RolesEnum.ADMIN],
+		redirectTo: AppRoutes.HOME,
+	});
 
-// export default UsersPage;
+	return {
+		props: {},
+		redirect: redirect,
+	};
+};
 
-export default withAuthorization(
-	UsersPage,
-	userPermissions(),
-	[RolesEnum.ADMIN, RolesEnum.MODERATOR],
-	AppRoutes.HOME
-);
+export default UsersPage;
+
+// export default withAuthorization(
+// 	UsersPage,
+// 	userPermissions(),
+// 	[RolesEnum.ADMIN, RolesEnum.MODERATOR],
+// 	AppRoutes.HOME
+// );

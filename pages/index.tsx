@@ -11,7 +11,7 @@ import Image from 'next/image';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const HomePage = (): any => {
 	return (
-		<Layout withSidebar>
+		<Layout dataCY="homePage" withSidebar>
 			<div className="flex flex-col justify-center text-center items-center mt-20 w-full">
 				<Image
 					src="/icons/svg/welcome.svg"

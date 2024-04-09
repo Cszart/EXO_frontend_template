@@ -5,6 +5,7 @@ import {
 } from 'interfaces/components/tables';
 import SimpleTable from './simpleTable';
 import PaginationBar from '../paginationBar/paginationBar';
+import { CypressI } from 'interfaces/cypress';
 
 /**
  * This component is meant to render a paginated table with a simple design
@@ -22,7 +23,7 @@ import PaginationBar from '../paginationBar/paginationBar';
  * @returns a JSX element that represents the table
  */
 const PaginatedTable = <T,>(
-	props: PaginatedTableProps<T> & Omit<SimpleTableProps<T>, 'rows'>
+	props: PaginatedTableProps<T> & CypressI & Omit<SimpleTableProps<T>, 'rows'>
 ): JSX.Element => {
 	const [currentPage, setCurrentPage] = useState<number>(props.page);
 
@@ -52,6 +53,7 @@ const PaginatedTable = <T,>(
 
 			{/* Paginated information */}
 			<PaginationBar
+				dataCY={`${props.dataCY}-paginationBar`}
 				currentPage={currentPage}
 				totalPages={100}
 				onPageChange={(pageNumber: number) => {

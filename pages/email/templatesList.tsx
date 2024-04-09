@@ -9,6 +9,8 @@ const EmailTemplatesList = (): JSX.Element => {
 	return <EmailTemplatesListScreen />;
 };
 
+// ---- POSSIBLE EXPORTS ---- //
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const session = await getSession(context);
 

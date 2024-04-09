@@ -3,6 +3,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import { InputProps, Option } from 'interfaces';
 import clsx from 'clsx';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
+import { CypressI } from 'interfaces/cypress';
 
 export interface InputListProps {
 	options: Option[];
@@ -15,7 +16,10 @@ const getDefaultValue = (options: Option[], value: string) => {
 };
 
 export const InputList: React.FC<
-	InputProps & InputListProps & React.InputHTMLAttributes<HTMLInputElement>
+	InputProps &
+		InputListProps &
+		CypressI &
+		React.InputHTMLAttributes<HTMLInputElement>
 > = ({
 	options,
 	myDefaultValue,

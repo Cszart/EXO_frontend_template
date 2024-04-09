@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { Typography } from '../typography';
 import { Icon } from '../icon';
 import { Spinner } from '../spinner';
+import { CypressI } from 'interfaces/cypress';
 
 export interface ButtonProps {
-	dataCY?: string; // Cypress ID attribute
 	type?: 'submit' | 'reset' | 'button';
 	className?: string;
 	disabled?: boolean;
@@ -25,7 +25,7 @@ export interface ButtonProps {
  * Primary UI component for user interaction
  */
 const ButtonContent: React.FC<
-	ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
+	ButtonProps & CypressI & React.ButtonHTMLAttributes<HTMLButtonElement>
 > = ({
 	dataCY,
 	type = 'button',
@@ -40,7 +40,7 @@ const ButtonContent: React.FC<
 	iconLeft,
 	iconRight,
 	loading,
-}) => {
+}): JSX.Element => {
 	return (
 		<button
 			data-cy={dataCY}
@@ -120,7 +120,7 @@ const ButtonContent: React.FC<
 };
 
 export const Button: React.FC<
-	ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
+	ButtonProps & CypressI & React.ButtonHTMLAttributes<HTMLButtonElement>
 > = ({
 	size = 'full',
 	label,

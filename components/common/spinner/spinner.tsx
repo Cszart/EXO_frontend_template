@@ -1,5 +1,6 @@
 import * as React from 'react';
 import clsx from 'clsx';
+import { CypressI } from 'interfaces/cypress';
 
 interface SpinnerProps {
 	type?: 'loadingPage';
@@ -10,7 +11,8 @@ interface SpinnerProps {
 	className?: string;
 }
 
-export const Spinner: React.FC<SpinnerProps> = ({
+export const Spinner: React.FC<SpinnerProps & CypressI> = ({
+	dataCY,
 	type,
 	width = type === 'loadingPage' ? 'w-10' : 'w-6',
 	circleFill = 'currentColor',
@@ -18,7 +20,10 @@ export const Spinner: React.FC<SpinnerProps> = ({
 	className,
 }) => {
 	return (
-		<div className={clsx('flex items-center justify-center', width, className)}>
+		<div
+			data-cy={dataCY}
+			className={clsx('flex items-center justify-center', width, className)}
+		>
 			<div role="status">
 				<svg
 					className="w-full animate-spin"

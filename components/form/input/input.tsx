@@ -3,9 +3,10 @@ import clsx from 'clsx';
 import { Typography } from '../../common/typography';
 import { InputProps } from 'interfaces';
 import { Icon } from 'components/common';
+import { CypressI } from 'interfaces/cypress';
 
 export const Input: React.FC<
-	InputProps & React.InputHTMLAttributes<HTMLInputElement>
+	InputProps & CypressI & React.InputHTMLAttributes<HTMLInputElement>
 > = ({
 	id,
 	dataCY,
