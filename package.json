@@ -1,6 +1,6 @@
 {
 	"name": "create_exo_frontend",
-	"version": "1",
+	"version": "1.0.0",
 	"bin": "./bin/cli.js",
 	"scripts": {
 		"dev": "next dev -p 3000",
