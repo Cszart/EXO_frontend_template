@@ -1,5 +1,5 @@
 {
-	"name": "create_exo_frontend",
+	"name": "create-exo-frontend",
 	"version": "1.0.0",
 	"bin": "./bin/cli.js",
 	"scripts": {
