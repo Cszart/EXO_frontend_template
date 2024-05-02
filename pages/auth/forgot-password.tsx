@@ -1,14 +1,9 @@
 import { ForgotPasswordScreen } from 'components/screens';
 import { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
-import { useEffect } from 'react';
 import authUtils from 'utils/auth';
 
 const ForgotPassword = (): JSX.Element => {
-	useEffect(() => {
-		authUtils.redirectUserIfNeeded();
-	}, []);
-
 	return <ForgotPasswordScreen />;
 };
 
