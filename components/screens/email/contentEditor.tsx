@@ -22,6 +22,7 @@ const EmailContentEditorScreen = (): JSX.Element => {
 	// Utils
 	const router = useRouter();
 	const { editMode } = router.query;
+	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const {
 		register,
 		reset,
@@ -56,23 +57,28 @@ const EmailContentEditorScreen = (): JSX.Element => {
 	};
 
 	// Function to handle create or update template name
-	const handleShowModal = () => {
-		// Retrieve the JSON object from local storage
-		const stringTemplateToEdit = localStorage.getItem('templateToEdit');
+	const handleShowModal = (): void => {
+		if (editMode === 'true') {
+			// Retrieve the JSON object from local storage
+			const stringTemplateToEdit = localStorage.getItem('templateToEdit');
 
-		if (stringTemplateToEdit) {
-			const templateToEditContent: EmailTemplateI =
-				JSON.parse(stringTemplateToEdit);
-			setValue('name', templateToEditContent.name, {
-				shouldDirty: true,
-				shouldValidate: true,
-			});
+			if (stringTemplateToEdit) {
+				const templateToEditContent: EmailTemplateI =
+					JSON.parse(stringTemplateToEdit);
+				setValue('name', templateToEditContent.name, {
+					shouldDirty: true,
+					shouldValidate: true,
+				});
+				showSaveTemplate();
+			}
+		} else {
 			showSaveTemplate();
 		}
 	};
 
 	// Function to handle update and save templates
 	const handleSaveTemplate = async (data: any): Promise<void> => {
+		setIsLoading(true);
 		try {
 			// Update template logic
 			if (editMode === 'true') {
@@ -114,10 +120,13 @@ const EmailContentEditorScreen = (): JSX.Element => {
 					}
 				}
 			}
+
+			setIsLoading(false);
 			hideSaveTemplate();
 			reset();
 		} catch (error) {
 			console.error('Error updating template:', error);
+			setIsLoading(false);
 			alert('Error updating template. Please try again.');
 		}
 	};
@@ -237,6 +246,7 @@ const EmailContentEditorScreen = (): JSX.Element => {
 							decoration="fill"
 							size="extra-small"
 							disabled={!isDirty || !isValid}
+							loading={isLoading}
 						/>
 					</div>
 				</form>

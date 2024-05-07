@@ -91,7 +91,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 	};
 
 	/**
-	 * Check when the wallet is connected and proceed with to sign
+	 * Check when the wallet is connected and proceed to sign
 	 */
 	React.useEffect(() => {
 		const triggerSignWithWallet = async (): Promise<void> => {
@@ -189,9 +189,14 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 				</Link>
 
 				{/* Credentials */}
-				<Button dataCY="signin" type="submit" size="full" decoration="fill">
-					Sign in
-				</Button>
+				<Button
+					dataCY="signin"
+					type="submit"
+					size="full"
+					decoration="fill"
+					label="Sign in"
+					loading={isLoading}
+				/>
 
 				<Separator text="Or" />
 

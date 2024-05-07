@@ -1,10 +1,13 @@
+import { authService } from 'api_services';
 import { Button, Separator, Typography } from 'components/common';
-import { InputEmail } from 'components/form';
+import { Input, InputEmail } from 'components/form';
 import InputPassword from 'components/form/input-password/input-password';
 import { LayoutLogin } from 'components/layout';
 import NextAuthProvidersEnum from 'const/auth';
 import Icons from 'const/icons';
+import RolesEnum from 'const/role';
 import AppRoutes from 'const/routes';
+import { UserI } from 'interfaces';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -33,29 +36,54 @@ export const SignUpScreen: React.FC<SignUpProps> = () => {
 		email: {
 			required: { value: true, message: 'This is required' },
 		},
+		name: {
+			required: { value: true, message: 'This is required' },
+		},
+		username: {
+			required: { value: true, message: 'This is required' },
+		},
 		password: {
 			required: { value: true, message: 'This is required' },
 		},
 	};
 
-	// Sign up
+	// SUBMIT function
 	const handleSubmitData = async (
 		provider: NextAuthProvidersEnum,
 		data?: FieldValues
 	): Promise<void> => {
 		setIsLoading(true);
+		logger.info('Data: ', { data });
+
 		try {
-			if (provider === 'credentials') {
-				await signIn('credentials', {
-					...data,
-				});
+			// Register with credentials
+			if (provider === NextAuthProvidersEnum.CREDENTIALS && data) {
+				// Build payload
+				const userPayload: UserI = {
+					id: 0,
+					email: data.email,
+					username: data.username,
+					name: data.name,
+					image:
+						'https://i.pinimg.com/564x/b3/e5/db/b3e5db5a3bf1399f74500a6209462794.jpg',
+					roles: [RolesEnum.USER],
+					permissions: [],
+				};
+
+				const signUpResponse = await authService.signUp(userPayload);
+
+				// User created succesfully
+				if (signUpResponse.status === 201) {
+					router.push(AppRoutes.AUTH_SIGN_IN);
+				} else {
+					logger.error(signUpResponse);
+				}
 			} else {
-				signIn(provider, {
+				await signIn(provider, {
 					redirect: true,
 					callbackUrl: '/',
 				});
 			}
-			router.push('/');
 		} catch (error) {
 			logger.error(error);
 		} finally {
@@ -74,26 +102,50 @@ export const SignUpScreen: React.FC<SignUpProps> = () => {
 				<Typography type="headline-4" className="text-center">
 					Sign Up
 				</Typography>
+
 				<InputEmail
 					name="email"
 					title="Email"
-					placeholder="Email"
+					placeholder="Write an email"
 					register={register}
 					rules={rules.email}
 					error={errors.email}
 				/>
+				<Input
+					name="name"
+					title="Name"
+					placeholder="Write your name..."
+					register={register}
+					rules={rules.name}
+					error={errors.name}
+				/>
+				<Input
+					name="username"
+					title="Username"
+					placeholder="Write your username..."
+					register={register}
+					rules={rules.username}
+					error={errors.username}
+				/>
 				<InputPassword
 					name="password"
 					title="Password"
-					placeholder="Password"
+					placeholder="Input your password"
 					register={register}
 					rules={rules.password}
 					error={errors.password}
 				/>
-				<Button type="submit" size="full" decoration="fill">
-					Sign up
-				</Button>
+
+				<Button
+					type="submit"
+					size="full"
+					decoration="fill"
+					label="Sign up"
+					loading={isLoading}
+				/>
+
 				<Separator text="Or" />
+
 				<Button
 					size="full"
 					onClick={() => handleSubmitData(NextAuthProvidersEnum.GOOGLE)}

@@ -22,7 +22,7 @@ const SimpleTable = <T,>({
 			const updatedColumns = props.columns.concat([
 				{
 					header: 'Actions',
-					content: (instance) => {
+					content: (instance: T) => {
 						if (props.rowActions) {
 							// Get the row actions
 							const actions = props.rowActions(instance);

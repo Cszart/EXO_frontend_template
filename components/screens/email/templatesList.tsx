@@ -47,11 +47,11 @@ const EmailTemplatesListScreen = (): JSX.Element => {
 					},
 				]}
 				rows={templatesData}
-				rowActions={() => [
+				rowActions={(instance: EmailTemplateI) => [
 					{
 						label: 'Edit',
 						name: 'edit',
-						onClick: (instance) => {
+						onClick: () => {
 							localStorage.setItem('templateToEdit', JSON.stringify(instance));
 							router.push({
 								pathname: AppRoutes.EMAIL_CONTENT_EDITOR,
