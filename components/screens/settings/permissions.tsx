@@ -12,7 +12,8 @@ import RolesEnum from 'const/role';
 import PermissionsEnum from 'const/permissions';
 
 const PermissionsScreen = (): JSX.Element => {
-	// Utils
+	// - Utils
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const {
 		register,
 		reset,
@@ -22,6 +23,8 @@ const PermissionsScreen = (): JSX.Element => {
 	} = useForm({
 		mode: 'onChange',
 	});
+
+	// - Modals
 	const {
 		Modal: ModalCreatePermission,
 		show: showCreatePermission,
@@ -33,13 +36,13 @@ const PermissionsScreen = (): JSX.Element => {
 		hide: hideDeletePermission,
 	} = useModal();
 
-	// Data
+	// - Data
 	const [permissionsData, setPermissionsData] = useState<PermissionI[]>();
 	const [idSelectedPermission, setIdSelectedPermission] = useState<
 		number | undefined
 	>();
 
-	// Rules
+	// - Rules
 	const rules = {
 		category: {
 			required: { value: true, message: 'This is requeried' },
@@ -47,36 +50,62 @@ const PermissionsScreen = (): JSX.Element => {
 	};
 
 	// - Functions
+	async function fetchPermissions(): Promise<void> {
+		const permissionsResponse = await permissionService.getAll();
+
+		if (permissionsResponse.status == 200) {
+			setPermissionsData(permissionsResponse.data);
+		} else {
+			setPermissionsData([]);
+		}
+	}
+
 	// Create permission handler - TODO: implement own logic
 	const handleSubmitData = async (formData: any): Promise<void> => {
+		setIsLoading(true);
 		const { category, subCategory, permission } = formData;
 		const permissionUUID = `${category}:${subCategory}:${permission}`; // Should be handled by backend really, but since its a demostration
+
+		const payload: Partial<PermissionI> = {
+			uuid: permissionUUID,
+			category,
+			subCategory,
+			permission,
+		};
 
 		if (idSelectedPermission) {
 			const updateResponse = await permissionService.update(
 				idSelectedPermission,
-				{
-					category,
-					subCategory,
-					permission,
-				}
+				payload
 			);
-
 			alert(updateResponse.message);
 		} else {
-			const createResponse = await permissionService.create({
-				uuid: permissionUUID,
-				category,
-				subCategory,
-				permission,
-			});
-
+			const createResponse = await permissionService.create(payload);
 			alert(createResponse.message);
 		}
 
+		fetchPermissions();
+
+		setIsLoading(false);
 		hideCreatePermission();
 		reset();
 		setIdSelectedPermission(undefined);
+	};
+
+	// Delete user handler - TODO: implement own logic
+	const handleDeletePermission = async (): Promise<void> => {
+		if (idSelectedPermission) {
+			setIsLoading(true);
+			const deleteResponse = await permissionService.delete(
+				idSelectedPermission
+			);
+
+			alert(deleteResponse.message);
+			fetchPermissions();
+			setIsLoading(false);
+			hideDeletePermission();
+			setIdSelectedPermission(undefined);
+		}
 	};
 
 	// Function to handle editing a permission
@@ -94,16 +123,6 @@ const PermissionsScreen = (): JSX.Element => {
 	// - UseEffects
 	// Fetch permissions data and set State
 	useEffect(() => {
-		async function fetchPermissions(): Promise<void> {
-			const permissionsResponse = await permissionService.getAll();
-
-			if (permissionsResponse.status == 200) {
-				setPermissionsData(permissionsResponse.data);
-			} else {
-				setPermissionsData([]);
-			}
-		}
-
 		fetchPermissions();
 	}, []);
 
@@ -137,11 +156,11 @@ const PermissionsScreen = (): JSX.Element => {
 					},
 				]}
 				rows={permissionsData}
-				rowActions={() => [
+				rowActions={(instance: PermissionI) => [
 					{
 						label: 'Edit',
 						name: 'edit',
-						onClick: (instance) => {
+						onClick: () => {
 							handleEditPermission(instance);
 						},
 						roles: [RolesEnum.ADMIN],
@@ -151,6 +170,7 @@ const PermissionsScreen = (): JSX.Element => {
 						label: 'Delete',
 						name: 'delete',
 						onClick: () => {
+							setIdSelectedPermission(instance.id);
 							showDeletePermission();
 						},
 						roles: [RolesEnum.ADMIN],
@@ -192,6 +212,7 @@ const PermissionsScreen = (): JSX.Element => {
 							decoration="line-primary"
 							size="extra-small"
 							type="button"
+							loading={isLoading}
 							onClick={() => {
 								hideCreatePermission();
 								reset();
@@ -204,6 +225,7 @@ const PermissionsScreen = (): JSX.Element => {
 							decoration="fill"
 							size="extra-small"
 							disabled={!isDirty || !isValid}
+							loading={isLoading}
 						/>
 					</div>
 				</form>
@@ -212,21 +234,12 @@ const PermissionsScreen = (): JSX.Element => {
 			<ModalDeletePermission title="Delete Permission">
 				<DeleteModalContent
 					type="permission"
+					isLoading={isLoading}
 					onClickCancel={() => {
 						hideDeletePermission();
 						setIdSelectedPermission(undefined);
 					}}
-					onClickSave={() => {
-						if (idSelectedPermission) {
-							permissionService
-								.delete(idSelectedPermission)
-								.then((response) => {
-									alert(response.message);
-									hideDeletePermission();
-									setIdSelectedPermission(undefined);
-								});
-						}
-					}}
+					onClickSave={handleDeletePermission}
 				/>
 			</ModalDeletePermission>
 		</Layout>

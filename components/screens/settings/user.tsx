@@ -15,9 +15,12 @@ import PermissionsEnum from 'const/permissions';
 
 const UsersScreen = (): JSX.Element => {
 	// Utils
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const { register, reset, handleSubmit, setValue } = useForm({
 		mode: 'onChange',
 	});
+
+	// - Modal
 	const {
 		Modal: ModalCreateUser,
 		show: showCreateUser,
@@ -29,40 +32,91 @@ const UsersScreen = (): JSX.Element => {
 		hide: hideDeleteUser,
 	} = useModal();
 
-	// Data
+	// - Data
 	const [usersData, setUsersData] = useState<UserI[]>();
 	const [rolesData, setRolesData] = useState<Option[]>([]);
 	const [selectedUser, setSelectedUser] = useState<UserI | undefined>();
 
 	// - Functions
+	async function fetchUsers(): Promise<void> {
+		const usersResponse = await userService.getAll();
+
+		if (usersResponse.status == 200) {
+			setUsersData(usersResponse.data);
+		} else {
+			setUsersData([]);
+		}
+	}
+
+	async function fetchRoles(): Promise<void> {
+		const rolesRespose = await rolesService.getAll();
+
+		if (rolesRespose.status == 200) {
+			const optionsAux: Option[] = [
+				{
+					name: '',
+					label: 'Select a role',
+					placeholder: true,
+				},
+			];
+
+			rolesRespose.data.map((role) => {
+				optionsAux.push({
+					label: role.role,
+					name: role.role,
+				});
+			});
+			setRolesData(optionsAux);
+		} else {
+			setRolesData([]);
+		}
+	}
+
 	// Create user handler - TODO: implement own logic
 	const handleSubmitData = async (formData: any): Promise<void> => {
-		if (selectedUser) {
-			const updateResponse = await userService.update(selectedUser.id, {
-				name: formData.name,
-				email: formData.email,
-				username: formData.username,
-				image: formData.image,
-				roles: [formData.role],
-			});
+		setIsLoading(true);
 
+		const payload: Partial<UserI> = {
+			name: formData.name,
+			email: formData.email,
+			username: formData.username,
+			image:
+				formData && formData.image
+					? formData.image
+					: 'https://i.pinimg.com/564x/58/2d/fc/582dfc3b8fbf6bb368f1b4c53f0c67bd.jpg',
+			roles: [formData.role],
+		};
+
+		if (selectedUser) {
+			const updateResponse = await userService.update(selectedUser.id, payload);
 			alert(updateResponse.message);
 		} else {
 			const createResponse = await userService.create({
-				name: formData.name,
-				email: formData.email,
-				username: formData.username,
-				image: formData.image,
-				roles: [formData.role],
+				...payload,
 				permissions: crudPermissions(),
 			});
-
 			alert(createResponse.message);
 		}
 
+		fetchUsers();
+
+		setIsLoading(false);
 		hideCreateUser();
-		reset();
 		setSelectedUser(undefined);
+	};
+
+	// Delete user handler - TODO: implement own logic
+	const handleDeleteUser = async (): Promise<void> => {
+		if (selectedUser) {
+			setIsLoading(true);
+			const deleteResponse = await userService.delete(selectedUser.id);
+
+			alert(deleteResponse.message);
+			fetchUsers();
+			setIsLoading(false);
+			hideDeleteUser();
+			setSelectedUser(undefined);
+		}
 	};
 
 	// Function to handle editing a user
@@ -78,47 +132,10 @@ const UsersScreen = (): JSX.Element => {
 		showCreateUser();
 	};
 
-	// Fetch users
+	// - UseEffects
+	// Fetch users and roles
 	useEffect(() => {
-		async function fetchUsers(): Promise<void> {
-			const usersResponse = await userService.getAll();
-
-			if (usersResponse.status == 200) {
-				setUsersData(usersResponse.data);
-			} else {
-				setUsersData([]);
-			}
-		}
-
 		fetchUsers();
-	}, []);
-
-	// Fetch roles
-	useEffect(() => {
-		async function fetchRoles(): Promise<void> {
-			const rolesRespose = await rolesService.getAll();
-
-			if (rolesRespose.status == 200) {
-				const optionsAux: Option[] = [
-					{
-						name: '',
-						label: 'Select a role',
-						placeholder: true,
-					},
-				];
-
-				rolesRespose.data.map((role) => {
-					optionsAux.push({
-						label: role.role,
-						name: role.role,
-					});
-				});
-				setRolesData(optionsAux);
-			} else {
-				setRolesData([]);
-			}
-		}
-
 		fetchRoles();
 	}, []);
 
@@ -134,6 +151,12 @@ const UsersScreen = (): JSX.Element => {
 		>
 			<SimpleTable<UserI>
 				columns={[
+					{
+						header: 'Image',
+						content: (instance) => (
+							<img src={instance.image} className="w-10 h-10 rounded-full" />
+						),
+					},
 					{
 						header: 'Name',
 						content: (instance) => <p>{instance.name}</p>,
@@ -172,11 +195,11 @@ const UsersScreen = (): JSX.Element => {
 					},
 				]}
 				rows={usersData}
-				rowActions={() => [
+				rowActions={(instance: UserI) => [
 					{
 						label: 'Edit',
 						name: 'edit',
-						onClick: (instance) => {
+						onClick: () => {
 							handleselectedUser(instance);
 						},
 						roles: [RolesEnum.ADMIN],
@@ -186,6 +209,7 @@ const UsersScreen = (): JSX.Element => {
 						label: 'Delete',
 						name: 'delete',
 						onClick: () => {
+							setSelectedUser(instance);
 							showDeleteUser();
 						},
 						roles: [RolesEnum.ADMIN],
@@ -199,6 +223,12 @@ const UsersScreen = (): JSX.Element => {
 					className="mt-4 space-y-4"
 					onSubmit={handleSubmit(handleSubmitData)}
 				>
+					<InputText
+						register={register}
+						name="image"
+						title="Image URL"
+						customPlaceholder="Please input an Image URL..."
+					/>
 					<InputText
 						register={register}
 						name="name"
@@ -232,6 +262,7 @@ const UsersScreen = (): JSX.Element => {
 							decoration="line-primary"
 							size="extra-small"
 							type="button"
+							loading={isLoading}
 							onClick={() => {
 								hideCreateUser();
 								reset();
@@ -243,6 +274,7 @@ const UsersScreen = (): JSX.Element => {
 							type="submit"
 							decoration="fill"
 							size="extra-small"
+							loading={isLoading}
 						/>
 					</div>
 				</form>
@@ -251,19 +283,12 @@ const UsersScreen = (): JSX.Element => {
 			<ModalDeleteUser title="Delete User">
 				<DeleteModalContent
 					type="user"
+					isLoading={isLoading}
 					onClickCancel={() => {
 						hideDeleteUser();
 						setSelectedUser(undefined);
 					}}
-					onClickSave={() => {
-						if (selectedUser) {
-							userService.delete(selectedUser.id).then((response) => {
-								alert(response.message);
-								hideDeleteUser();
-								setSelectedUser(undefined);
-							});
-						}
-					}}
+					onClickSave={handleDeleteUser}
 				/>
 			</ModalDeleteUser>
 		</Layout>

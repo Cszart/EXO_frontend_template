@@ -3,12 +3,14 @@ import * as React from 'react';
 
 interface DeleteModalProps {
 	type: string;
+	isLoading?: boolean;
 	onClickCancel: () => void;
 	onClickSave: () => void;
 }
 
 export const DeleteModalContent: React.FC<DeleteModalProps> = ({
 	type,
+	isLoading,
 	onClickCancel,
 	onClickSave,
 }) => {
@@ -25,12 +27,14 @@ export const DeleteModalContent: React.FC<DeleteModalProps> = ({
 					decoration="line-primary"
 					size="extra-small"
 					type="button"
+					loading={isLoading}
 					onClick={onClickCancel}
 				/>
 				<Button
 					label="Save"
 					decoration="fill"
 					size="extra-small"
+					loading={isLoading}
 					onClick={onClickSave}
 				/>
 			</div>

@@ -13,6 +13,7 @@ import PermissionsEnum from 'const/permissions';
 
 const RolesScreen = (): JSX.Element => {
 	//Utils
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const {
 		register,
 		reset,
@@ -22,6 +23,8 @@ const RolesScreen = (): JSX.Element => {
 	} = useForm({
 		mode: 'onChange',
 	});
+
+	// - Modals
 	const { Modal: ModalRole, show: showRole, hide: hideRole } = useModal();
 	const {
 		Modal: ModalDeleteRole,
@@ -29,11 +32,11 @@ const RolesScreen = (): JSX.Element => {
 		hide: hideDeleteRole,
 	} = useModal();
 
-	// Data
+	// - Data
 	const [rolesData, setRolesData] = useState<RoleI[]>();
 	const [idSelectedRole, setIdSelectedRole] = useState<number | undefined>();
 
-	// Rules
+	// - Rules
 	const rules = {
 		role: {
 			required: { value: true, message: 'This is requeried' },
@@ -41,8 +44,19 @@ const RolesScreen = (): JSX.Element => {
 	};
 
 	// - Functions
+	async function fetchRoles(): Promise<void> {
+		const rolesResponse = await rolesService.getAll();
+
+		if (rolesResponse.status == 200) {
+			setRolesData(rolesResponse.data);
+		} else {
+			setRolesData([]);
+		}
+	}
+
 	// Create role handler - TODO: implement own logic
 	const handleSubmitData = async (formData: any): Promise<void> => {
+		setIsLoading(true);
 		const { role } = formData;
 
 		if (idSelectedRole) {
@@ -60,8 +74,25 @@ const RolesScreen = (): JSX.Element => {
 			alert(createResponse.message);
 		}
 
+		fetchRoles();
+		setIsLoading(false);
 		hideRole();
 		reset();
+		setIdSelectedRole(undefined);
+	};
+
+	// Delete role handler - TODO: implement own logic
+	const handleDeleteRole = async (): Promise<void> => {
+		if (idSelectedRole) {
+			setIsLoading(true);
+			const deleteResponse = await rolesService.delete(idSelectedRole);
+
+			alert(deleteResponse.message);
+			fetchRoles();
+			setIsLoading(false);
+			hideDeleteRole();
+			setIdSelectedRole(undefined);
+		}
 	};
 
 	// Function to handle editing a role
@@ -76,16 +107,6 @@ const RolesScreen = (): JSX.Element => {
 
 	// Fetch roles
 	useEffect(() => {
-		async function fetchRoles(): Promise<void> {
-			const rolesResponse = await rolesService.getAll();
-
-			if (rolesResponse.status == 200) {
-				setRolesData(rolesResponse.data);
-			} else {
-				setRolesData([]);
-			}
-		}
-
 		fetchRoles();
 	}, []);
 
@@ -119,11 +140,11 @@ const RolesScreen = (): JSX.Element => {
 					},
 				]}
 				rows={rolesData}
-				rowActions={() => [
+				rowActions={(instance: RoleI) => [
 					{
 						label: 'Edit',
 						name: 'edit',
-						onClick: (instance) => {
+						onClick: () => {
 							handleEditRole(instance);
 						},
 						roles: [RolesEnum.ADMIN],
@@ -132,7 +153,7 @@ const RolesScreen = (): JSX.Element => {
 					{
 						label: 'Delete',
 						name: 'delete',
-						onClick: (instance) => {
+						onClick: () => {
 							setIdSelectedRole(instance.id);
 							showDeleteRole();
 						},
@@ -158,6 +179,7 @@ const RolesScreen = (): JSX.Element => {
 							decoration="line-primary"
 							size="extra-small"
 							type="button"
+							loading={isLoading}
 							onClick={() => {
 								hideRole();
 								reset();
@@ -169,27 +191,22 @@ const RolesScreen = (): JSX.Element => {
 							label="Save"
 							decoration="fill"
 							size="extra-small"
+							loading={isLoading}
 							disabled={!isDirty || !isValid}
 						/>
 					</div>
 				</form>
 			</ModalRole>
+
 			<ModalDeleteRole title="Delete Role">
 				<DeleteModalContent
 					type="role"
+					isLoading={isLoading}
 					onClickCancel={() => {
 						hideDeleteRole();
 						setIdSelectedRole(undefined);
 					}}
-					onClickSave={() => {
-						if (idSelectedRole) {
-							rolesService.delete(idSelectedRole).then((response) => {
-								alert(response.message);
-								hideDeleteRole();
-								setIdSelectedRole(undefined);
-							});
-						}
-					}}
+					onClickSave={handleDeleteRole}
 				/>
 			</ModalDeleteRole>
 		</Layout>
