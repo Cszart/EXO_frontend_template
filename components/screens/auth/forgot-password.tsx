@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import { InputEmail } from 'components/form';
 import { useForm } from 'react-hook-form';
@@ -22,8 +21,7 @@ export const ForgotPasswordScreen = (): JSX.Element => {
 		},
 	};
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const handleSubmitDataForm = async (data: any): Promise<void> => {
+	const handleSubmitDataForm = async (): Promise<void> => {
 		setIsLoading(true);
 		router.push('/auth/new-password?code=1234');
 	};

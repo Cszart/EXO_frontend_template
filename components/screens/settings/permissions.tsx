@@ -212,7 +212,7 @@ const PermissionsScreen = (): JSX.Element => {
 							decoration="line-primary"
 							size="extra-small"
 							type="button"
-							loading={isLoading}
+							disabled={isLoading}
 							onClick={() => {
 								hideCreatePermission();
 								reset();

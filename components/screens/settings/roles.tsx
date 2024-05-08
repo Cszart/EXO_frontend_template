@@ -179,7 +179,7 @@ const RolesScreen = (): JSX.Element => {
 							decoration="line-primary"
 							size="extra-small"
 							type="button"
-							loading={isLoading}
+							disabled={isLoading}
 							onClick={() => {
 								hideRole();
 								reset();

@@ -65,7 +65,7 @@ export const SignUpScreen: React.FC<SignUpProps> = () => {
 					username: data.username,
 					name: data.name,
 					image:
-						'https://i.pinimg.com/564x/b3/e5/db/b3e5db5a3bf1399f74500a6209462794.jpg',
+						'https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg',
 					roles: [RolesEnum.USER],
 					permissions: [],
 				};
@@ -121,7 +121,7 @@ export const SignUpScreen: React.FC<SignUpProps> = () => {
 				<Input
 					name="name"
 					title="Name"
-					placeholder="Write your name..."
+					placeholder="Write your name"
 					register={register}
 					rules={rules.name}
 					error={errors.name}
@@ -129,7 +129,7 @@ export const SignUpScreen: React.FC<SignUpProps> = () => {
 				<Input
 					name="username"
 					title="Username"
-					placeholder="Write your username..."
+					placeholder="Write your username"
 					register={register}
 					rules={rules.username}
 					error={errors.username}
