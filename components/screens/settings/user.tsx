@@ -12,6 +12,7 @@ import { crudPermissions } from 'utils';
 import { DeleteModalContent } from 'components/modals';
 import RolesEnum from 'const/role';
 import PermissionsEnum from 'const/permissions';
+import authUtils from 'utils/auth';
 
 const UsersScreen = (): JSX.Element => {
 	// Utils
@@ -195,6 +196,7 @@ const UsersScreen = (): JSX.Element => {
 					},
 				]}
 				rows={usersData}
+				hideRowActions={authUtils.hasRole(RolesEnum.MODERATOR)}
 				rowActions={(instance: UserI) => [
 					{
 						label: 'Edit',
