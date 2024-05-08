@@ -74,6 +74,13 @@ export const SignUpScreen: React.FC<SignUpProps> = () => {
 
 				// User created succesfully
 				if (signUpResponse.status === 201) {
+					alert('Your user has been created!');
+					await signIn(NextAuthProvidersEnum.CREDENTIALS, {
+						email: data.email,
+						password: data.email,
+						redirect: true,
+						callbackUrl: '/',
+					});
 					router.push(AppRoutes.AUTH_SIGN_IN);
 				} else {
 					logger.error(signUpResponse);
