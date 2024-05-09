@@ -16,6 +16,7 @@ import NextAuthProvidersEnum from 'const/auth';
 import AppRoutes from 'const/routes';
 
 import Logger from 'utils/logger';
+import { useRouter } from 'next/router';
 
 interface SignInProps {
 	providers: NextAuthProvidersEnum[];
@@ -25,6 +26,9 @@ const messageToSign = 'To proceed with login process please sign this message!';
 
 export const SignInScreen: React.FC<SignInProps> = () => {
 	// Utils
+	const router = useRouter();
+	const { error: errorInfoQuery } = router.query;
+
 	const logger = new Logger({ identifier: 'SignIn' });
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -33,6 +37,16 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({ mode: 'onSubmit' });
+
+	// Inputs rules
+	const rules = {
+		email: {
+			required: { value: true, message: 'This is required' },
+		},
+		password: {
+			required: { value: true, message: 'This is required' },
+		},
+	};
 
 	// Wallet connection
 	const { address, isConnected, connector } = useAccount();
@@ -51,16 +65,6 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 	} = useSignMessage({
 		message: messageToSign,
 	});
-
-	// Inputs rules
-	const rules = {
-		email: {
-			required: { value: true, message: 'This is required' },
-		},
-		password: {
-			required: { value: true, message: 'This is required' },
-		},
-	};
 
 	// SUBMIT function
 	const handleSubmitData = async (
@@ -90,6 +94,8 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 		}
 	};
 
+	// DISCLAIMER: this has been done this way since wagmi functions are async
+	// So we gotta check when the actual value has changed, is more difficult to do it on a sequence
 	/**
 	 * Check when the wallet is connected and proceed to sign
 	 */
@@ -147,6 +153,14 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 
 	return (
 		<LayoutLogin>
+			{errorInfoQuery && (
+				<Typography
+					text={String(errorInfoQuery)}
+					type="custom-p"
+					className="text-lg font-medium text-red-500"
+				/>
+			)}
+
 			<form
 				className="w-full space-y-4"
 				onSubmit={handleSubmit((data) =>
