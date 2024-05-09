@@ -9,7 +9,7 @@ import RolesEnum from 'const/role';
 // Props that represent a column
 export interface ColumnProps<T> {
 	header: string;
-	content: (instance: T) => JSX.Element;
+	content: (instance: T) => JSX.Element | null;
 	leftIcon?: JSX.Element;
 	rightIcon?: JSX.Element;
 }

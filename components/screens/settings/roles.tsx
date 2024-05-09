@@ -10,10 +10,11 @@ import { Button } from 'components/common';
 import { DeleteModalContent } from 'components/modals';
 import RolesEnum from 'const/role';
 import PermissionsEnum from 'const/permissions';
-import authUtils from 'utils/auth';
+import { useSession } from 'next-auth/react';
 
 const RolesScreen = (): JSX.Element => {
 	//Utils
+	const session = useSession();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const {
 		register,
@@ -141,7 +142,9 @@ const RolesScreen = (): JSX.Element => {
 					},
 				]}
 				rows={rolesData}
-				hideRowActions={authUtils.hasRole(RolesEnum.MODERATOR)}
+				hideRowActions={session?.data?.user?.roles?.some(
+					(role) => role === RolesEnum.MODERATOR
+				)}
 				rowActions={(instance: RoleI) => [
 					{
 						label: 'Edit',

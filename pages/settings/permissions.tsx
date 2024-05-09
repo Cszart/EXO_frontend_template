@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	const redirect: Redirect | undefined = await withAuthorizationServerSide({
 		session: session,
 		allowedPermissions: crudPermissions(),
-		allowedRoles: [RolesEnum.ADMIN],
+		allowedRoles: [RolesEnum.ADMIN, RolesEnum.MODERATOR],
 		redirectTo: AppRoutes.HOME,
 	});
 

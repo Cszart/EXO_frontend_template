@@ -63,7 +63,7 @@ class AuthUtils {
 
 	// In case session is not set then an error message should be throw
 	protected checkSession(): boolean {
-		if (!this.session) {
+		if (this.session == null) {
 			throw new Error(
 				'Session is null. Please set the session before calling this method.'
 			);

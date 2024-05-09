@@ -19,15 +19,17 @@ const SimpleTable = <T,>({
 	useEffect(() => {
 		// If row actions is not hidden append a fixed column
 		if (!hideRowActions) {
-			const updatedColumns = props.columns.concat([
-				{
-					header: 'Actions',
-					content: (instance: T) => {
-						if (props.rowActions) {
-							// Get the row actions
-							const actions = props.rowActions(instance);
-							const filteredActions =
-								filterRowOptionsByRolesOrPermissions(actions);
+			// Create the last column Action
+			const actionsColumn = {
+				header: 'Actions',
+				content: (instance: T) => {
+					if (props.rowActions) {
+						// Get the row actions
+						const actions = props.rowActions(instance);
+						const filteredActions =
+							filterRowOptionsByRolesOrPermissions(actions);
+
+						if (filteredActions.length > 0) {
 							return (
 								<Dropdown
 									buttonContent={<EllipsisVerticalIcon className="w-6 h-6" />}
@@ -36,17 +38,24 @@ const SimpleTable = <T,>({
 								/>
 							);
 						} else {
-							return <></>;
+							return null;
 						}
-					},
+					} else {
+						return null;
+					}
 				},
-			]);
+			};
+
+			// Append the actions column to the table
+			const updatedColumns = props.columns.concat([actionsColumn]);
+			// Save the columns to display
 			setColumnsData(updatedColumns);
 		} else {
 			setColumnsData(props.columns);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [props.columns, hideRowActions]);
+	}, [hideRowActions]);
 
 	return (
 		<>
