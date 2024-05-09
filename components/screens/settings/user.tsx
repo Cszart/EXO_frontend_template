@@ -12,6 +12,7 @@ import { crudPermissions } from 'utils';
 import { DeleteModalContent } from 'components/modals';
 import RolesEnum from 'const/role';
 import PermissionsEnum from 'const/permissions';
+import authUtils from 'utils/auth';
 
 const UsersScreen = (): JSX.Element => {
 	// Utils
@@ -83,7 +84,7 @@ const UsersScreen = (): JSX.Element => {
 			image:
 				formData && formData.image
 					? formData.image
-					: 'https://i.pinimg.com/564x/58/2d/fc/582dfc3b8fbf6bb368f1b4c53f0c67bd.jpg',
+					: 'https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg',
 			roles: [formData.role],
 		};
 
@@ -195,6 +196,7 @@ const UsersScreen = (): JSX.Element => {
 					},
 				]}
 				rows={usersData}
+				hideRowActions={authUtils.hasRole(RolesEnum.MODERATOR)}
 				rowActions={(instance: UserI) => [
 					{
 						label: 'Edit',
@@ -226,8 +228,8 @@ const UsersScreen = (): JSX.Element => {
 					<InputText
 						register={register}
 						name="image"
-						title="Image URL"
-						customPlaceholder="Please input an Image URL..."
+						title="Image URL (optional)"
+						customPlaceholder="Please input an Image URL"
 					/>
 					<InputText
 						register={register}
@@ -262,7 +264,7 @@ const UsersScreen = (): JSX.Element => {
 							decoration="line-primary"
 							size="extra-small"
 							type="button"
-							loading={isLoading}
+							disabled={isLoading}
 							onClick={() => {
 								hideCreateUser();
 								reset();

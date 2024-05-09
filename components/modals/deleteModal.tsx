@@ -27,7 +27,7 @@ export const DeleteModalContent: React.FC<DeleteModalProps> = ({
 					decoration="line-primary"
 					size="extra-small"
 					type="button"
-					loading={isLoading}
+					disabled={isLoading}
 					onClick={onClickCancel}
 				/>
 				<Button

@@ -53,8 +53,7 @@ export const NewPasswordScreen = (): JSX.Element => {
 	}, [code]);
 
 	// Sign in with Data
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-	const handleSubmitDataForm = async (data: any): Promise<void> => {
+	const handleSubmitDataForm = async (): Promise<void> => {
 		setIsLoading(true);
 		setIsPasswordSaved(true);
 	};

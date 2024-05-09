@@ -19,7 +19,7 @@ const options: NextAuthOptions = {
 				console.log(data.picture.data);
 				return {
 					provider: 'facebook',
-					roles: ['admin'], // You can change it if you want to follow another way of assigning a role
+					roles: ['user'], // You can change it if you want to follow another way of assigning a role
 					permissions: [
 						'user:management:view',
 						'user:management:create',
@@ -47,7 +47,7 @@ const options: NextAuthOptions = {
 			profile: (data) => ({
 				provider: 'google',
 				id: data.sub,
-				roles: ['admin'], // You can change it if you want to follow another way of assigning a role
+				roles: ['user'], // You can change it if you want to follow another way of assigning a role
 				image: data.picture,
 				permissions: [
 					'user:management:view',
