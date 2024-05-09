@@ -183,7 +183,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 
 				{/* Actions */}
 				<Link href="/auth/forgot-password">
-					<Typography type="link-1" className="hover:opacity-60">
+					<Typography type="link-1" className="hover:opacity-60 mt-2">
 						Forgot password?
 					</Typography>
 				</Link>
@@ -196,6 +196,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 					decoration="fill"
 					label="Sign in"
 					loading={isLoading}
+					disabled={isLoading || isLoadingWallet || isLoadingSign}
 				/>
 
 				<Separator text="Or" />
@@ -204,7 +205,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 				<Button
 					size="full"
 					onClick={() => handleSubmitData(NextAuthProvidersEnum.GOOGLE)}
-					disabled={isLoading}
+					disabled={isLoading || isLoadingWallet || isLoadingSign}
 					icon={Icons.google}
 					iconLeft
 					label="Sign in with Google"
@@ -214,7 +215,7 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 				<Button
 					size="full"
 					onClick={() => handleSubmitData(NextAuthProvidersEnum.FACEBOOK)}
-					disabled={isLoading}
+					disabled={isLoading || isLoadingWallet || isLoadingSign}
 					icon={Icons.facebook}
 					iconLeft
 					label="Sign in with Facebook"
@@ -240,8 +241,16 @@ export const SignInScreen: React.FC<SignInProps> = () => {
 				))}
 
 				{/* Error messages */}
-				{error && <div>{error.message}</div>}
-				{errorSign && <div>{errorSign.message}</div>}
+				{error && (
+					<Typography type="body-1" className="text-red-600">
+						{error.message}
+					</Typography>
+				)}
+				{errorSign && (
+					<Typography type="body-1" className="text-red-600">
+						{errorSign.message}
+					</Typography>
+				)}
 
 				{/* Register */}
 				<Typography type="link-1">

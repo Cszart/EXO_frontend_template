@@ -12,6 +12,7 @@ import { emailService } from 'api_services';
 import useModal from 'hooks/useModal';
 import { InputText } from 'components/form';
 import { useForm } from 'react-hook-form';
+import clsx from 'clsx';
 
 const saveHtmlToFile = (htmlContent: string, fileName: string): void => {
 	const blob = new Blob([htmlContent], { type: 'text/html' });
@@ -38,6 +39,7 @@ const EmailContentEditorScreen = (): JSX.Element => {
 	>('email_content');
 
 	// Data
+	const [templateName, setTemplateName] = React.useState<string>('');
 	const [previewContent, setPreviewContent] = React.useState<string>();
 	const [defaultHtml, setDefaultHtml] = React.useState<string | undefined>(
 		undefined
@@ -145,6 +147,7 @@ const EmailContentEditorScreen = (): JSX.Element => {
 					JSON.parse(stringTemplateToEdit);
 				setPreviewContent(templateToEditContent.content);
 				setDefaultHtml(templateToEditContent.content);
+				setTemplateName(templateToEditContent.name);
 			}
 		}
 	}, [editMode]);
@@ -152,7 +155,17 @@ const EmailContentEditorScreen = (): JSX.Element => {
 	return (
 		<Layout withHeader title="Content editor for Email">
 			{/* Download HTML button */}
-			<div className="flex w-full justify-end mb-10">
+			<div
+				className={clsx(
+					'flex w-full items-center mb-10',
+					templateName ? 'justify-between' : 'justify-end'
+				)}
+			>
+				{templateName && (
+					<Typography type="custom-h4" className="font-bold">
+						Name: {templateName}
+					</Typography>
+				)}
 				<Button
 					label="Download"
 					decoration="not-fill"
