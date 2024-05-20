@@ -8,7 +8,7 @@ import useModal from 'hooks/useModal';
 import { useForm } from 'react-hook-form';
 import { InputList, InputText } from 'components/form';
 import { Button } from 'components/common';
-import { crudPermissions } from 'utils';
+import { allPermissions, crudPermissions, onlyViewPermissions } from 'utils';
 import { DeleteModalContent } from 'components/modals';
 import RolesEnum from 'const/role';
 import PermissionsEnum from 'const/permissions';
@@ -76,6 +76,10 @@ const UsersScreen = (): JSX.Element => {
 	const handleSubmitData = async (formData: any): Promise<void> => {
 		setIsLoading(true);
 
+		let permissionsData: PermissionsEnum[] = [];
+		if (formData.role == RolesEnum.ADMIN) permissionsData = allPermissions()
+		if (formData.role == RolesEnum.MODERATOR) permissionsData = onlyViewPermissions()
+
 		const payload: Partial<UserI> = {
 			name: formData.name,
 			email: formData.email,
@@ -85,6 +89,7 @@ const UsersScreen = (): JSX.Element => {
 					? formData.image
 					: 'https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg',
 			roles: [formData.role],
+			permissions: permissionsData
 		};
 
 		if (selectedUser) {
@@ -93,7 +98,6 @@ const UsersScreen = (): JSX.Element => {
 		} else {
 			const createResponse = await userService.create({
 				...payload,
-				permissions: crudPermissions(),
 			});
 			alert(createResponse.message);
 		}
