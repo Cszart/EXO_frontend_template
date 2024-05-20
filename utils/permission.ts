@@ -34,7 +34,8 @@ export function onlyViewPermissions(): PermissionsEnum[] {
 	return [
 		PermissionsEnum.ROLE_MANAGEMENT_VIEW,
 		PermissionsEnum.USER_MANAGEMENT_VIEW,
-		PermissionsEnum.PERMISSION_MANAGEMENT_VIEW
+		PermissionsEnum.PERMISSION_MANAGEMENT_VIEW,
+		PermissionsEnum.USER_MANAGEMENT_EDIT,
 	];
 }
 
