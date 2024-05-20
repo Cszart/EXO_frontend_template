@@ -8,7 +8,7 @@ import useModal from 'hooks/useModal';
 import { useForm } from 'react-hook-form';
 import { InputList, InputText } from 'components/form';
 import { Button } from 'components/common';
-import { allPermissions, crudPermissions, onlyViewPermissions } from 'utils';
+import { allPermissions, onlyViewPermissions } from 'utils';
 import { DeleteModalContent } from 'components/modals';
 import RolesEnum from 'const/role';
 import PermissionsEnum from 'const/permissions';
@@ -77,8 +77,9 @@ const UsersScreen = (): JSX.Element => {
 		setIsLoading(true);
 
 		let permissionsData: PermissionsEnum[] = [];
-		if (formData.role == RolesEnum.ADMIN) permissionsData = allPermissions()
-		if (formData.role == RolesEnum.MODERATOR) permissionsData = onlyViewPermissions()
+		if (formData.role == RolesEnum.ADMIN) permissionsData = allPermissions();
+		if (formData.role == RolesEnum.MODERATOR)
+			permissionsData = onlyViewPermissions();
 
 		const payload: Partial<UserI> = {
 			name: formData.name,
@@ -89,7 +90,7 @@ const UsersScreen = (): JSX.Element => {
 					? formData.image
 					: 'https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg',
 			roles: [formData.role],
-			permissions: permissionsData
+			permissions: permissionsData,
 		};
 
 		if (selectedUser) {
